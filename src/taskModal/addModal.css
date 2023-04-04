@@ -1,0 +1,156 @@
+/* factory function add */
+
+
+.modal-add{
+    width: 400px;
+    height: 100%;
+    padding: 20px 25px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    border-radius: 3px;
+
+}
+
+
+/* input div -------------------------------------------------------------------------------*/
+.outer-form-input-div{
+    position: relative;
+
+}
+
+.modal-input-div{
+    width: 100%;
+    position: relative;
+    border-bottom: 1px solid rgba(185, 185, 185, 1); 
+    color: rgba(0, 0, 0, 0.914);
+}
+.modal-placeholder{
+    margin-top: 3px;
+    pointer-events: none;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    font-size: 1.2rem;
+    font-family: roboto;
+}
+.modal-input{
+    z-index: 10;
+    border: none;
+    outline: none;
+    width: 100%;
+    font-family: roboto;
+    letter-spacing: 0.08rem;
+    font-size: 1.5rem;
+    color: rgba(0, 0, 0, 0.929);
+    word-break: break-all;
+
+}
+.modal-text-length{
+    position: absolute;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    bottom: -16px;
+    font-size: 0.8rem;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.05rem;
+    text-align: center;
+    white-space: nowrap;
+
+}
+.overflown-input{
+    max-height: 85px;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+.modal-invalid-input{
+    border-bottom: 1px solid rgba(198, 5, 5, 0.398); 
+    background-color: rgba(255, 0, 0, 0.118);
+    text-shadow: none;
+}
+.modal-input-div::-webkit-scrollbar{
+    width: 5px;
+}
+.modal-input-div::-webkit-scrollbar-track{/*theme*/
+    border-radius: 10px;
+    background: #f1f1f1a9;
+}
+.modal-input-div::-webkit-scrollbar-thumb{/*theme*/
+    border-radius: 10px;
+    background: #060606c2;
+}
+/* modal elements -------------------------------------------------------------------------------*/
+
+.add-element{
+    position: relative;
+    padding: 10px 0px;
+    user-select: none;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr;
+    align-items: center;
+    height: 48px;
+}
+.add-label{
+    font-family: korean;
+    font-size: 1.2rem;
+    color: rgba(0, 0, 0, 0.756);
+}
+
+.add-btn{
+    height: 100%;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.11);
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 3px, rgba(0, 0, 0, 0.23) 0px 1px 2px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.1rem;
+    letter-spacing: 0.05rem;
+    transition: filter 0.1s linear;
+}
+.add-btn:hover{
+    filter: invert(30%) ;
+
+}
+.add-menu{
+    position: absolute;
+    top: 38px;
+    /* width: 100%;
+    height: 50px; */
+    background-color: rgba(0, 0, 0, 1);
+    z-index: 120;
+    opacity: 0;
+    transition: opacity 0.1s linear;
+}
+
+
+/* ------------------------------------------------------------------------------------------------ */
+/* ------------------------------------------------------------------------------------------------ */
+/* the add modal is created from factory function and appended to this class */
+.header-add-div{
+    position: fixed;
+    z-index: 110;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: opacity 0.1s ease-in-out;
+    opacity: 0;
+    border-radius: 3px;
+
+}
+
+/* ------------------------------------------------------------------------------------------------ */
+/* background thing */
+.bg-div-modal{
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(2px);
+    z-index: 99;
+    transition: opacity 0.15s ease-in-out;
+    opacity: 0;
+}
+.bg-div-show{opacity: 1;}

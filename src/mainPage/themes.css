@@ -1,0 +1,72 @@
+.light-theme{
+    --color-bg: linear-gradient(to right, #8e9eab, #eef2f3);
+    --header-bg: linear-gradient(to right, #d1d1d180, #2424241e);
+    --header-box-shadow: 0 4px 2px -2px rgba(128, 128, 128, 0.569);
+
+    --modal-add-bg: rgb(255, 255, 255);
+    --bg-div:  rgba(0, 0, 0, 0.325);
+    --modal-input: rgba(0, 0, 0, 0.914);
+    --add-label: rgba(0, 0, 0, 0.756);
+    --add-btn-bg: rgba(3, 2, 2, 0.05);
+    --add-box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
+    --add-text-length: rgba(0, 0, 0, 0.568);
+    --modal-placeholder: rgba(10, 10, 10, 0.898);
+}
+
+.dark-theme{
+    --color-bg: linear-gradient(to right, rgb(8, 19, 23), rgb(7, 17, 21), rgb(8, 19, 23));   
+    --header-bg: linear-gradient(to right, rgba(249, 249, 249, 0.747), rgba(255, 255, 255, 0.478));
+    --header-box-shadow:none;
+    --modal-add-bg: rgba(25, 25, 26, 0.845);
+    --bg-div:  rgba(0, 0, 0, 0.2);
+    --modal-input: rgba(255, 255, 255, 0.914);
+    --add-label: rgba(255, 255, 255, 0.756);
+    --add-btn-bg: rgba(236, 236, 236, 0.647);
+    --add-box-shadow: 0px 0px 2px rgba(255, 255, 255, 0.596);
+    --add-text-length: rgba(255, 255, 255, 0.503);
+    --modal-placeholder: rgba(255, 255, 255, 0.488);
+
+}
+
+
+body{
+    background: var(--color-bg);
+}
+
+header{
+    background: var(--header-bg);
+    box-shadow: var(--header-box-shadow);
+
+}
+.header-add-div{
+    box-shadow: var(--add-box-shadow);
+}
+/* add modal */
+.modal-add{
+    background: var(--modal-add-bg);
+}
+
+.bg-div-modal{
+    background: var(--bg-div);
+}
+
+.modal-input{
+    color: var(--modal-input);
+}
+
+.add-label{
+    color: var(--add-label)
+}
+
+.add-btn{
+    color: var(--add-btn-color);
+    background-color: var(--add-btn-bg);
+}
+
+.modal-text-length{
+    color: var(--add-text-length);
+}
+
+.modal-placeholder{
+    color: var(--modal-placeholder);
+}

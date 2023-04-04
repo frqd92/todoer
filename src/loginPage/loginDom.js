@@ -18,7 +18,10 @@ export function createLoginPageDom(){
 
 }
 function googleClick(){createHomeFromLogin(true)};
-function localClick(){createHomeFromLogin(false)};
+function localClick(e){
+    if(e.target.closest(".info-box")){return;}
+    createHomeFromLogin(false)
+};
 
 function createHomeFromLogin(isLogged){
     document.body.classList.remove("body-login");
@@ -41,7 +44,7 @@ function makeGoogleLogo(parent){
 function makeLocalBtn(parent){
     const btnDiv = elementCreator("div", ["class", "login-local-div"], false, parent);
     elementCreator("p", false, "Sign in as guest", btnDiv);
-    const hoverText = "Data saved in your browser's local storage."
+    const hoverText = "Data saved in your browser's local storage"
     btnDiv.appendChild(createInfoBox(hoverText));
     return btnDiv;
 }

@@ -7,5 +7,15 @@ export function createInfoBox(hoverText){
     elementCreator("span", false, "i", iDiv)
     const infoBox = elementCreator("div", ["class", "info-hover-text"], hoverText, mainDiv);
 
-    return iDiv
+    mainDiv.addEventListener("mouseover", showContent);
+    mainDiv.addEventListener("mouseleave", hideContent);
+    function showContent(){
+        infoBox.classList.add("info-hover-shown")
+    }
+    function hideContent(){
+        infoBox.classList.remove("info-hover-shown")
+    }
+
+
+    return mainDiv
 }

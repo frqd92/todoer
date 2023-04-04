@@ -5,7 +5,11 @@ header{
     justify-items: center;
     grid-template-columns: 1fr 10fr 1fr;
     user-select: none;
-    padding: 5px 10px;
+    -webkit-user-select: none;
+    padding: 10px 10px;
+    box-shadow: 0 4px 2px -2px rgba(128, 128, 128, 0.569);
+    height: 61px;
+
 }
 
 
@@ -25,7 +29,8 @@ header{
     0 3px 5px rgba(0,0,0,.15),
     0 3px 5px rgba(0,0,0,.1),
     0 3px 5px rgba(0, 0, 0, 0.12);
-    margin-right: calc(8px + 1vw)
+    margin-right: calc(8px + 1vw);
+ 
 }
 .title-hide{
     visibility: hidden;
@@ -34,7 +39,7 @@ header{
 
 /* search bar ----------------------------------------------------------------------------*/
 .searchbar-div{
-    margin-top: 6px;
+
     position: relative;
     display: grid;
     width:100%;
@@ -56,6 +61,7 @@ header{
     font-family: roboto;
     letter-spacing: 0.05rem;
     box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+
 }
 
 .header-loop-div{
@@ -112,21 +118,26 @@ header{
     font-size: 1.5rem;
     border-radius: 100px;
     box-shadow: rgba(0, 0, 0, 0.84) 0px 3px 8px;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
 }
+@-moz-document url-prefix() {
+    #header-add-btn{
+        padding-top: 2px;
+        align-items: center;
+    }
+}
+
 #header-add-btn:active{
     box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
 }
 #header-add-btn p{
     position: absolute;
     font-size: 1.8rem;
-    left:0;
-    right:0;
-    margin-left:auto;
-    margin-right:auto;
-    text-align: center;
     text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.473);
     color: rgba(255, 255, 255, 0.92);
-
 }
 /* calender icon in header---------------------------------------------------------------------- */
 .header-calender-div{
@@ -155,8 +166,8 @@ header{
 }
 .header-calender-month{
     width: 100%;
-    font-size: 0.59rem;
-    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.653);
+    font-size: 0.49rem;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.853);
     text-align: center;
     border-bottom: 1px solid rgba(24, 8, 247, 0.325);
     font-family: roboto-medium;
@@ -165,6 +176,7 @@ header{
     background: rgba(56, 107, 249, 0.687);
     color: rgb(255, 255, 255);
     border-radius: 6px 6px 0px 0px;
+    text-transform: uppercase;
 }
 
 .header-calender-day{
@@ -189,7 +201,8 @@ header{
 
 .bulb-luminosity{
     display: none;
-    box-shadow: 0 0 30px 35px #fff,  0 0 100px 60px rgba(105, 185, 203, 0.376), 0 0 140px 90px rgba(209, 210, 213, 0.406);
+    box-shadow: 0 0 120px 45px #ffffffb6,  5px 20px 50px 20px rgba(127, 211, 200, 0.827), 5px 10px 30px 30px rgba(209, 210, 213, 0.506);
+
 }
 .bulb-top{
     position: absolute;

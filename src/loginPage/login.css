@@ -3,6 +3,7 @@
     justify-content: center;
     align-items: center;
     height: 90vh;
+    background: linear-gradient(to right, #8e9eab, #eef2f3);
 }
 
 .main-title-login{

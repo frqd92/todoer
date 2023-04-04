@@ -1,8 +1,9 @@
 import { elementCreator } from "../utilities/elementCreator";
-import { currentTheme, modifyTheme } from "../state";
+import { currentTheme, modifyTheme, changeDocumentTheme } from "../state";
 import '/src/header/header.css'
 import { searchLoupe, inputBehaviour } from "./searchLogic";
-
+import { createAddModal } from "../taskModal/createModal";
+import { createBodyModal } from "../utilities/bodyModal";
 export function createHeaderDom(){
     const header = elementCreator("header", false, false, document.body);
     const title = elementCreator("h1", ["class", "main-title", "title-hide"], "Todoer", header);
@@ -11,12 +12,7 @@ export function createHeaderDom(){
     const addBtn = createAddTaskBtn(btnDiv);
     const miniCalBtn = createMiniCal(btnDiv);
     const lightBulb = createLightBulb(btnDiv);
-
     titleEffect(title)
-
-
-
-
 
     //for testing
     title.addEventListener("click", ()=>{
@@ -24,8 +20,23 @@ export function createHeaderDom(){
     })
 }
 
+// add btn---------------------------------------------------------------------------------------
 
+function createAddTaskBtn(parent){
+    const div = elementCreator("div", ["id", "header-add-btn"], false, parent);
+    elementCreator("p", false, "+", div);
 
+    div.addEventListener("click", makeAdd);
+    function makeAdd(){
+        const div = elementCreator("div", ["class", "header-add-div"], false, document.body);
+        createBodyModal(div);
+
+        div.appendChild(createAddModal())
+    }
+    return div
+}
+
+// theme, bulb---------------------------------------------------------------------------------------
 function createLightBulb(parent){
     const div = elementCreator("div", ["class", "bulb-container"], false, parent);
     const top = elementCreator("div", ["class", "bulb-top"], false, div);
@@ -42,25 +53,26 @@ function createLightBulb(parent){
     function bulbLogic(){
         if(!this.className.includes("bulb-on")){
             this.classList.add("bulb-on");
-            modifyTheme("dark");
+            modifyTheme("dark-theme");
             bulbLum.style.display = "block";
         }
         else{
             this.classList.remove("bulb-on");
-            modifyTheme("light");
+            modifyTheme("light-theme");
             bulbLum.style.display = "none";
         }
         localStorage.setItem("theme", currentTheme)
+        changeDocumentTheme(currentTheme)
     }
     function checkTheme(){
-        if(currentTheme==="dark"){
+        if(currentTheme==="dark-theme"){
             div.classList.add("bulb-on");
             bulbLum.style.display = "block";
         }
     }
 }
 
-
+// searchbar---------------------------------------------------------------------------------------
 function createSearchBar(parent){
     const searchDiv = elementCreator("div", ["class", "searchbar-div"], false, parent);
     const loupe = createLoupe(searchDiv);
@@ -76,12 +88,6 @@ function createLoupe(parent){
     elementCreator("div", false, false, div);
     return outerDiv;
 
-}
-
-function createAddTaskBtn(parent){
-    const div = elementCreator("div", ["id", "header-add-btn"], false, parent);
-    elementCreator("p", false, "+", div);
-    return div
 }
 
 
@@ -110,7 +116,6 @@ function titleEffect(title){
     setTimeout(()=>{
         loginTitle.remove();
         title.classList.remove("title-hide")
-        console.log(title.classList);
     }, 200)
 
 }
