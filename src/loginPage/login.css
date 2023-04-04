@@ -1,0 +1,114 @@
+.body-login{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 90vh;
+}
+
+.main-title-login{
+    font-family: berkshire;
+    align-self: self-start;
+    justify-self: center;
+    font-size: 5rem;
+    width: 100%;
+    text-align: center;
+    position: fixed;
+    top: 20%;
+    color: rgba(0, 0, 0, 0.747);
+    letter-spacing: 5px;
+    text-shadow: 0 1px 0 #ccc, 
+    0 1px 0 #597689,
+    0 2px 0 #7b7d81,
+    0 3px 0 #b9b9b989,
+    0 6px 1px rgba(0,0,0,.1),
+    0 0 5px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.5),
+    0 3px 5px rgba(0,0,0,.3),
+    0 5px 10px rgba(0,0,0,.25),
+    0 5px 10px rgba(0,0,0,.2),
+    0 10px 10px rgba(0, 0, 0, 0.32);
+    user-select: none;
+    transition: all 0.2s ease;
+}
+.login-main-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+}
+.login-btn-div{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 80%;
+    width: clamp(400px, 60%, 90%);
+    white-space: nowrap;
+    user-select: none; 
+}
+.login-btn-div > div{
+    cursor: pointer;
+}
+
+
+/* Google Div-------------------------------------------------------------------------  */
+.google-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1px 10px 1px 1px;
+    border-radius: 3px;
+    background-color: #4286f4b5;
+    cursor: pointer;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    max-width: 210px;
+    height: 38px;
+  
+}
+
+.google-div > div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 35px;
+    height: 35px;
+    border-radius: 3px;
+    background-color: white;
+    box-shadow: 0px 0px 3px rgba(0, 0, 0, 0.253);
+}
+
+.google-div img{
+    width: 30px;
+    filter: contrast(1.2);
+}
+.google-div p {
+    margin-left: 10px;
+    font-family: open;
+    font-weight: 500;
+    color: white;
+    text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.496);
+    font-family: open;
+    font-weight: 500;
+}
+
+/* Local btn-------------------------------------------------------------------------  */
+.login-local-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 200px;
+    height: 38px;
+    border-radius: 3px;
+    gap: 5px;
+    box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+    background-color: rgba(255, 255, 255, 0.226);
+}
+
+
+.login-local-div p{
+    font-family: open;
+    font-weight: 500;
+}
+.login-local-div > div{
+    
+}

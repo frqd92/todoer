@@ -1,0 +1,239 @@
+header{
+    width: 100%;
+    display: grid;
+    align-items: center;
+    justify-items: center;
+    grid-template-columns: 1fr 10fr 1fr;
+    user-select: none;
+    padding: 5px 10px;
+}
+
+
+.main-title{
+    justify-self: start;
+    font-family: berkshire;
+    color: rgba(0, 0, 0, 0.747);
+    letter-spacing: 2px;
+    text-shadow: 0 1px 0 #ccc, 
+    0 0.5px 0 #597689,
+    0 1px 0 #8e929a,
+    0 2px 0 #2d2b2bbe,
+    0 3px 1px rgba(0,0,0,.1),
+    0 0 3px rgba(0,0,0,.1),
+    0 1px 3px rgba(0,0,0,.2),
+    0 2px 3px rgba(0,0,0,.1),
+    0 3px 5px rgba(0,0,0,.15),
+    0 3px 5px rgba(0,0,0,.1),
+    0 3px 5px rgba(0, 0, 0, 0.12);
+    margin-right: calc(8px + 1vw)
+}
+.title-hide{
+    visibility: hidden;
+}
+
+
+/* search bar ----------------------------------------------------------------------------*/
+.searchbar-div{
+    margin-top: 6px;
+    position: relative;
+    display: grid;
+    width:100%;
+    height: 90%;
+    align-items: center;
+    
+}
+#header-input{
+    width: 30px;
+    height: 100%;
+    font-size: 1.4rem;
+    border-radius: 15px;
+    padding-left: 40px;
+    border: none;
+    outline: none;
+    transition: width .15s linear;
+    box-shadow: 0px 0px 5px rgba(150, 150, 152, 0.3);
+    background-color: rgba(255, 255, 255, 0.506);
+    font-family: roboto;
+    letter-spacing: 0.05rem;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+}
+
+.header-loop-div{
+    position: absolute;
+    width: 38px;
+    height: 100%;
+    opacity: 0.6;
+}
+.header-loup{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+
+}
+
+.header-loup div:first-child{
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50px;
+    border: 1px solid black;
+}
+
+.header-loup div:nth-child(2){
+    position: absolute;
+    border-left: 1px solid black;
+    height: 33%;
+    width: 0;
+    bottom: 6px;
+    right: 11px;
+    transform: rotate(-45deg);
+    
+}
+
+
+
+
+.header-btn-div{
+    display: flex;
+    align-items: center;
+    gap: 25px;
+    margin-left: calc(8px + 2vw)
+
+}
+#header-add-btn{
+    position: relative;
+    width: 35px;
+    height: 35px;
+    background: rgba(17, 32, 80, 0.303);
+    font-size: 1.5rem;
+    border-radius: 100px;
+    box-shadow: rgba(0, 0, 0, 0.84) 0px 3px 8px;
+}
+#header-add-btn:active{
+    box-shadow: rgba(0, 0, 0, 0.18) 0px 2px 4px;
+}
+#header-add-btn p{
+    position: absolute;
+    font-size: 1.8rem;
+    left:0;
+    right:0;
+    margin-left:auto;
+    margin-right:auto;
+    text-align: center;
+    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.473);
+    color: rgba(255, 255, 255, 0.92);
+
+}
+/* calender icon in header---------------------------------------------------------------------- */
+.header-calender-div{
+    position: relative;
+    width: 32px;
+    height: 35px;
+    border-radius: 6px;
+    display: grid;
+    grid-template-rows: 1fr 8fr;
+    grid-template-columns: 100%;
+    justify-items: center;
+    align-items: center;
+    user-select: none;
+    cursor: pointer;
+    background:white;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+    z-index: 10;
+}
+.calender-click-div{
+    position: absolute;
+    z-index: 12;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    
+}
+.header-calender-month{
+    width: 100%;
+    font-size: 0.59rem;
+    text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.653);
+    text-align: center;
+    border-bottom: 1px solid rgba(24, 8, 247, 0.325);
+    font-family: roboto-medium;
+    max-height: 10px;
+    letter-spacing: 0.1rem;
+    background: rgba(56, 107, 249, 0.687);
+    color: rgb(255, 255, 255);
+    border-radius: 6px 6px 0px 0px;
+}
+
+.header-calender-day{
+    margin-bottom: 3px;
+    font-family: roboto-medium;
+    font-size: 0.8rem;
+
+}
+
+/* bulb------------------------------------------------------------------------------------------------- */
+.bulb-container{
+    width: 35px;
+    height: 35px;
+    background-color: rgba(0, 0, 0, 0.528);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.bulb-luminosity{
+    display: none;
+    box-shadow: 0 0 30px 35px #fff,  0 0 100px 60px rgba(105, 185, 203, 0.376), 0 0 140px 90px rgba(209, 210, 213, 0.406);
+}
+.bulb-top{
+    position: absolute;
+    width: 18px;
+    height: 20px;
+    border-radius: 50px;
+    background-color: white;
+    top: 2px;
+}
+.bulb-shiny-thing{
+    position: absolute;
+    width: 15px;
+    height: 15px;
+    border-right: 3px solid rgba(188, 188, 188, 0.45);
+    top: 3px;
+    right: 9px;
+    border-radius: 0px 7px 9px 0px;
+    transform: rotate(-45deg);
+
+}
+.bulb-middle{
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 0.5rem solid transparent;
+    border-top: 0.9rem solid white;
+    border-bottom: 0;
+    top: 17px;
+}
+.bulb-bottom{
+    position: absolute;
+    background-color: rgb(255, 255, 255);
+    width: 8px;
+    height: 15px;
+    bottom: 2px;
+    border-radius: 7px 7px 10px 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 5px;
+}
+.bulb-bottom div{
+    height: 10px;
+    width: 100%;
+    border-bottom: 0.1px solid rgba(0, 0, 0, 0.498);
+    border-radius: 20px;
+}

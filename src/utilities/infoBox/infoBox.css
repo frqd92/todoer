@@ -1,0 +1,32 @@
+
+.info-box{
+    border: 1px solid rgba(0, 0, 0);
+    padding: 5px;
+    width: 5px;
+    aspect-ratio: 1 / 1;
+    border-radius: 50px;
+    position: relative;
+    opacity: 0.4;
+    transition: opacity 0.7s linear;
+
+}
+.info-box:hover{
+    background-color: rgba(0, 124, 143, 0.314);
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    cursor: default;
+    opacity: 0.6;
+
+}
+.info-box span{
+    position: absolute;
+    top: 0;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+    font-size: 0.8rem;
+}
+.info-hover-text{
+    position: absolute;
+}

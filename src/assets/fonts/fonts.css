@@ -1,0 +1,40 @@
+@font-face {
+    font-family: "open";
+    src: url(/src/assets/fonts/OpenSans-medium.ttf);
+}
+@font-face {
+    font-family: "sofia";
+    src: url(/src/assets/fonts/sofia.ttf);
+}
+@font-face {
+    font-family: "roboto";
+    src: url(/src/assets/fonts/Roboto-Light.ttf);
+}
+@font-face {
+    font-family: "roboto-medium";
+    src: url(/src/assets/fonts/Roboto-Medium.ttf);
+}
+@font-face {
+    font-family: "berkshire";
+    src: url(/src/assets/fonts/BerkshireSwash.ttf);
+}
+@font-face {
+    font-family: "playfair";
+    src: url(/src/assets/fonts/PlayfairDisplay.ttf);
+}
+@font-face {
+    font-family: "oxygen";
+    src: url(/src/assets/fonts/Oxygen.ttf);
+}
+@font-face {
+    font-family: "ptserif";
+    src: url(/src/assets/fonts/PTSerif.ttf);
+}
+@font-face {
+    font-family: "kalam";
+    src: url(/src/assets/fonts/kalam.ttf);
+}
+@font-face {
+    font-family: "korean";
+    src: url(/src/assets/fonts/noto-korean.otf);
+}
