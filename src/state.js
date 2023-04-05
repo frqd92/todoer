@@ -11,7 +11,6 @@ export function modifyTheme(val){
     currentTheme = val;
 }
 export function changeDocumentTheme(val){
-    console.log("fart");
     document.documentElement.className = val;
 }
 

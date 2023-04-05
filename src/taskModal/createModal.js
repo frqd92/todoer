@@ -1,5 +1,5 @@
 import { elementCreator } from "../utilities/elementCreator";
-
+import { CreateMainCal } from "../calendar/mainCal";
 export function createAddModal(isEdit){
     const classL = !isEdit?"add":"edit";
     const mainDiv = elementCreator("div", ["class", `modal-${classL}`], false, false);
@@ -45,6 +45,16 @@ function addFactory(parent, type){
     }
     function makeMenu(){
         const menuDiv = elementCreator("div", ["class", "add-menu" , `add-menu-${classL}`], false, mainDiv);
+        let chosenElement;
+        switch(classL){
+            case "due": 
+            chosenElement = CreateMainCal("modal", btn, true);
+            break;
+        }
+        if(chosenElement!==null){
+            menuDiv.appendChild(chosenElement);
+        }
+
         setTimeout(()=>{menuDiv.style.opacity=1}, 100)
         parent.addEventListener("click", closeM);
     }

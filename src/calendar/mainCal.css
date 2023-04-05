@@ -1,0 +1,12 @@
+.main-cal{
+    display: flex;
+    flex-direction: column;
+}
+.main-cal-modal{
+    padding: 10px;
+    background: white;
+}
+
+.main-cal > div{
+    border-bottom: 1px solid rgba(120, 120, 120, 0.497);
+}

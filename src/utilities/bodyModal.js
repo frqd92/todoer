@@ -3,14 +3,8 @@ import '/src/taskModal/addModal.css'
 export function createBodyModal(div){
     const bgDiv = elementCreator("div", ["class", "bg-div-modal"], false, document.body, true);
     bgDiv.addEventListener("click", closeDiv, {once:true});
-    window.addEventListener("keydown", closeFromEsc);
+   
 
-    function closeFromEsc(e){
-        if(e.key==="Escape"){
-            window.removeEventListener("keydown", closeFromEsc);
-            closeDiv()
-        }
-    }
 
     setTimeout(()=>{
         div.classList.add("bg-div-show");
