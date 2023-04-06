@@ -1,0 +1,48 @@
+.cal-general-quick-div{
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, calc(100% / 3));
+    grid-template-rows: 20px 20px;
+    gap: 3px;
+    justify-items: center;
+    align-items: center;
+    font-family: open;
+    padding: 5px 0px;
+    font-size: 0.78rem;
+    white-space: nowrap;
+}
+.cal-due-btn{
+    position: relative;
+    border: 1px solid rgba(0, 0, 0, 0.248);
+    border-radius: 2px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: color, background-color 0.2s linear;
+    background-color: rgba(135, 135, 172, 0.172);
+    width: 100%;
+}
+.cal-due-btn:hover{
+    background-color: rgba(0, 0, 0, 0.162);
+}
+.cal-due-btn-hover-div{
+    position: fixed;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    border: 1px solid rgba(70, 65, 65, 0.184);
+    padding: 3px;
+    background-color: rgba(255, 255, 255, 0.757);
+    backdrop-filter: blur(10px);
+    font-size: 0.9rem;
+    display: none;
+    z-index: 200;
+}
+@media screen and (max-width:400px){
+    .cal-general-quick-div{
+        font-size: 0.6rem;
+        gap: 0px;
+    }
+}

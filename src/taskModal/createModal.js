@@ -41,18 +41,23 @@ function addFactory(parent, type){
         btn.addEventListener("click", makePriorityMenu);
     }
     else{
-        btn.addEventListener("click", makeMenu, {once:true});
+        btn.addEventListener("click", makeMenu);
     }
     function makeMenu(){
+        if(mainDiv.querySelector(`.add-menu-${classL}`)!==null){
+            return;
+        }
         const menuDiv = elementCreator("div", ["class", "add-menu" , `add-menu-${classL}`], false, mainDiv);
         let chosenElement;
         switch(classL){
             case "due": 
-            chosenElement = CreateMainCal("modal", btn, true);
+            chosenElement = CreateMainCal("modal", btn, true, true);
+            menuDiv.appendChild(chosenElement);
+
             break;
         }
         if(chosenElement!==null){
-            menuDiv.appendChild(chosenElement);
+            // menuDiv.appendChild(chosenElement);
         }
 
         setTimeout(()=>{menuDiv.style.opacity=1}, 100)
@@ -70,15 +75,16 @@ function addFactory(parent, type){
         if(mainDiv.querySelector(`.add-menu-${classL}`)!==null){
             mainDiv.querySelector(`.add-menu-${classL}`).style.opacity=0;
             setTimeout(()=>{mainDiv.querySelector(`.add-menu-${classL}`).remove()}, 100)
-            btn.addEventListener("click", makeMenu, {once:true});
+        }
+        if(document.querySelector(".cal-due-btn-hover-div")!==null){
+            document.querySelector(".cal-due-btn-hover-div").remove()
         }
     }
 
     return mainDiv;
 }
 
-
-
+ 
 
 
 

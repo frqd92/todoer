@@ -8,7 +8,14 @@ const date = new Date();
 export function createSmartInput(outputBtn){
     const inputDiv = elementCreator("div", ["id", "cal-smart-input"], false, false);
     const input = elementCreator("input", false, "Write date & press enter", inputDiv, false, true); 
-    const infoFormats = "Write the available formats for the smart input blah blah"
+    const infoFormats =
+    `Smart input date formats:
+    → 31st of December 2099
+    → 31-12-2099
+    → 31/12/2099
+    → 2099/12/31`;
+
+
     inputDiv.appendChild(createInfoBox(infoFormats));
     
     
@@ -18,7 +25,17 @@ export function createSmartInput(outputBtn){
     return inputDiv;
 }
 
-function makeSmart(input, btn){
+function dateToDueBtn(val, outputBtn){
+    outputBtn.innerText = val;
+    const parent = outputBtn.parentElement;
+    const menu = parent.querySelector(".add-menu");
+    menu.style.opacity=0;
+    setTimeout(()=>{menu.remove()}, 100)
+
+}
+
+
+function makeSmart(input, outputBtn){
     input.addEventListener("keydown", renderDate);
     let formatObj = {};
     function renderDate(e){
@@ -33,24 +50,16 @@ function makeSmart(input, btn){
                 }
             }
             if(!invalid){ //if date in input passes all the checks
-                console.log(processDate(formatObj, btn, input));
-                return processDate(formatObj, btn, input);
+                dateToDueBtn(processDate(formatObj), outputBtn);
             }
             else{ //if date format is wrong
-                if(btn){
-                    errorMsg("Error in date format", input)
-                }
-                else{
-                    input.value="";
-                    input.placeholder="invalid date"
-                    return false;
-                }
+                return false;
             }
         }
     }
 }
 
-function processDate(obj, btn, input){ //if it passes all the checks
+function processDate(obj){ //if it passes all the checks
     obj.month=obj.month+1;
     let addZero = [obj.day, obj.month].map(elem=>elem<10?"0"+Number(elem):Number(elem));
     return `${addZero[0]}/${addZero[1]}/${obj.year}`;

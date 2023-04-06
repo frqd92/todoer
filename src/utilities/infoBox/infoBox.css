@@ -33,7 +33,7 @@
     font-family: ptserif;
     border: 1px solid rgba(0, 0, 0, 0.284);
     padding: 3px 5px;
-    background-color: rgba(218, 218, 223, 0.862);
+    background-color: rgba(218, 218, 223, 0.962);
     font-size: 0.9rem;
     color: rgba(0, 0, 0, 0.721);
     top: -30px;
@@ -43,7 +43,10 @@
     user-select: none;
     pointer-events: none;
 }
-
+.info-hover-text::first-line{
+    white-space: nowrap;
+    font-size: 1rem;
+}
 .info-hover-shown{
-    opacity: 0.8;
+    opacity: 0.95;
 }

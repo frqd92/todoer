@@ -63,7 +63,10 @@ header{
     box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
 
 }
+#header-input:focus{
+   border: 1px solid rgba(25, 25, 117, 0.554);
 
+}
 .header-loop-div{
     position: absolute;
     width: 38px;
