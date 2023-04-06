@@ -1,6 +1,7 @@
 import '/src/calendar/quickBtns/quickBtns.css';
 import { chosenDayFunc } from '../../utilities/dateUtils';
 import { elementCreator } from '../../utilities/elementCreator';
+import { closeMenuOutside } from '../../taskModal/createModal';
 export function createQuickBtns(mainCalDiv, outputBtn){
     const dateBtnsDiv = elementCreator("div", ["class", "cal-general-quick-div"], false, false);
     if(document.querySelector(".due-btn-hover-div")===null){
@@ -43,13 +44,12 @@ function dateToBtn(quickBtn, mainCalDiv){
         const [date,] = textToDate(quickBtn.innerText);
         parentBtn.innerText = date;
     }
-    const addMenu = mainCalDiv.parentElement;
-    addMenu.style.opacity=0;
-    setTimeout(()=>{addMenu.remove()}, 100)
-    if(document.querySelector(".cal-due-btn-hover-div")!==null){
-        document.querySelector(".cal-due-btn-hover-div").remove();
-    }
+    closeMenuOutside(mainCalDiv.parentElement);
 }
+
+
+
+
 
 function textToDate(text){
     if(text==="None") return false;

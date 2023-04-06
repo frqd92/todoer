@@ -84,6 +84,14 @@ function addFactory(parent, type){
     return mainDiv;
 }
 
+
+export function closeMenuOutside(addMenu){
+    addMenu.style.opacity=0;
+    setTimeout(()=>{addMenu.remove()}, 100)
+    if(document.querySelector(".cal-due-btn-hover-div")!==null){
+        document.querySelector(".cal-due-btn-hover-div").remove();
+    }
+}
  
 
 

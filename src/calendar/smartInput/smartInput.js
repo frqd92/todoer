@@ -1,7 +1,7 @@
 import '/src/calendar/smartInput/smartInput.css';
 import { createInfoBox } from '../../utilities/infoBox/infoBox';
 import { elementCreator } from '../../utilities/elementCreator';
-import { getCurrentDateText } from '../../utilities/dateUtils';
+import { closeMenuOutside } from '../../taskModal/createModal';
 const months = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
 const date = new Date();
 
@@ -14,7 +14,6 @@ export function createSmartInput(outputBtn){
     → 31-12-2099
     → 31/12/2099
     → 2099/12/31`;
-
 
     inputDiv.appendChild(createInfoBox(infoFormats));
     
@@ -29,9 +28,7 @@ function dateToDueBtn(val, outputBtn){
     outputBtn.innerText = val;
     const parent = outputBtn.parentElement;
     const menu = parent.querySelector(".add-menu");
-    menu.style.opacity=0;
-    setTimeout(()=>{menu.remove()}, 100)
-
+    closeMenuOutside(menu)
 }
 
 

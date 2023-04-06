@@ -7,7 +7,7 @@
     padding: 20px 25px;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 15px;
     border-radius: 3px;
     transition: width 0.15s ease-in-out;
 

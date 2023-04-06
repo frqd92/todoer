@@ -36,3 +36,39 @@ export function getMonthAndYear(){
 }
 
 
+export function detectFirstDayMonth(selectDate){
+  let [mm,yy] = selectDate;
+  mm = isNaN(Number(mm))?returnMonth(mm):mm;
+  const date = new Date(yy,mm, 1);
+  return getCurrentDateText("day", date);
+}
+
+export function daysInMonth(date){
+  return new Date(date.getFullYear(), date.getMonth()+1,0 ).getDate();
+}
+
+//returns a date object without time zone or time, used for day comparisons..
+export function removeTime(date){
+  return new Date(`${date.getFullYear()}/${date.getMonth()+1}/${date.getDate()}`);
+}
+
+//returns today in mm/dd/yyyy format if no parameter
+export function getToday(val){
+  const date = new Date();
+  if(!val){
+    return `${date.getDate()}/${date.getMonth()}/${date.getFullYear()}`;
+  }
+  else{
+    switch(val){
+      case "day": return date.getDate();
+      case "month": return date.getMonth();
+      case "year": return date.getFullYear();
+    }
+  }
+}
+
+
+export function addZero(elem){
+  return Number(elem)<10?"0"+elem:elem;
+
+}
