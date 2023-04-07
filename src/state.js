@@ -14,4 +14,14 @@ export function changeDocumentTheme(val){
     document.documentElement.className = val;
 }
 
-
+//groups
+export let mainGroupArr = [];
+export function modifyGroupsArr(arr){
+    mainGroupArr.push(arr);
+}
+export function updateGroupsLocal(){
+    const groups= JSON.parse(localStorage.getItem("groups"));
+    if(groups!==null){
+        mainGroupArr=groups;
+    }
+}

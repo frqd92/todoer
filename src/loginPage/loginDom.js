@@ -3,6 +3,7 @@ import googleLogo from '/src/assets/images/google-logo.png';
 import { createInfoBox } from '../utilities/infoBox/infoBox';
 import { createMainPageDom } from '../mainPage/mainPage';
 import { isLoggedModify } from '../state';
+import { signInWithGoogle } from '../firebase';
 import "/src/loginPage/login.css"
 export function createLoginPageDom(){
     document.body.classList.add("body-login");
@@ -17,13 +18,16 @@ export function createLoginPageDom(){
 
 
 }
-function googleClick(){createHomeFromLogin(true)};
+function googleClick(){
+    // createHomeFromLogin(true) in firebase.js authentication part
+    signInWithGoogle();
+};
 function localClick(e){
     if(e.target.closest(".info-box")){return;}
     createHomeFromLogin(false)
 };
 
-function createHomeFromLogin(isLogged){
+export function createHomeFromLogin(isLogged){
     document.body.classList.remove("body-login");
     isLoggedModify(isLogged);
     const loginMainDiv = document.querySelector(".login-main-div");

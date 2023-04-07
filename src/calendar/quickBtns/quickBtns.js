@@ -19,30 +19,29 @@ export function createQuickBtns(mainCalDiv, outputBtn){
             if (elem.hasOwnProperty(key)) {
                 const value = elem[key];
                 const btn = elementCreator("div", ["class", "cal-due-btn", `cal-due-btn-${key}`],value, dateBtnsDiv);
-                quickAddBtnsFunc(btn, mainCalDiv);
+                quickAddBtnsFunc(btn, mainCalDiv, outputBtn);
               }
         }
     })
     return dateBtnsDiv;
 }
 
-function quickAddBtnsFunc(btn, mainCalDiv){
+function quickAddBtnsFunc(btn, mainCalDiv, output){
     quickBtnHover(btn);
 
     btn.addEventListener("click", (e)=>{
-        dateToBtn(btn, mainCalDiv)
+        dateToBtn(btn, mainCalDiv, output)
         e.stopPropagation()
     })
 }
 
-function dateToBtn(quickBtn, mainCalDiv){
-    const parentBtn = document.querySelector(".add-btn-due");
+function dateToBtn(quickBtn, mainCalDiv, output){
     if(!textToDate(quickBtn.innerText)){
-        parentBtn.innerText = "None";
+        output.innerText = "None";
     }
     else{
         const [date,] = textToDate(quickBtn.innerText);
-        parentBtn.innerText = date;
+        output.innerText = date;
     }
     closeMenuOutside(mainCalDiv.parentElement);
 }

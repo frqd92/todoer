@@ -83,7 +83,8 @@ function CalFactory(calParent, mmYY, output){
         }
     }
     function calDateToOutputBtn(){
-        console.log(renderCalDate(this));
+        output.innerText = renderCalDate(this);
+        
         closeMenuOutside(this.parentElement.parentElement.parentElement.parentElement)
     }
     

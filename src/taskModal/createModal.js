@@ -1,5 +1,6 @@
 import { elementCreator } from "../utilities/elementCreator";
 import { CreateMainCal } from "../calendar/mainCal";
+import { createModalGroup } from "./modalGroup/modalGroup";
 export function createAddModal(isEdit){
     const classL = !isEdit?"add":"edit";
     const mainDiv = elementCreator("div", ["class", `modal-${classL}`], false, false);
@@ -31,7 +32,6 @@ function feedValues(div, arr){
 }
 
 
-
 function addFactory(parent, type){
     const classL = type.split(" ").shift().toLowerCase();
     const mainDiv = elementCreator("div", ["class", "add-element"], false, parent);
@@ -51,13 +51,13 @@ function addFactory(parent, type){
         let chosenElement;
         switch(classL){
             case "due": 
-            chosenElement = CreateMainCal("modal", btn, true, true);
-            menuDiv.appendChild(chosenElement);
-
+            chosenElement = CreateMainCal("modal", btn, true, true); break;
+            case "group":
+            chosenElement = createModalGroup(btn);
             break;
         }
         if(chosenElement!==null){
-            // menuDiv.appendChild(chosenElement);
+            menuDiv.appendChild(chosenElement);
         }
 
         setTimeout(()=>{menuDiv.style.opacity=1}, 100)
@@ -76,9 +76,12 @@ function addFactory(parent, type){
             mainDiv.querySelector(`.add-menu-${classL}`).style.opacity=0;
             setTimeout(()=>{mainDiv.querySelector(`.add-menu-${classL}`).remove()}, 100)
         }
-        if(document.querySelector(".cal-due-btn-hover-div")!==null){
-            document.querySelector(".cal-due-btn-hover-div").remove()
+        if(classL==="due"){
+            if(document.querySelector(".cal-due-btn-hover-div")!==null){
+                document.querySelector(".cal-due-btn-hover-div").remove()
+            }
         }
+
     }
 
     return mainDiv;

@@ -1,0 +1,56 @@
+.add-group{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+}
+
+.group-no-group{
+    padding: 10px 0px;
+}
+
+.add-group-btn{
+    cursor: pointer;
+    height: 32px;
+    border: 1px solid rgba(192, 190, 190, 0.586);
+    border-top:1px solid rgba(192, 190, 190, 0.786) ;
+    width: 100%;
+    text-align: center;
+    padding: 5px;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+    font-family: oxygen;
+    background-color: rgba(168, 204, 113, 0.143);
+    transition: background-color, font-size 0.1s linear;
+    color: rgba(0, 0, 0, 0.692);
+}
+.add-group-btn:hover{
+    background-color:rgba(148, 204, 113, 0.677);
+    font-size: 0.92rem;
+    
+}
+.add-group-input-div{
+    width: 100%;
+    display: flex;
+    align-items: center;
+
+}
+.add-group-input-div input{
+    flex-grow: 100;
+    padding: 6px 4px;
+    font-size: 1.1rem;
+    border: none;
+    outline: none;
+    text-align: center;
+}
+.add-group-input-div div{
+    flex-grow: 1;
+    height: 100%;
+    cursor: pointer;
+    filter: invert(40%);
+}
+.add-group-input-div div:hover{
+    filter: invert(20%);
+
+}
