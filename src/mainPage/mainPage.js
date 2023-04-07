@@ -14,14 +14,10 @@ export function createMainPageDom(){
 
 
 function readGroups(){
-    if(isLogged){
-        //reads user group in firebase and copies its value to mainGroupArr in state
-        readUserGroups();
-    }
-    else{
-        //gets local "groups" in state and copies to mainGroupArr in state
-        updateGroupsLocal();
-    }
+    //reads user group in firebase and copies its value to mainGroupArr in state if available
+    if(isLogged){readUserGroups()}
+    //gets local "groups" in state and copies to mainGroupArr in state if available
+    else{updateGroupsLocal()}
 }
 function readTheme(){
     //theme (always local)

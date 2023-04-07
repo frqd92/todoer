@@ -17,11 +17,14 @@ export function changeDocumentTheme(val){
 //groups
 export let mainGroupArr = [];
 export function modifyGroupsArr(arr){
-    mainGroupArr.push(arr);
+    mainGroupArr = arr;
 }
 export function updateGroupsLocal(){
-    const groups= JSON.parse(localStorage.getItem("groups"));
+    const groups = JSON.parse(localStorage.getItem("groups"));
     if(groups!==null){
         mainGroupArr=groups;
     }
+}
+export function addNewGroupLocal(){
+    localStorage.setItem("groups", JSON.stringify(mainGroupArr))
 }

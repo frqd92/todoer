@@ -8,8 +8,11 @@
 
 .group-no-group{
     padding: 10px 0px;
+    display: none;
 }
-
+.no-group-show{
+    display: block;
+}
 .add-group-btn{
     cursor: pointer;
     height: 32px;
@@ -25,11 +28,16 @@
     transition: background-color, font-size 0.1s linear;
     color: rgba(0, 0, 0, 0.692);
 }
-.add-group-btn:hover{
+.add-group-btn:not(.disabled-group-btn){
     background-color:rgba(148, 204, 113, 0.677);
     font-size: 0.92rem;
     
 }
+.disabled-group-btn{
+    background-color: rgba(128, 128, 128, 0.158);
+    cursor: not-allowed;
+}
+
 .add-group-input-div{
     width: 100%;
     display: flex;
@@ -54,3 +62,81 @@
     filter: invert(20%);
 
 }
+/* group list */
+.add-group-list-div{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.group-row-hide{
+    display: none;
+}
+.add-group-list-div input{
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 1.2rem;
+    text-align: center;
+    padding: 5px 0px;
+    font-family: sofia;
+    letter-spacing: 0.04rem;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.205);
+}
+
+.add-group-list{
+    display: flex;
+    flex-direction: column;
+    max-height: 250px;
+    overflow-y: auto;
+
+}
+.add-row-div{
+
+    min-height: 30px;
+    display: grid;
+    align-items: center;
+    grid-template-columns: 93% 7%;
+    cursor: pointer;
+    transition: background-color 0.1s linear;
+}
+
+
+.add-row-div:nth-child(even){
+    background-color: rgba(0, 0, 0, 0.048);
+}
+.add-row-div:hover{
+    background: rgba(159, 159, 233, 0.26);
+}
+.add-row-div p{
+    font-family: roboto-medium;
+}
+.add-row-div div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 0.7rem;
+    font-family: korean;
+    opacity: 0.5;
+    height: 100%;
+}
+.add-row-del{
+
+}
+.add-row-del:hover{
+    background-color: rgba(193, 104, 94, 0.447);
+    opacity: 0.85;
+
+}
+
+.add-group-list::-webkit-scrollbar {
+    width: 8px;
+}
+  
+.add-group-list::-webkit-scrollbar-track {
+    background: #e0dddd;
+}
+  
+.add-group-list::-webkit-scrollbar-thumb {
+    background: #000000ac;
+}
+  
