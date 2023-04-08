@@ -1,0 +1,52 @@
+.add-prio-menu{
+    width: 100%;
+    height: 25px;
+    position: relative;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    align-items: center;
+    
+}
+.prio-back-div{
+    position: absolute;
+    height: 100%;
+    transition: all 0.3s linear;
+    width: 0%;
+}
+.prio-btn{
+    border-right: 1px solid rgba(0, 0, 0, 0.288);
+    font-size: 0.8rem;
+    text-align: center;
+    cursor: pointer;
+    z-index: 2;
+    color: rgba(0, 0, 0, 0.401);
+    height: 80%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: font-size 0.2s linear;
+}
+.selected-prio-btn{
+    font-size: 0.92rem;
+    color: black;
+    
+}
+.prio-normal{
+    width: calc(100% / 3);
+    background-color: rgba(123, 217, 29, 0.284);
+}
+
+.prio-high{
+    width: calc(100% / 1.5);
+    background-color: rgba(242, 201, 135, 0.6);
+    
+}
+.prio-highest{
+    width: 100%;
+    background-color: rgba(215, 66, 49, 0.258);
+}
+
+
+.prio-btn:last-child{
+    border: none;
+}

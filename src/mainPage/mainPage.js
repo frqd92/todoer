@@ -5,7 +5,6 @@ export function createMainPageDom(){
     readTheme();
     createHeaderDom();
     readGroups();
-
     document.querySelector(".main-title").addEventListener("click", ()=>{
         console.log(mainGroupArr);
     })

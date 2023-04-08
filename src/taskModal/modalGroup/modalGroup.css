@@ -109,6 +109,7 @@
 }
 .add-row-div p{
     font-family: roboto-medium;
+    text-align: center;
 }
 .add-row-div div{
     display: flex;

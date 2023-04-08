@@ -1,6 +1,8 @@
 import { elementCreator } from "../utilities/elementCreator";
 import { CreateMainCal } from "../calendar/mainCal";
 import { createModalGroup } from "./modalGroup/modalGroup";
+import { makePriorityMenu } from "./priority/prio";
+import { createModalRepeat } from "./repeat/repeat";
 export function createAddModal(isEdit){
     const classL = !isEdit?"add":"edit";
     const mainDiv = elementCreator("div", ["class", `modal-${classL}`], false, false);
@@ -38,7 +40,7 @@ function addFactory(parent, type){
     const label = elementCreator("div", ["class", "add-label"], type, mainDiv);
     const btn = elementCreator("div", ["class", "add-btn", `add-btn-${classL}`], false, mainDiv);
     if(classL==="priority"){
-        btn.addEventListener("click", makePriorityMenu);
+        makePriorityMenu(btn);
     }
     else{
         btn.addEventListener("click", makeMenu);
@@ -47,14 +49,15 @@ function addFactory(parent, type){
         if(mainDiv.querySelector(`.add-menu-${classL}`)!==null){
             return;
         }
-        const menuDiv = elementCreator("div", ["class", "add-menu" , `add-menu-${classL}`], false, mainDiv);
+        const menuDiv = elementCreator("div", ["class", "add-menu" ,`add-menu-${classL}`], false, mainDiv);
         let chosenElement;
         switch(classL){
             case "due": 
             chosenElement = CreateMainCal("modal", btn, true, true); break;
             case "group":
-            chosenElement = createModalGroup(btn);
-            break;
+            chosenElement = createModalGroup(btn); break;
+            case "repeat":
+            chosenElement = createModalRepeat(btn); break;
         }
         if(chosenElement!==null){
             menuDiv.appendChild(chosenElement);
@@ -63,9 +66,7 @@ function addFactory(parent, type){
         setTimeout(()=>{menuDiv.style.opacity=1}, 100)
         parent.addEventListener("click", closeM);
     }
-    function makePriorityMenu(){
-      
-    }
+
     function closeM(e){
         if(!e.target.closest(`.add-btn-${classL}`) && !e.target.closest(`.add-menu-${classL}`) ){
             closeMenu();
