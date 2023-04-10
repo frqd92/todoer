@@ -1,6 +1,7 @@
 .main-cal{
     display: flex;
     flex-direction: column;
+
 }
 .main-cal-modal{
     padding: 10px;
@@ -50,6 +51,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+}
+@-moz-document url-prefix() {
+    .cal-og-date-btn-div {
+       bottom: -22px;
+    }
 }
 .cal-og-date-btn{
     width: fit-content;

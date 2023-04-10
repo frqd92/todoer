@@ -67,3 +67,309 @@
 .every-input::placeholder{
     font-size: 0.75rem;
 }
+
+/* week checkboxes */
+
+
+.repeat-week-div{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+    align-items: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.092);
+    height: 0px;
+    overflow: hidden;
+    transition: all 0.1s ease-in-out;
+}
+.repeat-week-invalid{
+    background-color: rgba(255, 0, 0, 0.097);
+    animation: invalidWeek 0.4s linear infinite;
+}
+@keyframes invalidWeek {
+    0%{background-color: rgba(255, 0, 0, 0.097)}
+    50%{background-color: rgba(255, 0, 0, 0.207)}
+    100%{background-color: rgba(255, 0, 0, 0.097)}
+}
+.show-hidden-week{
+    height: 46px;
+}
+.repeat-checkbox{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    transition: background-color 0.2s linear;
+    cursor: pointer;
+    gap: 2.5px;
+}
+
+.repeat-checkbox:hover{
+    background-color: rgba(190, 191, 225, 0.365);
+}
+.repeat-checkbox p{
+    padding-top: 2px;
+    font-family: roboto;
+}
+.repeat-checkbox div{
+    border: 1px solid rgba(0, 0, 0, 0.674);
+    border-radius: 2px;
+    width: 15px;
+    height: 15px;
+    position: relative;
+    opacity: 0.8;
+}
+.repeat-checkbox-inner{
+    display: none;
+    top: -13px;
+    left: -3px;
+    position: absolute;
+    text-align: center;
+    width: 100%;
+    height: 100%;
+    font-family: kalam;
+    font-size: 1.8rem;
+}
+.repeat-checkbox-inner-show{display: block;}
+
+
+
+.repeat-month-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    justify-content: center;
+    align-items: center;
+    height: 0px;
+    transition: height 0.15s linear;
+    overflow: hidden;
+
+}
+.show-hidden-month{
+    height: 35px;
+}
+.repeat-month-div div{
+    width: 100%;
+    font-family: roboto;
+    text-align: center;
+    padding: 8px 0px;
+    cursor: pointer;
+    transition: all 0.13s linear;
+    font-size: 0.9rem;
+    color: grey;
+}
+.repeat-month-div div:first-child{
+    border-right: 1px solid rgba(0, 0, 0, 0.152);
+}
+.repeat-month-div div:nth-child(2){
+
+}
+.chosen-month-tab-left{
+    box-shadow: 3px -1px 10px -1px rgba(0, 0, 0, 0.292);
+}
+.chosen-month-tab-right{
+    box-shadow: -3px -2px 10px -2px rgba(0, 0, 0, 0.292);
+  
+}
+.chosen-month-tab-right, .chosen-month-tab-left{
+    font-size: 1rem !important;
+    color: rgb(0, 0, 0) !important;
+    background-color: rgba(0, 0, 0, 0.037);
+}
+
+
+/* effective factor */
+
+.repeat-effective-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.118);
+    padding: 5px 0px;
+    gap: 5px;
+}
+.effective-left{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    letter-spacing: 0.07rem;
+}
+.effective-right{
+    position: relative;
+
+
+}
+.effective-btn{
+    padding: 3px 8px;
+    border-radius: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 3px 0px, rgba(60, 64, 67, 0.15) 0px 1px 2px 1px;
+    background-color: rgba(0, 0, 0, 0.056);
+    border: 1px solid rgba(0, 0, 0, 0);
+    height: 30px;
+    width: 155px;
+}
+.effective-btn:active{
+    box-shadow: none;
+    border: 1px solid rgba(0, 0, 0, 0.101);
+    transform: scale(0.96);
+}
+.effective-btn-text{
+   white-space: nowrap;
+   font-family: ptserif;
+   opacity: 0.7;
+}
+.effective-btn-arrow{
+    font-weight: 900;
+    opacity: 0.5;
+    font-size: 0.9rem;
+    font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    transition: all 0.15s linear;
+}
+.effective-arrow-on{
+    margin-top: 5px;
+    transform: rotate(-90deg);
+}
+.effective-drop-menu{
+    position: absolute;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    background-color: white;
+    height: 120px;
+    width: 100%;
+    transition: height 0.1s linear;
+    border: 1px solid rgba(0, 0, 0, 0.273);
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+
+}
+.effective-menu-hide{
+    box-shadow: none;
+    border: none;
+    height: 0px;
+}
+.effective-menu-row:not(.repeat-x-div){
+    position: relative;
+    font-family: open;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.172);
+    transition: background-color 0.1s linear;
+    cursor: pointer;
+}
+.effective-drop-menu div:nth-child(3){
+    border: none;
+}
+
+.chosen-rep-row{
+    background-color: rgba(19, 71, 114, 0.16);
+}
+
+.effective-menu-row:not(.chosen-rep-row, .x-times-btn):hover{
+    background-color: rgba(200, 214, 222, 0.183);
+}
+
+
+/* until cal */
+.main-cal-until{
+    position: absolute;
+    width: 300px;
+    top:-150px;
+    left: 155px;
+    background-color: white;
+    box-shadow: rgba(14, 30, 37, 0.12) 0px 2px 4px 0px, rgba(14, 30, 37, 0.32) 0px 2px 16px 0px;
+    border: 1px solid rgba(0, 0, 0, 0.6);
+    border-radius: 5px;
+    background-color: rgb(238, 238, 241);
+}
+.main-cal-until .prev-month-square{
+    background-color: rgb(230, 230, 235);
+
+}
+.main-cal-until .next-month-square{
+    background-color: rgb(224, 224, 227);
+}
+
+.main-cal-until #cal-smart-input{
+    padding: 5px 0px;
+}
+
+/* x times */
+
+.repeat-x-div{
+    height: 0px;
+    overflow: hidden;
+    transition: height 0.15s linear;
+    display: grid;
+    grid-template-columns: 1.5fr 1fr;
+    justify-items: center;
+    align-items: start;
+    background: rgba(19, 71, 114, 0.16);
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: rgba(19, 71, 114, 0.16);
+
+
+}
+
+.repeat-x-show{
+    height: 100%;
+
+}
+
+.repeat-x-div input{
+    width: 100%;
+    outline: none;
+    border: 1px solid rgba(0, 0, 0, 0.347);
+    text-align: center;
+    font-size: 1rem;
+    height: 90%;
+}
+
+.x-times-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: white;
+    width: 100%;
+    height: 90%;
+    cursor: pointer;
+    border: 1px solid rgba(0, 0, 0, 0.347);
+    border-left: none;
+}
+.x-times-btn:hover{
+    background-color: rgba(0, 0, 0, 0.051);
+
+}
+/* save/no repeat btn */
+.repeat-save-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    border-top:2px solid rgba(0, 0, 0, 0.118) ;
+    width: 100%;
+    padding: 5px 25px;
+}
+.repeat-save-btn, .no-repeat-btn{
+    text-align: center;
+    text-align: center;
+    padding: 5px 0px;
+    border: 1px solid rgba(0, 0, 0, 0.135);
+    font-family: Arial, Helvetica, sans-serif;
+    font-weight: lighter;
+    color: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: background-color 0.2s linear;
+}
+.repeat-save-btn{
+    background-color: rgba(127, 255, 212, 0.197);
+}
+
+.no-repeat-btn{
+    background-color: rgba(207, 26, 26, 0.148);
+
+}

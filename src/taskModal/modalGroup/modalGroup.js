@@ -88,6 +88,7 @@ function addNewGroup(e, isEnter){
     else{
         inputDiv = this.parentElement;
     }
+    if(inputDiv===null)return;
     const emptyDiv =inputDiv.parentElement.querySelector(".group-no-group");
     const input = inputDiv.querySelector("input");
 

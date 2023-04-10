@@ -12,3 +12,5 @@ export function inputOnlyNum(e, inp, arr){
         input.value="";
     }
 }
+
+

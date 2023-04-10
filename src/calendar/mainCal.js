@@ -4,23 +4,24 @@ import { createSmartInput } from "./smartInput/smartInput";
 import { createQuickBtns } from "./quickBtns/quickBtns";
 import { getMonthAndYear, returnMonth, detectFirstDayMonth, daysInMonth, removeTime, getToday, addZero} from "../utilities/dateUtils";
 import { closeMenuOutside } from "../taskModal/createModal";
+import { closeMenuFromCal} from "../taskModal/repeat/repeat";
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 export function CreateMainCal(type, outputBtn, smartInputBool, quickBtnBool){
     const mainCalDiv = elementCreator("div", ["class", "main-cal", `main-cal-${type}`], false, false)
-    if(smartInputBool){smartInput(mainCalDiv, outputBtn)};
+    if(smartInputBool){smartInput(mainCalDiv, outputBtn, type)};
     if(quickBtnBool){quickBtns(mainCalDiv, outputBtn)};
-    createCal(mainCalDiv, outputBtn);
+    createCal(mainCalDiv, outputBtn, type);
     return mainCalDiv;
 }
 //creates the actual calendar----------------------------------------------------------------------
-function createCal(parent, output){
+function createCal(parent, output, type){
     const mainCalDiv = elementCreator("div", ["class", "adder-cal-main-div"], false, parent);
     calTop(mainCalDiv, output);
-    CalFactory(mainCalDiv, getMonthAndYear(), output);
+    CalFactory(mainCalDiv, getMonthAndYear(), output, type);
 }
 
 //the calendar------------------------------------------------------------------
-function CalFactory(calParent, mmYY, output){
+function CalFactory(calParent, mmYY, output, type){
     const calDiv = elementCreator("div", ["class", "adder-cal-div"], false, calParent);
     const [firstWeekDay, daysInMonth, daysInPrevMonth] = getCalInfo(mmYY);
     let [currM, currY] = mmYY.split(" ");
@@ -82,10 +83,22 @@ function CalFactory(calParent, mmYY, output){
             square.addEventListener("click", calDateToOutputBtn)
         }
     }
-    function calDateToOutputBtn(){
-        output.innerText = renderCalDate(this);
-        
-        closeMenuOutside(this.parentElement.parentElement.parentElement.parentElement)
+    function calDateToOutputBtn(e){
+        if(type!=="until"){
+            output.innerText = renderCalDate(this);
+            closeMenuOutside(this.parentElement.parentElement.parentElement.parentElement)
+        }
+        else{ //until cal in the repeat menu
+            const right = calParent.parentElement.parentElement;
+            const dropBtn = right.querySelector(".effective-btn");
+            const dropMenu = right.querySelector(".effective-drop-menu");
+            const arrow = right.querySelector(".effective-btn-arrow");
+            output.innerText = "until " + renderCalDate(this);
+            closeMenuFromCal(dropBtn, dropMenu, arrow);
+            calParent.closest(".main-cal-until").remove();
+
+        }
+        e.stopPropagation()
     }
     
 
@@ -225,8 +238,8 @@ function monthTraversal(textDate, num){
 
 //------------------------------------------------------------------------------------------------
 //attaches smart input and quick btns if parameter is true-----------------------------------------
-function smartInput(parent, output){
-    const inputDiv = createSmartInput(output);
+function smartInput(parent, output, type){
+    const inputDiv = createSmartInput(output, type);
     parent.appendChild(inputDiv);
 }
 function quickBtns(parent, output){

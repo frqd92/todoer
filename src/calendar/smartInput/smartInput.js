@@ -2,14 +2,15 @@ import '/src/calendar/smartInput/smartInput.css';
 import { createInfoBox } from '../../utilities/infoBox/infoBox';
 import { elementCreator } from '../../utilities/elementCreator';
 import { closeMenuOutside } from '../../taskModal/createModal';
+import { closeMenuFromCal } from '../../taskModal/repeat/repeat';
 const months = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
 const date = new Date();
 
-export function createSmartInput(outputBtn){
+export function createSmartInput(outputBtn, type){
     const inputDiv = elementCreator("div", ["id", "cal-smart-input"], false, false);
     const input = elementCreator("input", false, "Write date & press enter", inputDiv, false, true); 
     const infoFormats =
-    `Smart input date formats:
+    `Input date formats:
     → 31st of December 2099
     → 31-12-2099
     → 31/12/2099
@@ -19,20 +20,31 @@ export function createSmartInput(outputBtn){
     
     
     autoCompleteMonth(input);
-    makeSmart(input, outputBtn);
+    makeSmart(input, outputBtn, type);
 
     return inputDiv;
 }
 
-function dateToDueBtn(val, outputBtn){
-    outputBtn.innerText = val;
-    const parent = outputBtn.parentElement;
-    const menu = parent.querySelector(".add-menu");
-    closeMenuOutside(menu)
+function dateToDueBtn(val, outputBtn, type, input){
+    outputBtn.innerText = "until "+ val;
+    if(type!=="until"){
+        const parent = outputBtn.parentElement;
+        const menu = parent.querySelector(".add-menu");
+        closeMenuOutside(menu)
+    }
+    else{
+
+        const menu = outputBtn.parentElement.parentElement.querySelector(".effective-drop-menu");
+        const cal = menu.parentElement.querySelector(".main-cal-until");
+        const arrow = menu.parentElement.querySelector(".effective-btn-arrow");
+        closeMenuFromCal(outputBtn, menu, arrow);
+        if(cal!==null) cal.remove();
+    }
+
 }
 
 
-function makeSmart(input, outputBtn){
+function makeSmart(input, outputBtn, type){
     input.addEventListener("keydown", renderDate);
     let formatObj = {};
     function renderDate(e){
@@ -47,7 +59,7 @@ function makeSmart(input, outputBtn){
                 }
             }
             if(!invalid){ //if date in input passes all the checks
-                dateToDueBtn(processDate(formatObj), outputBtn);
+                dateToDueBtn(processDate(formatObj), outputBtn, type, input);
             }
             else{ //if date format is wrong
                 return false;
