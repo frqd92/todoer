@@ -3,6 +3,8 @@ import { CreateMainCal } from "../calendar/mainCal";
 import { createModalGroup } from "./modalGroup/modalGroup";
 import { makePriorityMenu } from "./priority/prio";
 import { createModalRepeat } from "./repeat/repeat";
+import { displayCharCount } from "../utilities/inputUtils";
+import { processTask } from "./processTask";
 export function createAddModal(isEdit){
     const classL = !isEdit?"add":"edit";
     const mainDiv = elementCreator("div", ["class", `modal-${classL}`], false, false);
@@ -11,26 +13,33 @@ export function createAddModal(isEdit){
     const addDescDiv = createInput(mainDiv, "Description");
     const modalElements = ["Due date", "Group", "Priority", "Repeat", "Notes"];
     for(let i=0;i<5;i++){addFactory(mainDiv, modalElements[i])};
+    feedValues(mainDiv);
 
-    if(!isEdit) feedValues(mainDiv);
-
+    const btnText = isEdit?"Edit task":"Add task";
+    
+    const addEditTaskBtn = elementCreator("div", ["class", "modal-task-add-btn"], btnText, mainDiv);
+    
+    addEditTaskBtn.addEventListener("click", processTask);
     return mainDiv;
 }
+
+
+
+
+
+
 
 function feedValues(div, arr){
     const allElements = div.querySelectorAll(".add-btn");
 
     if(!arr){
-        const content = ["Today", "None", null, "No", "None"];
+        const content = ["Today", "None", null, "No repeat", "None"];
         allElements.forEach((elem, i)=>{
             if(i!==2){
                 elem.innerText=content[i];
             }
         })
-
     }
-
-    
 }
 
 
@@ -58,6 +67,8 @@ function addFactory(parent, type){
             chosenElement = createModalGroup(btn); break;
             case "repeat":
             chosenElement = createModalRepeat(btn); break;
+            case "notes":
+            chosenElement = createNotes(btn);
         }
         if(chosenElement!==null){
             menuDiv.appendChild(chosenElement);
@@ -97,7 +108,29 @@ export function closeMenuOutside(addMenu){
     }
 }
  
+// notes
+function createNotes(outputBtn){
+    const notesDiv = elementCreator("div", ["class", "add-notes"], false, false);
+    const textArea = elementCreator("div", ["class", "add-notes-input"], false, notesDiv);
+    if(outputBtn.innerText!=="None") textArea.innerText = outputBtn.innerText;
+    textArea.setAttribute("contenteditable", "true");
+    displayCharCount(textArea, 500, "adder-notes");
+    const saveBtn = elementCreator("div", ["class", "add-notes-save-btn"], "Save", notesDiv);
+    saveBtn.addEventListener("click", saveNotes);
+    function saveNotes(){
+        const length = textArea.innerText.length;
+        if(length>500)return
+        if(textArea.innerText==""){
+            console.log("shart");
+            outputBtn.innerText = "None";
+        }
+        else outputBtn.innerText = textArea.innerText;
+        const addModal = outputBtn.parentElement.querySelector(".add-menu-notes");
+        closeMenuOutside(addModal)
+    }
 
+    return notesDiv
+}
 
 
 
@@ -122,16 +155,16 @@ function createInput(parent, type){
     input.addEventListener("input", formInputLogic);
     function formInputLogic(){
         const invalidLength = type==="Description"?"200":"100";
-        this.innerText.length>0?placeholder.innerText="":placeholder.innerText=type;
+        this.textContent.length>0?placeholder.textContent="":placeholder.textContent=type;
         inputDiv.offsetHeight>80?inputDiv.classList.add("overflown-input"):inputDiv.classList.remove("overflown-input");
-        if(input.innerText.length>0){
+        if(input.textContent.length>0){
             textLengthDiv.style.display="block";
-            textLengthDiv.innerText = `Characters: ${input.innerText.length}/${invalidLength}`;
+            textLengthDiv.textContent = `Characters: ${input.textContent.length}/${invalidLength}`;
         }
         else{
             textLengthDiv.style.display="none";
         }
-        if(input.innerText.length>Number(invalidLength)){
+        if(input.textContent.length>Number(invalidLength)){
             inputDiv.classList.add("modal-invalid-input");
             textLengthDiv.classList.add("form-invalid-over");
         }

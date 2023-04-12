@@ -1,13 +1,14 @@
-import { writeUserGroups } from '../../firebase';
+import { writeUserGroupsServer } from '../../firebase';
 import { elementCreator } from '../../utilities/elementCreator';
 import { mainGroupArr, isLogged, addNewGroupLocal } from '../../state';
 
 import '/src/taskModal/modalGroup/modalGroup.css'
+import { closeMenuOutside } from '../createModal';
 
-export function createModalGroup(){
+export function createModalGroup(outputBtn){
     const groupDiv = elementCreator("div", ["class", "add-group"], false, false);
     const emptyDiv = elementCreator("div", ["class", "group-no-group"], "Group list empty.", groupDiv);
-    const groupRowDiv = createGroupListDiv(groupDiv);
+    const groupRowDiv = createGroupListDiv(groupDiv, outputBtn);
 
     if(mainGroupArr.length<1){//if empty
         emptyDiv.classList.add("no-group-show");
@@ -18,12 +19,12 @@ export function createModalGroup(){
     return groupDiv
 }
 
-function createGroupListDiv(parent){
+function createGroupListDiv(parent, outputBtn){
     const div = elementCreator("div", ["class", "add-group-list-div"], false, parent);
     const searchInput = elementCreator("input", ["class", "group-search-input"], false, div);
     searchInput.placeholder = "Search groups";
     const listDiv = elementCreator("div", ["class", "add-group-list"], false, div);
-    if(mainGroupArr.length>0)createGroupRows(listDiv);
+    if(mainGroupArr.length>0)createGroupRows(listDiv, outputBtn);
     searchInput.addEventListener("input", groupSearchFunc);
     return div;
 
@@ -40,19 +41,25 @@ function groupSearchFunc(){
 }
 
     
-function createGroupRows(listDiv){
+function createGroupRows(listDiv, outputBtn){
     clearGroupRows(listDiv);
     mainGroupArr.forEach(group=>{
         const rowDiv = elementCreator("div", ["class", "add-row-div"], false, listDiv, true);
         const groupText = elementCreator("p", false, group, rowDiv);
         const delBtn = elementCreator("div", ["class", "add-row-del"], "X", rowDiv);
+        groupText.addEventListener("click", rowGroupToBtn);
     })
     const menu = listDiv.parentElement.parentElement;
     const addNewGroupBtn = menu.querySelector(".add-group-btn");
     if(addNewGroupBtn!==null){
         addNewGroupBtn.classList.remove("disabled-group-btn")
     }
+    function rowGroupToBtn(){
+        outputBtn.innerText = this.innerText;
+        closeMenuOutside(this.closest(".add-menu"));
+    }
 }
+
 function groupInputFunc(){
     this.classList.add("disabled-group-btn");
     const inputDiv = elementCreator("div",["class", "add-group-input-div"], false, this.parentElement);
@@ -63,7 +70,6 @@ function groupInputFunc(){
     window.addEventListener("keydown", addNewGroupEnter)
 }
 function addNewGroupEnter(e){
-
     if(e.key==="Enter"){
         if(addNewGroup(e, true)){
             window.removeEventListener("keypress", addNewGroupEnter)
@@ -96,13 +102,14 @@ function addNewGroup(e, isEnter){
         mainGroupArr.push(input.value);
 
         if(!isLogged){addNewGroupLocal()}
-        else{writeUserGroups(mainGroupArr)}
+        else{writeUserGroupsServer(mainGroupArr)}
 
         const listDiv = inputDiv.parentElement.querySelector(".add-group-list");
         const listDivDiv = listDiv.parentElement;
         emptyDiv.classList.remove("no-group-show");
         listDivDiv.classList.remove("group-row-hide");
-        createGroupRows(listDiv);
+        const outputBtn = listDivDiv.parentElement.parentElement.parentElement.querySelector(".add-btn-group")
+        createGroupRows(listDiv, outputBtn);
         inputDiv.remove();
 
         const addInputDivBtn = listDivDiv.parentElement.querySelector(".add-group-btn");

@@ -1,0 +1,38 @@
+.timeframe-div{
+    border: 1px solid black;
+    display: grid;
+    grid-template-columns: 1fr 10fr;
+
+}
+.tf-cal-container{
+    border: 1px solid red;
+}
+.tf-time-range-div{
+    position: relative;
+    /* display: grid;
+    grid-template-rows: repeat(4, 1fr);
+    align-items: center; */
+    display: flex;
+    flex-direction: column;
+  
+}
+
+.tf-range-row{
+    border: 1px solid rgba(0, 0, 255, 0.163);
+    cursor: pointer;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    padding: 3px 1px;
+
+}
+.tf-range-p{
+    width: fit-content;
+    padding: 2px 3px;
+    font-family: montserrat;
+    border: 1px solid red;
+}
+.tf-range-arrow{
+    position: fixed;
+    transition: all 0.3s linear;
+}

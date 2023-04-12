@@ -121,6 +121,20 @@
     filter: invert(30%) ;
 
 }
+.add-btn-repeat{
+    max-width: 210px;
+    white-space: nowrap;
+
+}
+.repeat-overflown{
+    justify-content: start;
+    padding-left: 3px;
+    text-overflow: ellipsis;
+    overflow-x: auto;
+    font-size: 0.9rem;
+    height: 30px;
+
+}
 .add-menu{
     position: absolute;
     top: 38px;
@@ -132,7 +146,20 @@
     transition: opacity 0.1s linear;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
 }
-
+.add-btn-repeat::-webkit-scrollbar{
+    height: 5px;
+}
+.add-btn-repeat::-webkit-scrollbar-track{/*theme*/
+    border-radius: 10px;
+    background: #f1f1f1a9;
+}
+.add-btn-repeat::-webkit-scrollbar-thumb{/*theme*/
+    border-radius: 10px;
+    background: #060606c2;
+}
+.add-btn-repeat::-webkit-scrollbar-thumb:hover{
+    cursor: grab;
+}
 
 @media screen and (max-width:400px) {
     .modal-add{
@@ -171,6 +198,90 @@
 }
 
 /* ------------------------------------------------------------------------------------------------ */
+/* notes */
+.add-btn-notes, .add-btn-group{
+    padding-left: 5px;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align: center;
+    max-height: 25px;
+}
+
+.add-btn-repeat{
+    max-width: 250px;
+
+
+}
+.add-notes{
+    padding: 10px;
+    padding-bottom: 25px;
+    background-color: white;
+
+    position: relative;
+}
+
+.add-notes-input{
+    padding: 3px 7px;
+    height: 200px;
+    max-height: 200px;
+    outline: none;
+    border: none;
+    border-radius: 0px 0px 3px 3px;
+    color: black;
+    border: 1px solid rgba(0, 0, 0, 0.197);
+    overflow: auto;
+}
+.add-notes-save-btn{
+    position: absolute;
+    bottom: 2px;
+    width: 15%;
+    right: 50%;
+    transform: translateX(50%);
+    border: 1px solid rgba(0, 0, 0, 0.219);
+    text-align: center;
+    background-color: rgba(174, 193, 174, 0.462);
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.disp-char-adder-notes{
+    position: absolute;
+    width: 100%;
+    background-color:none;
+    bottom: 0;
+    left: 0;
+    text-align: end;
+    margin: 0;
+    font-family: ptserif;
+    font-size: 0.8rem;
+    margin: 0px 0px 4px -12px;
+
+}
+.disp-char-adder-notes-invalid{
+    color: rgba(255, 0, 0, 0.488) !important;
+}
+/* ------------------------------------------------------------------------------------------------ */
+/* modal add btn */
+.modal-task-add-btn, .modal-task-edit-btn{
+    width: 100%;
+    align-self: center;
+    border: 1px solid rgba(0, 0, 0, 0.179);
+    border-radius: 3px;
+    text-align: center;
+    padding: 2px 0px;
+    font-family: Arial, Helvetica, sans-serif;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    color: rgb(62, 61, 61, 0.9);
+    text-transform: uppercase;
+}
+
+.modal-task-add-btn:active, .modal-task-edit-btn:active{
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+    transform: scale(0.99);
+}
+
+/* ------------------------------------------------------------------------------------------------ */
 /* background thing */
 .bg-div-modal{
     position: fixed;
@@ -184,4 +295,12 @@
 .bg-div-show{opacity: 1;}
 
 
+.invalid-modal-element{
+    animation: invalidModal 0.8s linear infinite;
+}
 
+@keyframes invalidModal {
+    0%{background-color:rgba(255, 0, 0, 0.092)}
+    50%{background-color:rgba(255, 0, 0, 0.292)}
+    100%{background-color:rgba(255, 0, 0, 0.092)}
+}

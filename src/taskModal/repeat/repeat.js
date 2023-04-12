@@ -9,13 +9,13 @@ export function createModalRepeat(parentBtn){
 
     createTimeTab(repeatDiv);
     createRepeatFactor(repeatDiv);
-    createEffective(repeatDiv);
+    createEffective(repeatDiv, parentBtn);
     return repeatDiv;
 }
 
 
 
-function createEffective(parent){
+function createEffective(parent, outputBtn){
     const mainDiv = elementCreator("div", ["class", "repeat-effective-div"], false, parent);
     const left = elementCreator("div", ["class", "effective-left"], "Effective:", mainDiv);
     const right = elementCreator("div", ["class", "effective-right"], false, mainDiv);
@@ -32,22 +32,31 @@ function createEffective(parent){
     };
     const xTimesDiv = createXTimes(dropMenu)
 
-    const saveDiv = createSave()
-
+    createSave()
     
     function createSave(){
         const btnDiv = elementCreator("div", ["class", "repeat-save-div"], false, parent);
         const saveBtn = elementCreator("div", ["class", "repeat-save-btn"], "Save", btnDiv);
         const noRepeatBtn = elementCreator("div", ["class", "no-repeat-btn"], "No repeat", btnDiv);
-    
         noRepeatBtn.addEventListener("click", noRepeatFunc);
-        saveBtn.addEventListener("click", saveRepeatOptions)
+        saveBtn.addEventListener("click", saveRepeatOptions);
+
     }
 
     function saveRepeatOptions(){
-        console.log(readRepeatData());
-        const repeatMenu = this.closest(".add-menu-repeat");
-        // closeMenuOutside(repeatMenu)
+        if(readRepeatData()!==undefined){
+            outputBtn.innerText = readRepeatData();
+            console.log(outputBtn.innerText);
+            const repeatMenu = this.closest(".add-menu-repeat");
+            closeMenuOutside(repeatMenu);
+            if(isOverflown(outputBtn)) outputBtn.classList.add("repeat-overflown")
+            else outputBtn.classList.remove("repeat-overflown")
+        }
+
+        function isOverflown(element){//thank you stackoverflow
+            return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+          }
+
     }
     function readRepeatData(){
         let repeatData = "";
@@ -107,6 +116,8 @@ function createEffective(parent){
     }
 
     function noRepeatFunc(){
+        outputBtn.innerText="No repeat";
+        outputBtn.classList.remove("repeat-overflown")
         const repeatMenu = this.closest(".add-menu-repeat");
         closeMenuOutside(repeatMenu)
     }

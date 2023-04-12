@@ -33,7 +33,6 @@ function dateToDueBtn(val, outputBtn, type, input){
         closeMenuOutside(menu)
     }
     else{
-
         const menu = outputBtn.parentElement.parentElement.querySelector(".effective-drop-menu");
         const cal = menu.parentElement.querySelector(".main-cal-until");
         const arrow = menu.parentElement.querySelector(".effective-btn-arrow");

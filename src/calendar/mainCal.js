@@ -16,7 +16,7 @@ export function CreateMainCal(type, outputBtn, smartInputBool, quickBtnBool){
 //creates the actual calendar----------------------------------------------------------------------
 function createCal(parent, output, type){
     const mainCalDiv = elementCreator("div", ["class", "adder-cal-main-div"], false, parent);
-    calTop(mainCalDiv, output);
+    calTop(mainCalDiv, output, type);
     CalFactory(mainCalDiv, getMonthAndYear(), output, type);
 }
 
@@ -84,7 +84,9 @@ function CalFactory(calParent, mmYY, output, type){
         }
     }
     function calDateToOutputBtn(e){
+        console.log(type);
         if(type!=="until"){
+            console.log("fart");
             output.innerText = renderCalDate(this);
             closeMenuOutside(this.parentElement.parentElement.parentElement.parentElement)
         }
@@ -174,7 +176,7 @@ function getCalInfo(date){
 
 
 //top part with arrows------------------------------------------------------------------
-function calTop(calParent, output){
+function calTop(calParent, output, type){
     const calTopPart = elementCreator("div", ["class", "cal-top"], false, calParent);
     const content = ["<<", "<", false, ">", ">>"];
     content.forEach((elem, i)=>{
@@ -204,7 +206,7 @@ function calTop(calParent, output){
         //deletes old cal and creates new one from the new month or year change
         const adderCalDiv = this.parentElement.parentElement.querySelector(".adder-cal-div");
         adderCalDiv.remove();
-        const newCal = CalFactory(this.parentElement.parentElement,textPart.innerText, output);
+        const newCal = CalFactory(this.parentElement.parentElement,textPart.innerText, output, type);
     }
     
     function backToOGDate(e){
@@ -216,7 +218,7 @@ function calTop(calParent, output){
         const calDiv = this.parentElement.parentElement.parentElement.parentElement;
         const adderCalDiv = calDiv.querySelector(".adder-cal-div");
         adderCalDiv.remove()
-        const newCal = CalFactory(calDiv, textPart.innerText, output);
+        const newCal = CalFactory(calDiv, textPart.innerText, output, type);
         e.stopPropagation();
     }
 }

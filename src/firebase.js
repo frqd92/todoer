@@ -4,7 +4,7 @@ import { getAuth, signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { getDatabase, ref, set, get, child } from "firebase/database";
 
 import { createHomeFromLogin } from "./loginPage/loginDom";
-import { modifyGroupsArr } from "./state";
+import { modifyGroupsArr, modifyTasksArr } from "./state";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -48,7 +48,13 @@ export function signInWithGoogle(){
 const database = getDatabase(app);
 
 //write
-export function writeUserGroups(group) {
+export function writeUserTasksServer(taskArr) {
+  const userID = auth.currentUser.uid;
+  const db = getDatabase();
+  set(ref(db, 'users/' + userID + '/tasks'), taskArr);
+}
+
+export function writeUserGroupsServer(group) {
     const userID = auth.currentUser.uid;
     const db = getDatabase();
     set(ref(db, 'users/' + userID + '/groups'), group);
@@ -56,8 +62,20 @@ export function writeUserGroups(group) {
 
 
 //read
-
-export function readUserGroups(){
+export function readUserTasksServer(){
+  const userID = auth.currentUser.uid;
+  const dbRef = ref(getDatabase());
+  get(child(dbRef, `users/${userID}/tasks`)).then((snapshot) => {
+    if (snapshot.exists()) {
+        modifyTasksArr(snapshot.val())
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+}
+export function readUserGroupsServer(){
     const userID = auth.currentUser.uid;
     const dbRef = ref(getDatabase());
     get(child(dbRef, `users/${userID}/groups`)).then((snapshot) => {

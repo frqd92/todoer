@@ -29,7 +29,8 @@ function createAddTaskBtn(parent){
     div.addEventListener("click", makeAdd);
     function makeAdd(){
         const div = elementCreator("div", ["class", "header-add-div"], false, document.body);
-        createBodyModal(div);
+        const bgModal= createBodyModal(div);
+        bgModal.createDiv();
 
         div.appendChild(createAddModal())
     }

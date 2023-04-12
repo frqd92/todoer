@@ -38,3 +38,7 @@
     font-family: "korean";
     src: url(/src/assets/fonts/noto-korean.otf);
 }
+@font-face {
+    font-family: "montserrat";
+    src: url(/src/assets/fonts/Montserrat.ttf);
+}

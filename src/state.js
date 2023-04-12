@@ -5,15 +5,23 @@ export function isLoggedModify(bool){
     isLogged = bool;
 }
 
-//theme
-export let currentTheme = "light-theme";
-export function modifyTheme(val){
-    currentTheme = val;
+//tasks
+export let mainTaskArr = [];
+
+export function modifyTasksArr(arr){
+    mainTaskArr=arr;
 }
-export function changeDocumentTheme(val){
-    document.documentElement.className = val;
+export function updateTasksLocal(){
+    const tasks = JSON.parse(localStorage.getItem("tasks"));
+    if(tasks!==null){mainTaskArr = tasks}
 }
 
+export function addNewTaskLocal(){
+    localStorage.setItem("tasks", JSON.stringify(mainTaskArr))
+}
+export function addNewTaskServer(arr){
+
+}
 //groups
 export let mainGroupArr = [];
 export function modifyGroupsArr(arr){
@@ -27,4 +35,15 @@ export function updateGroupsLocal(){
 }
 export function addNewGroupLocal(){
     localStorage.setItem("groups", JSON.stringify(mainGroupArr))
+}
+
+
+
+//theme
+export let currentTheme = "light-theme";
+export function modifyTheme(val){
+    currentTheme = val;
+}
+export function changeDocumentTheme(val){
+    document.documentElement.className = val;
 }

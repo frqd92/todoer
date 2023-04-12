@@ -11,6 +11,8 @@
     --add-box-shadow: rgba(0, 0, 0, 0.25) 0px 54px 55px, rgba(0, 0, 0, 0.12) 0px -12px 30px, rgba(0, 0, 0, 0.12) 0px 4px 6px, rgba(0, 0, 0, 0.17) 0px 12px 13px, rgba(0, 0, 0, 0.09) 0px -3px 5px;
     --add-text-length: rgba(0, 0, 0, 0.568);
     --modal-placeholder: rgba(10, 10, 10, 0.898);
+    --modal-add-btn: rgba(0, 0, 0, 0.052);
+    --modal-add-btn-hover: rgba(0, 0, 0, 0.073);
 }
 
 .dark-theme{
@@ -25,6 +27,8 @@
     --add-box-shadow: 0px 0px 1px rgba(255, 255, 255, 0.896);
     --add-text-length: rgba(255, 255, 255, 0.503);
     --modal-placeholder: rgba(255, 255, 255, 0.488);
+    --modal-add-btn: rgba(221, 215, 215, 0.854);
+    --modal-add-btn-hover: rgba(253, 253, 253, 0.673);
 
 }
 
@@ -42,7 +46,7 @@ header{
 .header-add-div{
     box-shadow: var(--add-box-shadow);
 }
-/* add modal */
+/* add modal ----------------------------------------------------------------------------------*/
 .modal-add{
     background: var(--modal-add-bg);
 }
@@ -70,4 +74,16 @@ header{
 
 .modal-placeholder{
     color: var(--modal-placeholder);
+}
+
+
+
+/* cal */
+.modal-task-add-btn, .modal-task-edit-btn{
+    background-color: var(--modal-add-btn);
+
+}
+.modal-task-add-btn:hover, .modal-task-edit-btn:hover{
+    background-color: var(--modal-add-btn-hover);
+
 }

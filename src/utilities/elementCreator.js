@@ -10,7 +10,7 @@ export function elementCreator(type, selector,text, parent, isPrepend, placehold
         }
     }
     if(text){
-        if(type==="input"){
+        if(type==="input" || type==="textarea"){
             if(placeholder){
                 element.placeholder = text;
             }

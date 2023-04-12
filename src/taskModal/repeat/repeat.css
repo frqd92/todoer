@@ -308,12 +308,10 @@
     display: grid;
     grid-template-columns: 1.5fr 1fr;
     justify-items: center;
-    align-items: start;
     background: rgba(19, 71, 114, 0.16);
     font-family: Arial, Helvetica, sans-serif;
     background-color: rgba(19, 71, 114, 0.16);
-
-
+    padding: 0px 10px;
 }
 
 .repeat-x-show{
@@ -327,7 +325,7 @@
     border: 1px solid rgba(0, 0, 0, 0.347);
     text-align: center;
     font-size: 1rem;
-    height: 90%;
+    height: 70%;
 }
 
 .x-times-btn{
@@ -336,15 +334,17 @@
     align-items: center;
     background-color: white;
     width: 100%;
-    height: 90%;
+    height: 70%;
     cursor: pointer;
     border: 1px solid rgba(0, 0, 0, 0.347);
     border-left: none;
+    font-size: 0.9rem;
 }
 .x-times-btn:hover{
     background-color: rgba(0, 0, 0, 0.051);
 
 }
+
 /* save/no repeat btn */
 .repeat-save-div{
     display: grid;

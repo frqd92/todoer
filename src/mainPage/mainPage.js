@@ -1,11 +1,28 @@
 import { createHeaderDom } from '../Header/createHeader';
-import { readUserGroups } from '../firebase';
-import { isLogged, currentTheme, modifyTheme, changeDocumentTheme, mainGroupArr,updateGroupsLocal } from '../state';
+import { readUserGroupsServer, readUserTasksServer } from '../firebase';
+import { isLogged, currentTheme, modifyTheme, changeDocumentTheme, mainGroupArr,updateGroupsLocal, mainTaskArr, updateTasksLocal } from '../state';
+import { createTimeframeDiv } from '../timeframe/createTimeframe';
 export function createMainPageDom(){
     readTheme();
     createHeaderDom();
     readGroups();
+
+    createTimeframeDiv();
+
+
+
+
+
+
+
+
+
+
+    //testing
     document.querySelector(".main-title").addEventListener("click", ()=>{
+        console.log("tasks:");
+        console.log(mainTaskArr);
+        console.log("groups:");
         console.log(mainGroupArr);
     })
 
@@ -13,10 +30,16 @@ export function createMainPageDom(){
 
 
 function readGroups(){
-    //reads user group in firebase and copies its value to mainGroupArr in state if available
-    if(isLogged){readUserGroups()}
-    //gets local "groups" in state and copies to mainGroupArr in state if available
-    else{updateGroupsLocal()}
+    //reads user group and task in firebase and copies its value to mainGroupArr/task in state if available
+    if(isLogged){
+        readUserGroupsServer();
+        readUserTasksServer();
+    }
+    //gets local "groups" and tasks in state and copies to mainGroupArr/task in state if available
+    else{
+        updateTasksLocal();
+        updateGroupsLocal();
+    }
 }
 function readTheme(){
     //theme (always local)
