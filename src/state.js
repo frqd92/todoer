@@ -5,6 +5,17 @@ export function isLoggedModify(bool){
     isLogged = bool;
 }
 
+//timeframe
+export let timeframeOption = "Week";
+
+export function timeframeChange(val, changeLocal){
+    if(changeLocal)localStorage.setItem("timeframe-option", val); 
+    
+    timeframeOption=val;
+}
+
+
+
 //tasks
 export let mainTaskArr = [];
 

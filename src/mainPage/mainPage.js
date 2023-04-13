@@ -1,13 +1,16 @@
 import { createHeaderDom } from '../Header/createHeader';
 import { readUserGroupsServer, readUserTasksServer } from '../firebase';
-import { isLogged, currentTheme, modifyTheme, changeDocumentTheme, mainGroupArr,updateGroupsLocal, mainTaskArr, updateTasksLocal } from '../state';
+import { isLogged, currentTheme, modifyTheme, changeDocumentTheme, mainGroupArr,updateGroupsLocal, mainTaskArr, updateTasksLocal, timeframeChange, timeframeOption } from '../state';
 import { createTimeframeDiv } from '../timeframe/createTimeframe';
+import { elementCreator } from '../utilities/elementCreator';
 export function createMainPageDom(){
     readTheme();
     createHeaderDom();
     readGroups();
-
+    
+    readTimeframe();
     createTimeframeDiv();
+
 
 
 
@@ -50,4 +53,14 @@ function readTheme(){
     else{
         changeDocumentTheme("light-theme")
     }
+}
+
+function readTimeframe(){
+    if(localStorage.getItem("timeframe-option")===null){
+        timeframeChange("Week")
+    }
+    else{
+        timeframeChange(localStorage.getItem("timeframe-option"))
+    }
+
 }
