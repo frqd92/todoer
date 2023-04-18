@@ -7,7 +7,6 @@
     gap: 30px;
 
 
-
 }
 .empty-task-div{
     margin: 0 !important;
@@ -21,7 +20,12 @@
 
 }
 
+.task-row-main{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+    border-radius: 5px;
+    min-width: 270px;
 
+}
 
 .task-row-upper{
     user-select: none;
@@ -33,10 +37,28 @@
     height: 50px;
     border-radius: 5px;
     font-size: 1rem;
-    min-width: 270px;
     background-color: rgba(255, 255, 255, 0.246);
-    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
 }
+.upper-opened{
+    border-radius: 5px 5px 0px 0px;
+    box-shadow: rgba(6, 24, 44, 0.3) 0px 0px 0px 1px, rgba(6, 24, 44, 0.45) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+.task-row-lower{
+    height: 0px;
+    overflow: hidden;
+    transition: padding 0.15s linear;
+
+}
+.lower-opened{
+    background: rgba(159, 214, 242, 0.071);
+    padding:10px 0px;
+    height: fit-content;
+    overflow: visible;
+    border-radius: 0px 0px 5px 5px;
+    border: 1px solid rgba(0, 0, 0, 0.255);
+    border-top: none;
+}
+
 /* row div */
 .task-row-upper{
     border: 1px solid rgba(0, 0, 0, 0.248);
@@ -137,7 +159,7 @@ font-size: 0.75rem;
     justify-content: center;
     height: 22px;
     width: 30px;
-
+    opacity: 0.7;
 }
 .repeat-icon-dash{
     position: absolute;
@@ -147,7 +169,7 @@ font-size: 0.75rem;
     border-radius: 50px;
     width: 100%;
     height: 0px;
-    opacity: 0.3;
+    opacity: 0.4;
 }
 .repeat-icon-dash:nth-child(1){
     transform: rotate(45deg);
@@ -212,6 +234,74 @@ font-size: 0.75rem;
     font-size: 150%;
 
 }
+
+
+
+
+
+/* lower part--------------- */
+
+.task-row-lower{
+
+}
+.tr-l-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -10px;
+}
+
+
+.tr-l-prio{
+    border: 1px solid rgba(0, 0, 0, 0.097);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top: none;
+    border-left: none;
+    padding: 3px 10px;
+    border-radius: 0px 0px 4px 0px;
+    text-transform: uppercase;
+    font-family: roboto-medium;
+    font-size: 85%;
+    letter-spacing: 0.02rem;
+    user-select: none;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+}
+.tr-l-edit{
+    border: 1px solid rgba(0, 0, 0, 0.13);
+    border-top: none;
+    padding: 2px 7px;
+    border-right: none;
+    font-family: montserrat;
+    user-select: none;
+    cursor: pointer;
+    color: rgba(0, 0, 0, 0.628);
+    background-color: rgba(255, 255, 255, 0.319);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
+    border-radius: 0px 0px 0px 4px;
+
+
+}
+.tr-l-edit:active{
+    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+
+}
+
+.tr-l-info{
+    padding: 0px 3%;
+}
+
+.tr-l-title{
+    font-family: roboto-medium;
+    font-size: 150%;
+    text-align: center;
+}
+.tr-l-desc{
+    text-align: center;
+    font-family: ptserif;
+    font-size: 110%;
+}
 @media screen and (max-width: 1000px) and (min-width:651px) {
     #task-disp-main{
         margin-top: 5%;
@@ -242,6 +332,9 @@ font-size: 0.75rem;
     }
 
     .tr-group{
+        display: none;
+    }
+    .repeat-icon-div{
         display: none;
     }
     .tr-due{

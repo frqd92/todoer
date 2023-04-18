@@ -19,7 +19,6 @@ export function createTaskDisplay(){
 
 export function renderTasks(){
 
-
     const taskDispDiv = document.getElementById("task-disp-main");
     const [fromDate, toDate] = getFromToDate();
     const tasksToDisplay = returnRangeTasks(mainTaskArr, fromDate, toDate);
@@ -38,51 +37,80 @@ export function renderTasks(){
 
 
 function TaskFactory(taskObj, dispDiv){
-
+    let rowDiv, upperPart, lowerPart;
     function createTaskElements(){
-        const rowDiv = elementCreator("div", ["class", "task-row-main"], false, dispDiv);
-        const upperPart = elementCreator("div", ["class", "task-row-upper"], false, rowDiv );
+        rowDiv = elementCreator("div", ["class", "task-row-main"], false, dispDiv);
+
+        upperPart = elementCreator("div", ["class", "task-row-upper"], false, rowDiv );
         const dueLine = elementCreator("div", ["class", "div-line"], false, upperPart)
         const titleDiv = elementCreator("div", ["class", "tr-title"], taskObj.title, upperPart);
-        
         const dueDiv = elementCreator("div", ["class", "tr-due"], false, upperPart);
         dueDiv.appendChild(createMiniCal(taskObj.due, "task"));
         const dueText = elementCreator("span", false, taskObj.due, dueDiv);
-
         const otherInfoDiv = elementCreator("div", ["class","tr-other-div"], false, upperPart);
+        const trGroup = elementCreator("div", ["class", "tr-group"], taskObj.group?taskObj.group:"No group", otherInfoDiv);
         const trPriority = elementCreator("div", ["class","tr-priority"], false, otherInfoDiv);
         trPriority.style.background = prioToColor(taskObj.priority)
-        const trGroup = elementCreator("div", ["class", "tr-group"], taskObj.group?taskObj.group:"No group", otherInfoDiv);
-        const trRepeat = createRepeatIcon();
+        const trRepeat = createRepeatIcon(taskObj.repeat?true:false);
         otherInfoDiv.appendChild(trRepeat) ;
-        
         const checkBoxDiv = createCheckbox(upperPart);
-
         followMouseHoverText(trPriority, taskObj.priority + " priority");
-        if(taskObj.group){
-            followMouseHoverText(trGroup, taskObj.group);
-        }
+        if(taskObj.group){ followMouseHoverText(trGroup, taskObj.group) }
         followMouseHoverText(trRepeat, taskObj.repeat?taskObj.repeat:"no repeat");
 
+        lowerPart = elementCreator("div", ["class", "task-row-lower"], false, rowDiv);
+        const lowerBox = elementCreator("div", ["class", "tr-l-box"], false, lowerPart)
+        const lowerPrioLabel = elementCreator("div", ["class", "tr-l-prio"], taskObj.priority + " priority", lowerBox);
+        lowerPrioLabel.style.background = prioToColor(taskObj.priority);
+        const editBtn = elementCreator("div", ["class", "tr-l-edit"], "Edit",lowerBox);
+        
+        const lowerInfoDiv = elementCreator("div", ["class", "tr-l-info"], false, lowerPart)
+        const title = elementCreator("div", ["class", "tr-l-title"], taskObj.title , lowerInfoDiv)
+        const descTxt = taskObj.description?taskObj.description:"No description"
+        const description = elementCreator("div", ["class", "tr-l-desc"], descTxt , lowerInfoDiv)
+
+
+
+
+        upperPart.addEventListener("click", showHideLower);
+        function showHideLower(e){
+            if(e.target.closest(".tr-check-outer")) return;
+            if(!this.className.includes("upper-opened")) showLowerTask()
+            else hideLowerTask()
+        }
     }
 
+    function showLowerTask(){
+        closeAll()
+        upperPart.classList.add("upper-opened");
+        lowerPart.classList.add("lower-opened");
+    }
+    function hideLowerTask(){
+        upperPart.classList.remove("upper-opened")
+        lowerPart.classList.remove("lower-opened")
+    }
+    function closeAll(){
+        const allRows = dispDiv.querySelectorAll(".task-row-main");
+        allRows.forEach(row=>{
+            const upperPart = row.querySelector(".task-row-upper");
+            const lowerPart = row.querySelector(".task-row-lower");
+            upperPart.classList.remove("upper-opened")
+            lowerPart.classList.remove("lower-opened")
+        })
+    }
 
-    return {createTaskElements}
+    return {rowDiv, createTaskElements}
 }
 
 
 
 
-
-
-
-
-
-
-function createRepeatIcon(){
+function createRepeatIcon(bool){
     const mainDiv = elementCreator("div", ["class", "repeat-icon-div"], false, false)
-    elementCreator("div", ["class", "repeat-icon-dash"], false, mainDiv)
-    elementCreator("div", ["class", "repeat-icon-dash"], false, mainDiv)
+    if(!bool){
+        elementCreator("div", ["class", "repeat-icon-dash"], false, mainDiv)
+        elementCreator("div", ["class", "repeat-icon-dash"], false, mainDiv)
+    }
     for(let i=0;i<2;i++){
         const div = elementCreator("div", ["class", "repeat-icon"], false, mainDiv);
         if(i===1) div.classList.add("repeat-icon-bottom");
@@ -104,7 +132,6 @@ function createCheckbox(rowParent){
     const outerDiv = elementCreator("div", ["class", "tr-check-outer"], false, rowParent);
     const check = elementCreator("p", false, "✓", outerDiv);
     const checkLine = rowParent.querySelector(".div-line");
-
     outerDiv.addEventListener("click", checkFunc);
     function checkFunc(){
         if(!this.className.includes("tr-outer-true")){
