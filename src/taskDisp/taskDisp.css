@@ -32,16 +32,19 @@
     position: relative;
     font-family: roboto;
     display: grid;
-    grid-template-columns: 1fr 1fr 0.5fr 30px;
+    grid-template-columns: 35vw 1fr 0.5fr 30px;
     align-items: center;
     height: 50px;
     border-radius: 5px;
     font-size: 1rem;
     background-color: rgba(255, 255, 255, 0.246);
+
+
 }
 .upper-opened{
     border-radius: 5px 5px 0px 0px;
     box-shadow: rgba(6, 24, 44, 0.3) 0px 0px 0px 1px, rgba(6, 24, 44, 0.45) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    background-color: rgba(0, 0, 0, 0.013);
 }
 .task-row-lower{
     height: 0px;
@@ -53,7 +56,7 @@
     background: rgba(159, 214, 242, 0.071);
     padding:10px 0px;
     height: fit-content;
-    overflow: visible;
+
     border-radius: 0px 0px 5px 5px;
     border: 1px solid rgba(0, 0, 0, 0.255);
     border-top: none;
@@ -90,23 +93,31 @@
 
 /* title */
 .tr-title{
-    font-family: roboto-medium;
     border-right:1px solid rgba(0, 0, 0, 0.2) ;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 90%;
+
+}
+.tr-title p {
+    font-family: roboto-medium;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
 }
 /* due */
 .tr-due{
     display: flex;
     justify-content: center;
+    width: 100%;
     align-items: center;
-    gap: 10px;
+    gap: 5%;
     
 }
 .tr-due > span{
-    letter-spacing: 0.08rem;
+    letter-spacing: 0.04rem;
 
 }
 .task-mini-cal{
@@ -242,7 +253,9 @@ font-size: 0.75rem;
 /* lower part--------------- */
 
 .task-row-lower{
-
+    display: flex;
+    flex-direction: column;
+  
 }
 .tr-l-box{
     width: 100%;
@@ -263,10 +276,11 @@ font-size: 0.75rem;
     border-radius: 0px 0px 4px 0px;
     text-transform: uppercase;
     font-family: roboto-medium;
-    font-size: 85%;
+    font-size:  75%;
     letter-spacing: 0.02rem;
     user-select: none;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    opacity: 0.8;
 }
 .tr-l-edit{
     border: 1px solid rgba(0, 0, 0, 0.13);
@@ -280,47 +294,157 @@ font-size: 0.75rem;
     background-color: rgba(255, 255, 255, 0.319);
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     border-radius: 0px 0px 0px 4px;
-
-
 }
 .tr-l-edit:active{
     box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
-
+    transform: scale(0.95);
 }
 
-.tr-l-info{
+.tr-l-title-div{
+    margin-bottom: 0.5%;
     padding: 0px 3%;
-}
 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2%;
+}
 .tr-l-title{
-    font-family: roboto-medium;
-    font-size: 150%;
-    text-align: center;
+    font-family: roboto;
+    font-size: calc(90% + 1.4vw)
 }
 .tr-l-desc{
+    font-family: Arial, Helvetica, sans-serif;
+
+    font-size: calc(70% + 0.7vw);
+    font-style: italic;
+}
+.tr-l-info{
+    padding: 0px 3%;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    margin-bottom: 2%;
+
+}
+.tr-l-elem{
+    border-right: 1px solid rgba(0, 0, 0, 0.393);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+}
+.tr-l-elem:last-child{
+    border: none;
+}
+.tr-l-elem p{
     text-align: center;
+    width: 100%;
+    font-size: calc(12px + 0.3vw);
+}
+.tr-l-elem p:first-child{
     font-family: ptserif;
+    white-space: nowrap;
+    font-weight: 900;
     font-size: 110%;
 }
-@media screen and (max-width: 1000px) and (min-width:651px) {
+
+.tr-l-elem p:nth-child(2){
+    font-family: sofia;
+  
+
+    width: fit-content;
+
+}
+
+/* notes */
+.tr-notes-div{
+    display: flex;
+    flex-direction: column;
+
+}
+.tr-notes-btn{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap:  5px;
+    user-select: none;
+    cursor: pointer;
+    padding: 3px 16px;
+
+
+}
+.tr-notes-btn p{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: calc(0.6rem + 0.5vw);
+
+}
+.tr-notes-btn span{
+    transition: transform 0.3s linear;
+    font-size: calc(0.6rem + 0.6vw);
+
+}
+.notes-arrow-show{
+    transform: rotate(-90deg) translateX(-2px);
+}
+.tr-notes-disp{
+    align-self: stretch;
+    height: 0px;
+    padding: 0;
+    overflow: auto;
+    border-left: none;
+    border-right: none;
+    transition: all 0.17s linear;
+}
+.tr-show-notes{
+    height: 200px;
+    max-height: 200px;
+    padding: 3% 4%;
+    border-top: 1px solid rgba(0, 0, 0, 0.168);
+
+}
+/* width */
+.tr-notes-disp::-webkit-scrollbar {
+    width: 10px;
+}
+  
+  /* Track */
+.tr-notes-disp::-webkit-scrollbar-track {
+    background: white;
+    border-radius: 2px;
+}
+  
+  /* Handle */
+.tr-notes-disp::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.622);
+    border-radius: 2px;
+
+}
+@media screen and (max-width: 1000px) and (min-width:675px) {
     #task-disp-main{
         margin-top: 5%;
-
         padding: 0% 13%;
-
     }
+    .task-row-upper{
+        grid-template-columns: 250px 1fr 0.5fr 20px;
+    }
+    .task-mini-cal{
+      
+    }
+
 }
-@media screen and (max-width: 650px) {
+@media screen and (max-width: 674px){
     #task-disp-main{
         margin-top: 10%;
         padding: 0% 10%;
-
     }
+    .task-row-main{
+        min-width: 312px;
+    }
+    
     .task-row-upper{
-        grid-template-columns: 2fr 2fr 0.5fr 20px;
+        grid-template-columns: 200px 2fr 0.5fr 20px;
         height: 40px;
-    }
-    .tr-other-div{
     }
     .tr-priority{
         height: 100%;
@@ -337,6 +461,7 @@ font-size: 0.75rem;
     .repeat-icon-div{
         display: none;
     }
+
     .tr-due{
         gap: 5px;
     }
@@ -344,29 +469,60 @@ font-size: 0.75rem;
         font-size: 75%;
         letter-spacing: 0.03rem;
     }
-    .task-mini-cal{
-        width: 23px;
-        height: 25px;
-    }
+
+
     .task-mini-cal .header-calender-month{
         font-size: 0.4rem;
     }
     
     .task-mini-cal .header-calender-day{
-    font-size: 0.65rem;
+        font-size: 0.65rem;
 
     }
-
     .tr-check-outer{
+
         font-size: 80%;
     }
     .tr-outer-true{
         font-size: 90%;
 
     }
+
+    .tr-l-info{
+
+        grid-template-columns: 1fr 1fr
+    }
+
+
+    .tr-l-elem{
+        border-bottom: 1px solid rgba(0, 0, 0, 0.393);
+        border-right:none ;
+
+    }
+    .tr-l-elem:first-child, .tr-l-elem:nth-child(3){
+        border-right:1px solid rgba(0, 0, 0, 0.393);
+    }
+
+    .tr-l-elem:nth-child(3){
+        border-bottom: none;
+       
+    }
+    .tr-l-elem p{
+
+    }
+    .tr-l-elem p:first-child{
+
+    }
+    
+    .tr-l-elem p:nth-child(2){
+
+    }
+    
 }
 
 
-
-
-
+@media screen and (max-width:440px) {
+.task-mini-cal{
+    display: none;
+}
+}

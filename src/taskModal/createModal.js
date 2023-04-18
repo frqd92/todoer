@@ -117,14 +117,14 @@ function createNotes(outputBtn){
     const textArea = elementCreator("div", ["class", "add-notes-input"], false, notesDiv);
     if(outputBtn.innerText!=="None") textArea.innerText = outputBtn.innerText;
     textArea.setAttribute("contenteditable", "true");
-    displayCharCount(textArea, 500, "adder-notes");
+    displayCharCount(textArea, 1000, "adder-notes");
     const saveBtn = elementCreator("div", ["class", "add-notes-save-btn"], "Save", notesDiv);
     saveBtn.addEventListener("click", saveNotes);
     function saveNotes(){
-        const length = textArea.innerText.length;
-        if(length>500)return
+        const length = textArea.innerText.match(/\S/g).length;
+        console.log(length);
+        if(length>1000)return
         if(textArea.innerText==""){
-            console.log("shart");
             outputBtn.innerText = "None";
         }
         else outputBtn.innerText = textArea.innerText;

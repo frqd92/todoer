@@ -1,8 +1,8 @@
 import { dispDateStrToObjDate } from "./dateUtils";
 export function sortByDate(arr, isAsc){
     return makeDeepCopy(arr).sort((a,b)=>{
-        const aDate =  new Date(`${dateFormatSort(a.due)}`);
-        const bDate =  new Date(`${dateFormatSort(b.due)}`);
+        const aDate =  dispDateStrToObjDate(a.due).getTime();
+        const bDate =  dispDateStrToObjDate(b.due).getTime();
         return isAsc? aDate - bDate : bDate-aDate;
     })
 }
@@ -21,12 +21,6 @@ export function returnRangeTasks(arr, from, to){
 
 
 
-
-function dateFormatSort(arr){
-    let [dd, mm, yy] = arr;
-    mm++;
-    return `${yy}/${zeroAdder(mm)}/${zeroAdder(dd)}`
-}
 
 function zeroAdder(num){return num<10?"0"+num:num;}
 

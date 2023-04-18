@@ -2,8 +2,8 @@ import { elementCreator } from '../utilities/elementCreator';
 import { mainTaskArr, isLogged, timeframeOption } from '../state';
 import '/src/taskDisp/taskDisp.css'
 import { readUserTasksServer} from '../firebase';
-import { dispDateStrToObjDate} from '../utilities/dateUtils';
-import { returnRangeTasks } from '../utilities/sortTasks';
+import { dispDateStrToObjDate, fullFormattedDate} from '../utilities/dateUtils';
+import { returnRangeTasks, sortByDate } from '../utilities/sortTasks';
 import { createMiniCal } from '../Header/createHeader';
 import { prioToColor } from '../utilities/priorityColor';
 import { followMouseHoverText } from '../utilities/hoverDiv';
@@ -28,12 +28,17 @@ export function renderTasks(){
         return
     }
     taskDispDiv.classList.remove("empty-task-div");
-    tasksToDisplay.forEach(task=>{
+    const sortedTasks = sortByDate(tasksToDisplay, true);
+  
+    sortedTasks.forEach((task, i)=>{
+        if(i>1 && task.due!==sortedTasks[i-1].due){
+        }
         const row = TaskFactory(task, taskDispDiv);
         row.createTaskElements()
     })
 
 }
+
 
 
 function TaskFactory(taskObj, dispDiv){
@@ -43,7 +48,8 @@ function TaskFactory(taskObj, dispDiv){
 
         upperPart = elementCreator("div", ["class", "task-row-upper"], false, rowDiv );
         const dueLine = elementCreator("div", ["class", "div-line"], false, upperPart)
-        const titleDiv = elementCreator("div", ["class", "tr-title"], taskObj.title, upperPart);
+        const titleDiv = elementCreator("div", ["class", "tr-title"], false, upperPart);
+        elementCreator("p", false, taskObj.title, titleDiv)
         const dueDiv = elementCreator("div", ["class", "tr-due"], false, upperPart);
         dueDiv.appendChild(createMiniCal(taskObj.due, "task"));
         const dueText = elementCreator("span", false, taskObj.due, dueDiv);
@@ -64,13 +70,53 @@ function TaskFactory(taskObj, dispDiv){
         lowerPrioLabel.style.background = prioToColor(taskObj.priority);
         const editBtn = elementCreator("div", ["class", "tr-l-edit"], "Edit",lowerBox);
         
-        const lowerInfoDiv = elementCreator("div", ["class", "tr-l-info"], false, lowerPart)
-        const title = elementCreator("div", ["class", "tr-l-title"], taskObj.title , lowerInfoDiv)
-        const descTxt = taskObj.description?taskObj.description:"No description"
-        const description = elementCreator("div", ["class", "tr-l-desc"], descTxt , lowerInfoDiv)
+        const lowerTitleDiv = elementCreator("div", ["class", "tr-l-title-div"], false, lowerPart)
+        const title = elementCreator("div", ["class", "tr-l-title"], taskObj.title , lowerTitleDiv)
+        const descTxt = taskObj.description?taskObj.description:"No description..."
+        const description = elementCreator("div", ["class", "tr-l-desc"], descTxt , lowerTitleDiv)
+        
+        const lowerInfoDiv =elementCreator("div", ["class", "tr-l-info"], false, lowerPart)
+        const dueLowerDiv = elementCreator("div", ["class", "tr-l-elem"], false , lowerInfoDiv)
+        elementCreator("p", false, "Due date", dueLowerDiv);
+        elementCreator("p", false, fullFormattedDate(taskObj.due), dueLowerDiv);
+        // change the repeat ones after
+        const dateEnteredDiv = elementCreator("div", ["class", "tr-l-elem"], false, lowerInfoDiv)
+        elementCreator("p", false, "Date entered", dateEnteredDiv);
+        elementCreator("p", false, fullFormattedDate(taskObj.dateEntered), dateEnteredDiv);
 
+        const groupLowerDiv = elementCreator("div", ["class", "tr-l-elem"], false , lowerInfoDiv)
+        elementCreator("p", false, "Group", groupLowerDiv);
+        elementCreator("p", false, taskObj.group?taskObj.group:"No group", groupLowerDiv);
 
+        const repeatLowerDiv = elementCreator("div", ["class", "tr-l-elem"], false , lowerInfoDiv)
+        elementCreator("p", false, "Repeated task", repeatLowerDiv);
+        elementCreator("p", false, taskObj.repeat?taskObj.repeat:"No repeat", repeatLowerDiv);
 
+        if(taskObj.notes){
+            const notesDiv = elementCreator("div", ["class", "tr-notes-div"], false, lowerPart);
+            const notesBtnDiv = elementCreator("div", ["class", "tr-notes-btn"], false, notesDiv);
+            const notesLabel = elementCreator("p", false, "Show notes", notesBtnDiv);
+            const notesArrow = elementCreator("span", false, "<", notesBtnDiv);
+            const notesDisp = elementCreator("div", ["class", "tr-notes-disp"], taskObj.notes, notesDiv);
+            notesBtnDiv.addEventListener("click", showHideNotes)
+        
+            function showHideNotes(){
+                if(!this.className.includes("tr-notes-show")){
+                    this.classList.add("tr-notes-show");
+                    notesArrow.classList.add("notes-arrow-show");
+                    notesLabel.innerText = "Hide notes";
+                    notesDisp.classList.add("tr-show-notes")
+                }
+                else{
+                    this.classList.remove("tr-notes-show")
+                    notesArrow.classList.remove("notes-arrow-show");
+                    notesLabel.innerText = "Show notes";
+                    notesDisp.classList.remove("tr-show-notes")
+
+                }
+            }
+        
+        }
 
         upperPart.addEventListener("click", showHideLower);
         function showHideLower(e){
