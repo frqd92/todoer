@@ -2,15 +2,18 @@ import { createHeaderDom } from '../Header/createHeader';
 import { readUserGroupsServer, readUserTasksServer } from '../firebase';
 import { isLogged, currentTheme, modifyTheme, changeDocumentTheme, mainGroupArr,updateGroupsLocal, mainTaskArr, updateTasksLocal, timeframeChange, timeframeOption } from '../state';
 import { createTimeframeDiv } from '../timeframe/createTimeframe';
-import { elementCreator } from '../utilities/elementCreator';
+import { createTimeSpan } from '../timeframe/createTimeSpanDiv';
+import { createTaskDisplay } from '../taskDisp/createTaskDisp';
+
 export function createMainPageDom(){
     readTheme();
     createHeaderDom();
     readGroups();
-    
+
     readTimeframe();
     createTimeframeDiv();
 
+    createTaskDisplay();
 
 
 

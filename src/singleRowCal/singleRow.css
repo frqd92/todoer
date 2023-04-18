@@ -1,0 +1,130 @@
+
+.tf-cal-container{
+ 
+}
+
+/* week cal */
+.sr-week-div{
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: 1fr;
+    width: 100%;
+    height: 100%;
+}
+
+.sr-w-square{
+    position: relative;
+    border-right: 1px solid rgba(0, 0, 0, 0.22);
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: 1fr 5fr;
+
+}
+.sr-week-label-week{
+    grid-column: 1 / 2;
+    grid-row: 1 / 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sr-week-day-num{
+    grid-column: 2 / 3;
+    grid-row: 1 / 2;
+    white-space: nowrap;
+    font-size: calc(0.5rem + 0.45vw);
+    justify-self: center;
+    align-self: center;
+    font-family: montserrat;
+}
+
+.sr-task-div{
+    border-top: 1px solid rgba(0, 0, 0, 0.135);
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+}
+.sr-cal-add-task{
+    position: absolute;
+    bottom: 0;
+    right: 50%;
+    transform: translateX(50%);
+    font-size: calc(0.6rem + 0.7vw);
+    opacity: 0.5;
+    transition: transform 0.15s linear;
+    cursor: pointer;
+    font-family: 'Times New Roman', Times, serif;
+    
+
+}
+
+.sr-cal-add-task:hover{
+    transform: translateX(50%) scale(1.4);
+    opacity: 0.8;
+
+    
+}
+.sr-w-square:last-child{
+    border-right: none;
+}
+.sr-week-label-week{
+ 
+    border-right: 1px solid rgba(0, 0, 0, 0.223);
+    padding: 0px 2px;
+    font-family: zilla;
+    background-color: rgba(255, 255, 255, 0.137);
+    color: rgb(103, 100, 100);
+    font-size: calc(0.6rem + 0.4vw);
+}
+
+
+/* today's square */
+.sr-week-today{
+    background-color: rgba(255, 255, 255, 0.397);   
+
+
+}
+
+/* single row month------------------------------------------------------------------- */
+.sr-month-div{
+    /* display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    grid-template-rows: 1fr; */
+    display: flex;
+    justify-content: space-around;
+    height: 100%;
+    border: 1px solid rgba(0, 0, 0, 0.018);
+}
+
+.sr-m-square{
+    padding: 2px 0px;
+    border-right: 1px solid rgba(0, 0, 0, 0.235);
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 5fr 1fr;
+    justify-items: center;
+    overflow: hidden;
+    transition: padding 0.2s ease-in-out;
+
+}
+.sr-m-square:hover{
+    padding: 0px calc(5vw);
+}
+.sr-month-task-cont{
+
+}
+.sr-m-square:last-child{
+    border-right: none;
+
+}
+.sr-month-num{
+    color: rgba(0, 0, 0, 0.763);
+    font-family: roboto-medium;
+    font-size: calc(0.3rem + 0.6vw);
+
+}
+.sr-month-label-week{
+    font-family: roboto;
+    font-size: calc(0.2rem + 0.4vw);
+    text-align: center;
+    align-self: center;
+}

@@ -10,7 +10,8 @@ export function createHeaderDom(){
     createSearchBar(header);
     const btnDiv = elementCreator("div", ["class", "header-btn-div"], false, header);
     const addBtn = createAddTaskBtn(btnDiv);
-    const miniCalBtn = createMiniCal(btnDiv);
+    const miniCalBtn = createMiniCal(false, "header");
+    btnDiv.appendChild(miniCalBtn);
     const lightBulb = createLightBulb(btnDiv);
     titleEffect(title)
 
@@ -27,16 +28,21 @@ function createAddTaskBtn(parent){
     elementCreator("p", false, "+", div);
 
     div.addEventListener("click", makeAdd);
-    function makeAdd(){
-        const div = elementCreator("div", ["class", "header-add-div"], false, document.body);
-        const bgModal= createBodyModal(div);
-        bgModal.createDiv();
 
-        div.appendChild(createAddModal())
-    }
     return div
 }
+export function makeAdd(){
 
+    const div = elementCreator("div", ["class", "header-add-div"], false, document.body);
+    const bgModal= createBodyModal(div);
+    bgModal.createDiv();
+    if(this.parentElement.className.includes("datecal")){
+        const date = this.parentElement.classList[1].split("-").pop();
+        div.appendChild(createAddModal(false, date))     
+    }
+    else div.appendChild(createAddModal(false, false))
+    
+}
 // theme, bulb---------------------------------------------------------------------------------------
 function createLightBulb(parent){
     const div = elementCreator("div", ["class", "bulb-container"], false, parent);
@@ -92,8 +98,8 @@ function createLoupe(parent){
 }
 
 
-function createMiniCal(parent){
-    const div = elementCreator("div", ["class", "header-calender-div"], false, parent);
+export function createMiniCal(dateCal, type){
+    const div = elementCreator("div", ["class","mini-cal", `${type}-mini-cal`], false, false);
     const clickDiv = elementCreator("div", ["class", "calender-click-div"], false, div)
     const monthDiv = elementCreator("div", ["class", "header-calender-month"], getDate()[0],div);
     const dayDiv = elementCreator("div", ["class", "header-calender-day"], getDate()[1],div);
@@ -101,7 +107,11 @@ function createMiniCal(parent){
     return div
 
     function getDate(){
-        const date = String(new Date());
+        let date;
+        if(dateCal) date = String(new Date(dateCal.split("/").reverse().join("/")))
+         
+        else date = String(new Date());
+     
         return [date.split(" ")[1], date.split(" ")[2]]
     }
 }

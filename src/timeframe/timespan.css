@@ -1,0 +1,142 @@
+.ts-main-div{
+ 
+
+    user-select: none;
+    display: grid;
+    grid-template-columns: 1fr 1.5fr 1fr;
+    border-top: 1px solid rgba(0, 0, 0, 0.199);
+
+
+
+}
+
+
+.taskbox-left-div{
+  border-right: 1px solid rgba(0, 0, 0, 0.172);
+}
+.taskbox-right-div{
+  border-left: 1px solid rgba(0, 0, 0, 0.172);
+
+}
+
+.taskbox-arrow-div{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color:rgba(0, 0, 0, 0.555);
+    text-shadow: 0px 0px 2px rgb(143, 140, 140);
+    cursor: pointer;
+    transition: background-color 0.1s linear;
+    height: 45px;
+  }
+
+  .taskbox-arrow-div:hover{
+    background-color: rgba(2, 2, 2, 0.12);
+
+  }
+  .taskbox-arrow-div:active{
+    background-color: rgba(2, 2, 2, 0.276);
+
+  }
+
+  .taskbox-arrow-div p{
+    font-size: 25px ;
+    font-family: oxygen;
+    pointer-events: none;
+  
+  }
+
+/* timespan  */
+.ts-div{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: zilla;
+    font-size: calc(0.8rem + 0.7vw);
+    color: rgba(0, 0, 0, 0.621);
+    text-shadow: 0px 0px 2px rgba(0, 0, 0, 0.398);
+    padding: 0px 25px;
+    transition: font-size 0.15s linear;
+  background-color: rgba(208, 195, 166, 0.092);
+
+}
+.day-date-range{
+    white-space: nowrap;
+}
+.week-date-range{
+
+    height: 100%;;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+}
+.ts-week-text{
+    text-shadow: none;
+    font-family: sofia;
+    font-size: calc(0.5rem + 0.5vw);
+    display: flex;
+    align-items: center;
+    height: 100%;
+   white-space: nowrap;
+}
+.week-date-range, .month-date-range, .day-date-range{
+    display: flex;
+    align-items: center;
+}
+.month-date-range{
+    white-space: nowrap;
+}
+
+
+
+
+
+
+
+
+
+.taskbox-animate{
+    animation: arrowboop 0.3s ease-in-out;
+}
+
+
+
+  @keyframes arrowboop {
+    0%{font-size: 25px;}
+    50%{font-size: 40px;}
+    100%{font-size: 25px;}
+  }
+
+
+
+  @media screen and (max-width:600px) {
+    .week-date-range{
+      gap: 10px;
+    }
+    .ts-main-div{
+        height: fit-content;
+    }
+    .ts-div{
+      font-size: calc(0.6rem + 0.8vw);
+      gap: 5px;
+    }
+    .ts-week-text{
+      display: none;
+
+
+    }
+    .taskbox-arrow-div{
+        height: 30px;
+    }
+
+    .taskbox-arrow-div p{
+        font-size: calc(0.8rem + 1vw);
+    }
+
+}
+
+
+
+

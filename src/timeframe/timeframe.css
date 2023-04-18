@@ -1,17 +1,22 @@
 .timeframe-div{
     display: grid;
-    grid-template-columns: 1fr 10fr;
+    grid-template-columns: 1fr 12fr;
     grid-template-rows: 1fr 13px;
     height:12vw;
     min-height: 90px;
     max-height: 250px;
     user-select: none;
+    transition: all 0.15s linear;
+
 }
 
 .hidden-tf{
     display: block;
-    min-height: none;
-    max-height: none;
+    min-height: 0px;
+    max-height: 0px;
+
+  
+    
 
 }
 .tf-cal-container{
@@ -20,7 +25,6 @@
     border: 1px solid rgba(0, 0, 0, 0.172);
     border-bottom: none;
     height: 100%;
-    transition: height 0.3s linear;
 }
 
 
@@ -30,14 +34,14 @@
     position: relative;
     display: flex;
     flex-direction: column;  
-    height: 100%;
+   
+
     
 
 }
 .hidden-timeframe{
     height: 0%;
     overflow: hidden;
-
 
 }
 .tf-range-row{
@@ -52,6 +56,7 @@
     background: rgba(255, 255, 255, 0.073);
     transition: font-size, background-color 0.15s linear;
     border: 1px solid rgba(0, 0, 0, 0.012);
+    
 
 }
 .tf-chosen-row{
@@ -68,6 +73,7 @@
 .tf-hidden{
     border-top: none !important;
 }
+
 .tf-range-row:last-child{
   box-shadow: none;
 }
@@ -91,7 +97,6 @@
     justify-content: center;
     align-items: center;
     text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.579);
-    background: rgba(0, 0, 0, 0.182);
     box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
     cursor: pointer;
@@ -105,28 +110,35 @@
     animation: hideTFAnim 1s linear infinite;
 }
 .hide-tf-arrow{
-    transition: transform 0.3s linear;
-    transform: rotate(0deg);
+    border: 3px solid rgb(0, 0, 0);
+    border-bottom: none;
+    border-right: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 1px 5px 0px 5px;
+    margin-top: 6px;
+    transform: rotate(45deg);
+    filter: drop-shadow(0px 1px 5px black);
+    transition: all 0.25s linear;
 
 }
 .hide-tf-arrow-down{
-    transform: rotate(180deg);
+    margin-top: -5px;
+    transform: rotate(225deg);
+ 
 }
 
 @keyframes hideTFAnim {
     0%{
         height: 13px ;
-        font-size: 0.8rem;
         opacity: 0.5;
     }
     50%{
         height: 17px;
-        font-size: 1rem;
         opacity: 0.6;
     }
     100%{
         height:13px;
-        font-size: 0.8rem;
         opacity: 0.5;
     }
 }
@@ -139,19 +151,22 @@
 
 @media screen and (max-width:1000px) and (min-width:670px) {
     .timeframe-div{
-        height: 15vh;
+        height: 15vw;
+
     }
     .tf-range-row{
         font-size: 0.9rem;
         
     }
+
 }
 @media screen and (max-width:670px) {
     .timeframe-div{
-      
+    
+
     }
     .tf-range-row{
-     padding: 0px 3px;
+     padding: 0px 2px;
      font-size: 0.75rem;
 
     }
@@ -159,4 +174,6 @@
         padding: 0;
     }
 
+    .hidden-tf{
+    }
 }

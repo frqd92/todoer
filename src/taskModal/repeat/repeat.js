@@ -46,7 +46,6 @@ function createEffective(parent, outputBtn){
     function saveRepeatOptions(){
         if(readRepeatData()!==undefined){
             outputBtn.innerText = readRepeatData();
-            console.log(outputBtn.innerText);
             const repeatMenu = this.closest(".add-menu-repeat");
             closeMenuOutside(repeatMenu);
             if(isOverflown(outputBtn)) outputBtn.classList.add("repeat-overflown")

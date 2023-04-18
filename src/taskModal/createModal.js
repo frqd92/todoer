@@ -5,7 +5,8 @@ import { makePriorityMenu } from "./priority/prio";
 import { createModalRepeat } from "./repeat/repeat";
 import { displayCharCount } from "../utilities/inputUtils";
 import { processTask } from "./processTask";
-export function createAddModal(isEdit){
+import { formatNumDate } from "../utilities/dateUtils";
+export function createAddModal(isEdit, fromCalDate){
     const classL = !isEdit?"add":"edit";
     const mainDiv = elementCreator("div", ["class", `modal-${classL}`], false, false);
 
@@ -13,7 +14,10 @@ export function createAddModal(isEdit){
     const addDescDiv = createInput(mainDiv, "Description");
     const modalElements = ["Due date", "Group", "Priority", "Repeat", "Notes"];
     for(let i=0;i<5;i++){addFactory(mainDiv, modalElements[i])};
-    feedValues(mainDiv);
+    if(!isEdit){
+        if(!fromCalDate) feedValues(mainDiv);
+        else feedValues(mainDiv, [fromCalDate])
+    }
 
     const btnText = isEdit?"Edit task":"Add task";
     
@@ -31,15 +35,14 @@ export function createAddModal(isEdit){
 
 function feedValues(div, arr){
     const allElements = div.querySelectorAll(".add-btn");
+    let content = ["Today", "None", null, "No repeat", "None"];
+    if(arr){if(arr.length===1) content[0] = formatNumDate(arr[0])};
+    allElements.forEach((elem, i)=>{
+        if(i!==2){
+            elem.innerText=content[i];
+        }
+    })
 
-    if(!arr){
-        const content = ["Today", "None", null, "No repeat", "None"];
-        allElements.forEach((elem, i)=>{
-            if(i!==2){
-                elem.innerText=content[i];
-            }
-        })
-    }
 }
 
 

@@ -1,15 +1,32 @@
 import '/src/timeframe/timeframe.css'
 import { elementCreator } from "../utilities/elementCreator";
 import { timeframeChange, timeframeOption } from '../state';
+import { createTimeSpan } from './createTimeSpanDiv';
+import { createWeekCal } from '../singleRowCal/singleRowWeek';
+import { createMonthCal } from '../singleRowCal/singleRowMonth';
+import { createTaskDisplay } from '../taskDisp/createTaskDisp';
+
 export function createTimeframeDiv(){
+    const timeSpanBtnsDiv = elementCreator("div", ["class", "timespan-div"], false, document.body);
     const timeframeDiv = elementCreator("div", ["class", "timeframe-div"], false, document.body);
-    createTimeRange(timeframeDiv);
+    createTimeSpan(timeSpanBtnsDiv)
+    createTimeRange(timeframeDiv, timeSpanBtnsDiv);
     checkPrevChosen();
+    createSRCal();
 }
+export function createSRCal(){
+    //clear previous cal
+    const calContainer = document.querySelectorAll(".tf-cal-container div");
+    if(calContainer.length>0) calContainer.forEach(elem=>{elem.remove()})
 
-function createTimeRange(timeframeDiv){
-
-
+    switch(timeframeOption){
+        case "Week": createWeekCal(); break;
+        case "Month": createMonthCal();break;
+        
+    }
+    
+}
+function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
     const timeRangeDiv = elementCreator("div", ["class", "tf-time-range-div"], false, timeframeDiv);
     const trArray = ["All", "Month", "Week", "Day"];
     trArray.forEach(elem=>{
@@ -21,20 +38,30 @@ function createTimeRange(timeframeDiv){
     const calContainer = elementCreator("div", ["class", "tf-cal-container"], false,timeframeDiv);
 
     const hideTF = elementCreator("div", ["class", "hide-tf-btn"], false, timeframeDiv);
-    const hideArrow = elementCreator("span", ["class","hide-tf-arrow"], "⇧", hideTF)
+    const hideArrow = elementCreator("span", ["class","hide-tf-arrow"],false, hideTF)
     hideTF.addEventListener("click", hideShowTF)
 
         
 
     
-    
-
     function tfRowChoose(){
-        const pElem = this.querySelector(".tf-range-p");
-        timeframeChange(pElem.innerText, true);
-        document.querySelectorAll(".tf-range-row").forEach(row=>{row.classList.remove("tf-chosen-row")})
-        this.classList.add("tf-chosen-row");
-        moveArrow();
+        if(!this.className.includes("tf-chosen-row")){
+            
+            // row stuff
+            const pElem = this.querySelector(".tf-range-p");
+            timeframeChange(pElem.innerText, true);
+            document.querySelectorAll(".tf-range-row").forEach(row=>{row.classList.remove("tf-chosen-row")})
+            this.classList.add("tf-chosen-row");
+            moveArrow();
+
+            //time span upper part stuff
+            timeSpanBtnsDiv.childNodes.forEach(child=>child.remove());
+            createTimeSpan(timeSpanBtnsDiv)
+
+            //single row cal from button;
+            createSRCal();
+            createTaskDisplay()
+        }
         
     }
 
@@ -59,7 +86,6 @@ function createTimeRange(timeframeDiv){
         const currentRow = document.querySelector(`.tf-tr-${timeframeOption}`);
         const rowArrow = currentRow.querySelector(".tf-row-arrow");
         let prevChosen = document.querySelector(".tf-chosen-arrow")
-        
 
         prevChosen.classList.remove("tf-chosen-arrow");
         setTimeout(()=>{

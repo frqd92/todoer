@@ -1,8 +1,8 @@
 .light-theme{
     --color-bg: linear-gradient(to right, #8e9eab, #eef2f3);
     --header-bg: linear-gradient(to right, #d1d1d180, #2424241e);
-    --header-box-shadow: 0 4px 2px -2px rgba(128, 128, 128, 0.569);
 
+    --header-box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     --modal-add-bg: rgb(255, 255, 255);
     --bg-div:  rgba(0, 0, 0, 0.325);
     --modal-input: rgba(0, 0, 0, 0.914);
@@ -13,6 +13,11 @@
     --modal-placeholder: rgba(10, 10, 10, 0.898);
     --modal-add-btn: rgba(0, 0, 0, 0.052);
     --modal-add-btn-hover: rgba(0, 0, 0, 0.073);
+    --tf-bg:none;
+
+    --tf-hide-btn:  rgba(0, 0, 0, 0.182);
+    --tf-hide-opa: 0.3;
+
 }
 
 .dark-theme{
@@ -23,13 +28,15 @@
     --bg-div:  rgba(0, 0, 0, 0.2);
     --modal-input: rgba(255, 255, 255, 0.914);
     --add-label: rgba(255, 255, 255, 0.756);
-    --add-btn-bg: rgba(236, 236, 236, 0.647);
+    --add-btn-bg: rgba(236, 236, 236, 0.856);
     --add-box-shadow: 0px 0px 1px rgba(255, 255, 255, 0.896);
     --add-text-length: rgba(255, 255, 255, 0.503);
     --modal-placeholder: rgba(255, 255, 255, 0.488);
     --modal-add-btn: rgba(221, 215, 215, 0.854);
     --modal-add-btn-hover: rgba(253, 253, 253, 0.673);
-
+    --tf-bg:rgba(255, 255, 255, 0.757);
+    --tf-hide-btn: rgb(255, 255, 255);
+    --tf-hide-opa: 0.8;
 }
 
 
@@ -43,10 +50,27 @@ header{
     box-shadow: var(--header-box-shadow);
 
 }
+/* timefram cal ----------------------------------------------------------------------------------*/
+
+ .tf-time-range-div{
+    background: var(--tf-bg);
+}
+.hide-tf-btn{
+    background: var(--tf-hide-btn);
+    opacity: var(--tf-hide-opa);
+
+}
+
+
+
+
+
+
+
+/* add modal ----------------------------------------------------------------------------------*/
 .header-add-div{
     box-shadow: var(--add-box-shadow);
 }
-/* add modal ----------------------------------------------------------------------------------*/
 .modal-add{
     background: var(--modal-add-bg);
 }

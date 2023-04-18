@@ -74,6 +74,16 @@ export function addZero(elem){
   return Number(elem)<10?"0"+elem:elem;
 
 }
+//str 17/4/2023 becomes 17/04/2023, ignore above function
+export function addZeroDispDate(str){
+  let arr = str.split("/");
+  for(let i=0;i<2;i++){
+    if(Number(arr[i])<10){
+      arr[i]= "0"+ arr[i];
+    }
+  }
+  return arr.join("/");
+}
 
 export function addSuffix(val){
   const num = Number(val);
@@ -119,3 +129,102 @@ export function weekDayFind(strDate){
   const date = new Date(strDate);
   return date.toLocaleString('en-us', {weekday: 'long'});
 }
+
+//displays full text formatted date
+//ex. string "2/2/2023" returns 2nd of march, 2023
+export function fullFormattedDate(date){
+  const [dd,mm,yy] = date.split("/");
+  return `${addSuffix(Number(dd))} of ${returnMonth(Number(mm))}, ${yy}`
+}
+
+export function addOneToMonth(date, isSub){
+  let arr = date.split("/");
+  const num = isSub?-1:1;
+  arr[1] = Number(arr[1])<9?"0" + (Number(arr[1])+num):(Number(arr[1])+num);
+  return arr.join("/");
+}
+
+//can't use the one in dateUtil because I messed up and used a bad date format (month 0-11) but there's already a bunch of other functions using it... Plan shit better next time kunt
+export function chosenDayFunc2(str) {
+  const [day,month,year] = str.split("/"); 
+  const chosenDay = new Date(year, month, day);
+  return chosenDay.toLocaleString('en-us', {weekday: 'long'})
+}
+// recursive function that looks for the week date range of a specific date
+// messed up because of the 0-11 month shenanigans
+export function recursiveFunc(date, isIncrement){
+  const isIn = isIncrement;
+  const limit = isIncrement?"Sunday":"Monday";
+  const step = isIncrement?1:-1;
+  if(chosenDayFunc2(date)===limit) return date;
+
+  const [dd,mm,yy] = date.split("/");
+  const newDate = findRelativeDate(`${dd}/${mm}/${yy}`, step);
+  const weekDay = chosenDayFunc2(newDate);
+  if(weekDay===limit) return newDate;
+  else return recursiveFunc(newDate, isIn);
+}
+
+//adds a zero to nums less than 10
+//ex. arr [2,2,2023] returns string 02/02/2023
+export function formatNumDate(date, addMonth){
+  let val = date;
+  if(typeof date==="string"){
+    val = date.split("/");
+  }
+  for(let i=0;i<2;i++){
+    if(i===1 && addMonth) val[i]++;
+    if(val[i]<10 && val[i][0]!=="0"){
+      val[i] = "0"+(val[i]);
+    }
+  }
+  return `${val[0]}/${val[1]}/${val[2]}`
+}
+
+//ex enter a date as a string "2/2/2023" and num 7
+//finds date 7 days from that date.. if negative then goes back 7
+export function findRelativeDate(date, num, isMonth){
+  let dd,mm,yy;
+  if(typeof date==="object"){
+    [dd,mm,yy] = date;
+  }
+  else{
+    [dd,mm,yy] = date.split("/");
+  }
+
+  if(isMonth) mm = Number(mm-1);
+  const inputDate = new Date(yy,mm,dd);
+  const nextDate = new Date(inputDate);
+  nextDate.setDate(inputDate.getDate() + num);
+  return `${nextDate.getDate()}/${nextDate.getMonth()}/${nextDate.getFullYear()}`
+}
+
+//"3rd of march, 2023" becomes 3/2/2023
+export function textDateToNum(str){
+  const arr = str.split(" ");
+  const day = arr[0].split("").filter(elem=>!isNaN(elem)).join("")
+  const monthComma = arr[arr.length-2].split("");
+  monthComma.pop()
+  const month = returnMonth(monthComma.join(""));
+  const year = arr[arr.length-1];
+  return `${day}/${month}/${year}`
+
+}
+
+
+//calculates the which week of the year it is
+export function whichWeekOfYear(dateObj){
+  const year = new Date(dateObj.getFullYear(), 0, 1);
+  const days = Math.floor((dateObj - year) / (24*60*60*1000));
+  return  Math.ceil(( dateObj.getDay() + 1 + days) / 7);
+}
+
+//date in the dom (displayed as a str in dd/mm/year) to date object
+//str "dd/mm/yyyy" to new Date("yyyy/mm/dd")
+export function dispDateStrToObjDate(strDate){
+  const [strD, strM, strY] = strDate.split("/");
+  return new Date(`${strY}/${strM}/${strD}`)
+}
+
+
+

@@ -1,0 +1,279 @@
+#task-disp-main{
+    margin-top: 2%;
+    padding: 2% 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 30px;
+
+
+
+}
+.empty-task-div{
+    margin: 0 !important;
+    padding: 0 !important;
+    justify-content: center;
+    align-items: center;
+    height: 50%;
+    opacity: 0.7;
+    font-size: calc(0.9rem + 1vw);
+    font-family: oxygen;
+
+}
+
+
+
+.task-row-upper{
+    user-select: none;
+    position: relative;
+    font-family: roboto;
+    display: grid;
+    grid-template-columns: 1fr 1fr 0.5fr 30px;
+    align-items: center;
+    height: 50px;
+    border-radius: 5px;
+    font-size: 1rem;
+    min-width: 270px;
+    background-color: rgba(255, 255, 255, 0.246);
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
+}
+/* row div */
+.task-row-upper{
+    border: 1px solid rgba(0, 0, 0, 0.248);
+
+}
+.task-row-upper> div{
+   height: 100%;
+}
+.task-row-upper:hover{
+    box-shadow: rgba(6, 24, 44, 0.3) 0px 0px 0px 1px, rgba(6, 24, 44, 0.45) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+    background-color: rgba(0, 0, 0, 0.013);
+}
+
+.div-line{
+    position: absolute;
+    width: 0%;
+    pointer-events: none;
+    left: -1%;
+    border-top: 2px solid rgba(0, 0, 0, 0.458) ;
+    z-index: 10;
+    top: 50%;
+    transition: width 0.2s linear;
+}
+.div-line-checked{
+    width: 102% !important;
+    min-width: 275px !important;
+
+}
+
+/* title */
+.tr-title{
+    font-family: roboto-medium;
+    border-right:1px solid rgba(0, 0, 0, 0.2) ;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 90%;
+}
+/* due */
+.tr-due{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    
+}
+.tr-due > span{
+    letter-spacing: 0.08rem;
+
+}
+.task-mini-cal{
+    cursor: default;
+    width: 27px;
+    height: 30px;
+    z-index: 2;
+}
+.task-mini-cal .header-calender-month{
+    font-size: 0.45rem;
+}
+
+.task-mini-cal .header-calender-day{
+font-size: 0.75rem;
+}
+/* tr- other */
+.tr-other-div{
+    border-left: 1px solid rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    height: 100%;
+}
+.tr-group{
+    font-family: open;
+    font-size: 80%;
+    white-space: nowrap;
+    width: 60px;
+    max-width: 65px;
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+.tr-priority{
+    border: 1px solid rgba(0, 0, 0, 0.126);
+    width: 20px;
+    height: 20px;
+    border-radius: 50px;
+    transition: all 0.3s linear;
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
+
+
+
+}
+/* tr-repeat */
+.repeat-icon-div{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 22px;
+    width: 30px;
+
+}
+.repeat-icon-dash{
+    position: absolute;
+    border: 1.5px solid rgb(153, 55, 23);
+    border-left: none;
+    border-right: none;
+    border-radius: 50px;
+    width: 100%;
+    height: 0px;
+    opacity: 0.3;
+}
+.repeat-icon-dash:nth-child(1){
+    transform: rotate(45deg);
+
+}
+.repeat-icon-dash:nth-child(2){
+    transform: rotate(-45deg);
+
+}
+.repeat-icon{
+    transform: scale(0.6);
+    opacity: 0.5;
+
+}
+.repeat-icon-bottom{
+    transform: scale(0.6) rotate(180deg);
+}
+.repeat-icon div:nth-child(1){
+    width: 100%;
+    height: 8px;
+    border-top: 4px solid black;
+    border-radius: 50px 0px 0px 0px;
+}
+.repeat-icon div:nth-child(2){
+    position: absolute;
+    right: -3px;
+    top: -12.5px;
+    font-size: 160%;
+    font-weight: 900;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    justify-self: start;
+}
+/* tr completed checkbox */
+
+.tr-check-outer{
+    border-left: 1px solid rgba(0, 0, 0, 0.229);
+    cursor: pointer;
+    user-select: none;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background-color 1s linear;
+    background: rgba(255, 255, 255, 0);
+    border-radius: 0px 5px 5px 0px;
+}
+.tr-check-outer:active{
+    box-shadow: none;
+}
+.tr-outer-true{
+    background-color: rgba(1, 50, 1, 0.1);
+    box-shadow: 0px 0px 3px rgba(1, 50, 1, 0.58);
+}
+.tr-check-outer p{
+    opacity: 0.2;
+    transition: font-size 0.24s linear;
+
+}
+
+.tr-check-true{
+    opacity: 0.7 !important;
+    font-size: 150%;
+
+}
+@media screen and (max-width: 1000px) and (min-width:651px) {
+    #task-disp-main{
+        margin-top: 5%;
+
+        padding: 0% 13%;
+
+    }
+}
+@media screen and (max-width: 650px) {
+    #task-disp-main{
+        margin-top: 10%;
+        padding: 0% 10%;
+
+    }
+    .task-row-upper{
+        grid-template-columns: 2fr 2fr 0.5fr 20px;
+        height: 40px;
+    }
+    .tr-other-div{
+    }
+    .tr-priority{
+        height: 100%;
+        border-top: none;
+        border-bottom: none;
+        width: 10px;
+        border-radius: 0;
+        box-shadow: rgba(9, 30, 66, 0.25) 0px 1px 1px, rgba(9, 30, 66, 0.13) 0px 0px 1px 1px;
+    }
+
+    .tr-group{
+        display: none;
+    }
+    .tr-due{
+        gap: 5px;
+    }
+    .tr-due > span{
+        font-size: 75%;
+        letter-spacing: 0.03rem;
+    }
+    .task-mini-cal{
+        width: 23px;
+        height: 25px;
+    }
+    .task-mini-cal .header-calender-month{
+        font-size: 0.4rem;
+    }
+    
+    .task-mini-cal .header-calender-day{
+    font-size: 0.65rem;
+
+    }
+
+    .tr-check-outer{
+        font-size: 80%;
+    }
+    .tr-outer-true{
+        font-size: 90%;
+
+    }
+}
+
+
+
+
+

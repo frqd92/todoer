@@ -42,3 +42,11 @@
     font-family: "montserrat";
     src: url(/src/assets/fonts/Montserrat.ttf);
 }
+@font-face {
+    font-family: "zilla";
+    src: url(/src/assets/fonts/ZillaSlab-Light.ttf);
+}
+@font-face {
+    font-family: "schib";
+    src: url(/src/assets/fonts/SchibstedGrotesk-VariableFont_wght.ttf);
+}

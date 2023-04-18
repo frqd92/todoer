@@ -1,8 +1,8 @@
-import { getToday } from "../utilities/dateUtils";
+import { addZeroDispDate, getToday } from "../utilities/dateUtils";
 import { mainTaskArr, isLogged } from "../state";
 import { writeUserTasksServer } from "../firebase";
-import { closeMenuOutside } from "./createModal";
 import { createBodyModal } from "../utilities/bodyModal";
+import { createTaskDisplay } from '/src/taskDisp/createTaskDisp';
 export function processTask(){
     const [titleDiv, descDiv, dueDiv, groupDiv, priorityDiv, repeatDiv, notesDiv,] = this.parentElement.childNodes;
 
@@ -21,7 +21,9 @@ export function processTask(){
 
     //due
     const dueDate = dueDiv.querySelector(".add-btn-due").innerText;
-    obj.due = dueDate==="Today"?getToday(false, true):dueDate;
+    obj.due = dueDate==="Today"?addZeroDispDate(getToday(false, true)):dueDate;
+  
+
 
     //group
     const group = groupDiv.querySelector(".add-btn-group").innerText
@@ -31,7 +33,9 @@ export function processTask(){
     obj.priority = priority.classList[1].split("-").pop();
     //repeat
     const repeat = repeatDiv.querySelector(".add-btn-repeat").innerText
-    obj.repeat= repeat==="No repeat"?false:group;
+    console.log();
+    obj.repeat= repeat==="No repeat"?false:repeat;
+    console.log(obj.repeat);
     //notes
     const notes = notesDiv.querySelector(".add-btn-notes").innerText
     obj.notes = notes==="None"?false:notes;
@@ -53,10 +57,11 @@ export function processTask(){
     else{
         localStorage.setItem("tasks", JSON.stringify(mainTaskArr));
     }
-    console.log(this.parentElement.parentElement);
 
-    const bgModal= createBodyModal(this.parentElement.parentElement);
+
+    const bgModal = createBodyModal(this.parentElement.parentElement);
     bgModal.closeDiv();
+    createTaskDisplay()
 }
 
 

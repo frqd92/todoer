@@ -5,6 +5,7 @@ import { getDatabase, ref, set, get, child } from "firebase/database";
 
 import { createHomeFromLogin } from "./loginPage/loginDom";
 import { modifyGroupsArr, modifyTasksArr } from "./state";
+import { renderTasks } from "./taskDisp/createTaskDisp";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -62,12 +63,26 @@ export function writeUserGroupsServer(group) {
 
 
 //read
-export function readUserTasksServer(){
+export function readUserTasksServer(isRender){
   const userID = auth.currentUser.uid;
   const dbRef = ref(getDatabase());
   get(child(dbRef, `users/${userID}/tasks`)).then((snapshot) => {
     if (snapshot.exists()) {
-        modifyTasksArr(snapshot.val())
+        modifyTasksArr(snapshot.val());
+        if(isRender)renderTasks();
+    } else {
+      console.log("No data available");
+    }
+  }).catch((error) => {
+    console.error(error);
+  });
+}
+//read
+export function createTasksServer(){
+  const userID = auth.currentUser.uid;
+  const dbRef = ref(getDatabase());
+  get(child(dbRef, `users/${userID}/tasks`)).then((snapshot) => {
+    if (snapshot.exists()) {
     } else {
       console.log("No data available");
     }

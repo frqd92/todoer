@@ -299,6 +299,14 @@
     padding: 5px 0px;
 }
 
+@media screen and (max-width:840px) {
+    .main-cal-until{
+        top: -285px;
+        width: 280px;
+        left: -100px;
+    }
+}
+
 /* x times */
 
 .repeat-x-div{

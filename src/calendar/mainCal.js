@@ -13,6 +13,12 @@ export function CreateMainCal(type, outputBtn, smartInputBool, quickBtnBool){
     createCal(mainCalDiv, outputBtn, type);
     return mainCalDiv;
 }
+
+
+
+
+
+
 //creates the actual calendar----------------------------------------------------------------------
 function createCal(parent, output, type){
     const mainCalDiv = elementCreator("div", ["class", "adder-cal-main-div"], false, parent);
@@ -84,9 +90,7 @@ function CalFactory(calParent, mmYY, output, type){
         }
     }
     function calDateToOutputBtn(e){
-        console.log(type);
         if(type!=="until"){
-            console.log("fart");
             output.innerText = renderCalDate(this);
             closeMenuOutside(this.parentElement.parentElement.parentElement.parentElement)
         }
@@ -193,20 +197,40 @@ function calTop(calParent, output, type){
             arrow.addEventListener("click", changeTopDateAndCal);
         };
     })
+    mouseWheelCalFunc(calParent.parentElement);
 
-    function changeTopDateAndCal(){
-        const textPart = this.parentElement.querySelector(".cal-date-text");
-        const ogBtn = this.parentElement.querySelector(".cal-og-date-btn");
+    function mouseWheelCalFunc(calOuterDiv){
+        calOuterDiv.addEventListener("mouseover", startScroll);
+        calOuterDiv.addEventListener("mouseleave", stopScroll);
+        function startScroll(){document.addEventListener("wheel", scrollCal, {once:true})};
+        function stopScroll(){
+            document.removeEventListener("wheel", scrollCal, {once:true})
+        }
+        
+        function scrollCal(e){
+            const delta = e.deltaY;
+            const [,arrowLeft, arrowRight,] =calTopPart.querySelectorAll(".cal-arrow");
+            if(delta<0) changeTopDateAndCal(arrowRight);
+            else changeTopDateAndCal(arrowLeft);
+            document.addEventListener("wheel", scrollCal, {once:true})
+        }
+    }
+   
+    
+    function changeTopDateAndCal(val){
+        if(this!==undefined){val = this};
+        const textPart = val.parentElement.querySelector(".cal-date-text");
+        const ogBtn = val.parentElement.querySelector(".cal-og-date-btn");
         const btnID = ["<<", "<", ">", ">>"];
         const changeDateBy = [-12,-1,1,12];
-        const clickAction = changeDateBy[btnID.indexOf(this.innerText)];
+        const clickAction = changeDateBy[btnID.indexOf(val.innerText)];
         textPart.innerText = monthTraversal(textPart, clickAction);
         ogBtn.style.display = getMonthAndYear()===textPart.innerText?"none":"block";
       
         //deletes old cal and creates new one from the new month or year change
-        const adderCalDiv = this.parentElement.parentElement.querySelector(".adder-cal-div");
+        const adderCalDiv = val.parentElement.parentElement.querySelector(".adder-cal-div");
         adderCalDiv.remove();
-        const newCal = CalFactory(this.parentElement.parentElement,textPart.innerText, output, type);
+        const newCal = CalFactory(val.parentElement.parentElement,textPart.innerText, output, type);
     }
     
     function backToOGDate(e){

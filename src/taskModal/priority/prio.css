@@ -33,17 +33,17 @@
 }
 .prio-normal{
     width: calc(100% / 3);
-    background-color: rgba(123, 217, 29, 0.284);
+    background-color: rgba(85, 189, 64, 0.324);
 }
 
 .prio-high{
     width: calc(100% / 1.5);
-    background-color: rgba(242, 201, 135, 0.6);
+    background-color: rgba(209, 136, 33, 0.336);
     
 }
 .prio-highest{
     width: 100%;
-    background-color: rgba(215, 66, 49, 0.258);
+    background-color: rgba(222, 52, 0, 0.383);
 }
 
 
