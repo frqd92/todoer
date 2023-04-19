@@ -31,9 +31,15 @@ export function renderTasks(){
     const sortedTasks = sortByDate(tasksToDisplay, true);
   
     sortedTasks.forEach((task, i)=>{
-        if(i>1 && task.due!==sortedTasks[i-1].due){
+        if((i>=1 && task.due!==sortedTasks[i-1].due) || i===0){
+            const taskDueGroup = elementCreator("div", ["class", "td-grouped"], false, taskDispDiv);
+            const dropDiv = elementCreator("div", ["class", "td-grouped-drop"], false, taskDueGroup);
+            const dropText = elementCreator("p", false, fullFormattedDate(task.due), dropDiv);
+            const arrow = elementCreator("span", false, "<", dropDiv);
+            const tasksContainer = elementCreator("div", ["class","td-grouped-tasks-div"], false, taskDueGroup);
         }
-        const row = TaskFactory(task, taskDispDiv);
+        const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
+        const row = TaskFactory(task, allGroups[allGroups.length-1]);
         row.createTaskElements()
     })
 

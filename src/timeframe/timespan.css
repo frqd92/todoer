@@ -102,38 +102,37 @@
 }
 
 
-
-  @keyframes arrowboop {
+@keyframes arrowboop {
     0%{font-size: 25px;}
     50%{font-size: 40px;}
     100%{font-size: 25px;}
+}
+
+
+
+@media screen and (max-width:600px) {
+  .week-date-range{
+    gap: 10px;
+  }
+  .ts-main-div{
+      height: fit-content;
+  }
+  .ts-div{
+    font-size: calc(0.6rem + 0.8vw);
+    gap: 5px;
+  }
+  .ts-week-text{
+    display: none;
+
+
+  }
+  .taskbox-arrow-div{
+      height: 30px;
   }
 
-
-
-  @media screen and (max-width:600px) {
-    .week-date-range{
-      gap: 10px;
-    }
-    .ts-main-div{
-        height: fit-content;
-    }
-    .ts-div{
-      font-size: calc(0.6rem + 0.8vw);
-      gap: 5px;
-    }
-    .ts-week-text{
-      display: none;
-
-
-    }
-    .taskbox-arrow-div{
-        height: 30px;
-    }
-
-    .taskbox-arrow-div p{
-        font-size: calc(0.8rem + 1vw);
-    }
+  .taskbox-arrow-div p{
+      font-size: calc(0.8rem + 1vw);
+  }
 
 }
 
