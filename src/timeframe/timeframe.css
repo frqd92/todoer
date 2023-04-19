@@ -12,11 +12,10 @@
 
 .hidden-tf{
     display: block;
-    min-height: 0px;
+    min-height: 26px;
     max-height: 0px;
 
-  
-    
+
 
 }
 .tf-cal-container{
