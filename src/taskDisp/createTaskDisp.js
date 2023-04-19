@@ -32,18 +32,53 @@ export function renderTasks(){
   
     sortedTasks.forEach((task, i)=>{
         if((i>=1 && task.due!==sortedTasks[i-1].due) || i===0){
-            const taskDueGroup = elementCreator("div", ["class", "td-grouped"], false, taskDispDiv);
-            const dropDiv = elementCreator("div", ["class", "td-grouped-drop"], false, taskDueGroup);
-            const dropText = elementCreator("p", false, fullFormattedDate(task.due), dropDiv);
-            const arrow = elementCreator("span", false, "<", dropDiv);
-            const tasksContainer = elementCreator("div", ["class","td-grouped-tasks-div"], false, taskDueGroup);
+            const taskDueGroup = TaskGroupFactory(taskDispDiv, task);
+            taskDueGroup.createTaskGroup();
         }
         const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
         const row = TaskFactory(task, allGroups[allGroups.length-1]);
         row.createTaskElements()
     })
 
+
+
+}function TaskGroupFactory(dispDiv, task){
+    let taskDueGroup, tasksContainer, numOfTasks, arrow;
+    function createTaskGroup(){
+        taskDueGroup = elementCreator("div", ["class", "td-grouped"], false, dispDiv);
+        const dropDiv = elementCreator("div", ["class", "td-grouped-drop"], false, taskDueGroup);
+        const dropText = elementCreator("p", false, fullFormattedDate(task.due), dropDiv);
+        arrow = elementCreator("span", false, "<", dropDiv);
+        tasksContainer = elementCreator("div", ["class","td-grouped-tasks-div"], false, taskDueGroup);
+        numOfTasks = elementCreator("p", ["class", "td-group-num-tasks"], false, taskDueGroup);
+        numOfTasks.style.display = "none";
+
+        dropDiv.addEventListener("click", closeOpenTaskGroup)
+    }
+    function closeOpenTaskGroup(){
+        if(this.className.includes("td-group-hide")){
+            this.classList.remove("td-group-hide")
+            tasksContainer.classList.remove("td-group-container-hide");
+            numOfTasks.style.display = "none";
+            arrow.classList.remove("group-arrow-hide")
+            
+        }
+        else{
+            this.classList.add("td-group-hide")
+            tasksContainer.classList.add("td-group-container-hide")
+            const length = tasksContainer.children.length;
+            const txt = length>1?" hidden tasks":" hidden task";
+            numOfTasks.innerText = length + txt;
+            numOfTasks.style.display = "block";
+            arrow.classList.add("group-arrow-hide")
+        }
+    }
+
+    return {taskDueGroup, tasksContainer, createTaskGroup, closeOpenTaskGroup}
 }
+
+
+
 
 
 
@@ -142,7 +177,7 @@ function TaskFactory(taskObj, dispDiv){
         lowerPart.classList.remove("lower-opened")
     }
     function closeAll(){
-        const allRows = dispDiv.querySelectorAll(".task-row-main");
+        const allRows = document.querySelectorAll(".task-row-main");
         allRows.forEach(row=>{
             const upperPart = row.querySelector(".task-row-upper");
             const lowerPart = row.querySelector(".task-row-lower");

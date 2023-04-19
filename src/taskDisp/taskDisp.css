@@ -20,17 +20,18 @@
 
 /* dropdown groups */
 .td-grouped{
+    position: relative;
     display: flex;
     flex-direction: column;
-    min-width: 315px;
+    min-width: 340px;
     padding: 0% 5% 0% 5%;
     padding-bottom: max(18px, 2%);
     border-radius: 10px;
     transition: background-color 0.13s linear;
     border: 1px solid rgba(0, 0, 0, 0.314);
-    background-color: rgba(13, 34, 82, 0.217);
+    background-color: rgba(251, 251, 251, 0.184);
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
-
+    gap: 1vw;
 
 
 }
@@ -43,27 +44,66 @@
     gap: 10px;
     user-select: none;
     cursor: pointer;
-    width: 100%;
+    width: inherit;
+    padding: 5px 0px;
+    border-radius: 10px 10px 0px 0px;
+    width: calc(100% + 11.1%);
+
+}
+.td-grouped-drop:hover{
+    background-color: rgba(0, 0, 0, 0.09);
 }
 .td-grouped-drop p{
     font-family: oxygen;
     font-size: calc(0.7rem + 0.6vw);
 }
 .td-grouped-drop span {
+    border: 1px solid rgba(0, 0, 0, 0.238);
+    border-radius: 50px;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: rgba(0, 0, 0, 0.39);
     font-family: sofia;
     font-size: calc(0.7rem + 0.7vw);
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    transform: rotate(-90deg);
+    transition: transform 0.12s ease-in-out;
+}
+.group-arrow-hide{
+    transform: rotate(0deg) !important;
+}
+.td-grouped-drop span:hover{
+    background-color: rgba(11, 196, 238, 0.085);
 }
 .td-grouped-tasks-div{
     display: flex;
     flex-direction: column;
     gap: 1.2vw;
+
+
+}
+.td-group-container-hide{
+    height: 0px;
+    overflow: hidden;
 }
 
+.td-group-num-tasks{
+    position: absolute;
+    align-self: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-style: italic;
+    bottom: 15%;
+    font-size: calc(0.6rem + 0.4vw);
+}
 /* row */
 .task-row-main{
     box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     border-radius: 5px;
     min-width: 270px;
+    border: 1px solid rgba(0, 0, 0, 0.343);
 
 }
 
@@ -78,7 +118,6 @@
     border-radius: 5px;
     font-size: 1rem;
     background-color: rgba(255, 255, 255, 0.246);
-
 
 }
 .upper-opened{
@@ -102,6 +141,9 @@
     border-top: none;
 }
 
+
+
+.td
 /* row div */
 .task-row-upper{
     border: 1px solid rgba(0, 0, 0, 0.248);
@@ -386,7 +428,8 @@ font-size: 0.75rem;
     font-family: ptserif;
     white-space: nowrap;
     font-weight: 900;
-    font-size: 110%;
+    font-size: calc(13px + 0.4vw);
+
 }
 
 .tr-l-elem p:nth-child(2){
@@ -566,7 +609,13 @@ font-size: 0.75rem;
 
 
 @media screen and (max-width:440px) {
-.task-mini-cal{
-    display: none;
-}
+
+    .task-mini-cal{
+        display: none;
+    }
+  
+    .task-row-upper{
+        grid-template-columns: 150px 1fr 0.5fr 20px;
+
+    }
 }
