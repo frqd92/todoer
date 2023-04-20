@@ -1,4 +1,5 @@
 #task-disp-main{
+    position: relative;
     margin-top: 2%;
     padding: 2% 10%;
     display: flex;
@@ -6,16 +7,21 @@
     justify-content: center;
     gap: 1.5vw;
 }
+
 .empty-task-div{
-    margin: 0 !important;
-    padding: 0 !important;
+
+    position: absolute;
+    transform: translateY(150%);
     justify-content: center;
     align-items: center;
-    height: 50%;
     opacity: 0.7;
     font-size: calc(0.9rem + 1vw);
     font-family: oxygen;
+    
 
+}
+#task-empty-msg{
+    /* border: 1px solid black; */
 }
 
 /* dropdown groups */

@@ -1,11 +1,13 @@
 .ts-main-div{
- 
+  position: sticky;
+  top: 50px;
+
 
     user-select: none;
     display: grid;
     grid-template-columns: 1fr 1.5fr 1fr;
     border-top: 1px solid rgba(0, 0, 0, 0.199);
-
+    min-width:  368px;
 
 
 }
@@ -121,11 +123,7 @@
     font-size: calc(0.6rem + 0.8vw);
     gap: 5px;
   }
-  .ts-week-text{
-    display: none;
-
-
-  }
+ 
   .taskbox-arrow-div{
       height: 30px;
   }

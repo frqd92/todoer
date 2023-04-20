@@ -78,18 +78,7 @@ export function readUserTasksServer(isRender){
   });
 }
 //read
-export function createTasksServer(){
-  const userID = auth.currentUser.uid;
-  const dbRef = ref(getDatabase());
-  get(child(dbRef, `users/${userID}/tasks`)).then((snapshot) => {
-    if (snapshot.exists()) {
-    } else {
-      console.log("No data available");
-    }
-  }).catch((error) => {
-    console.error(error);
-  });
-}
+
 export function readUserGroupsServer(){
     const userID = auth.currentUser.uid;
     const dbRef = ref(getDatabase());

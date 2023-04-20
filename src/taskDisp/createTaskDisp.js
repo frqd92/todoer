@@ -9,6 +9,7 @@ import { prioToColor } from '../utilities/priorityColor';
 import { followMouseHoverText } from '../utilities/hoverDiv';
 import { findRelativeDate, returnMonth } from '../utilities/dateUtils';
 import { processRepeat } from './processRepeat';
+import { createSRCal } from '../timeframe/createTimeframe';
 export function createTaskDisplay(){
     if(document.getElementById("task-disp-main")!==null) document.getElementById("task-disp-main").remove()
     const taskDispDiv = elementCreator("div", ["id", "task-disp-main"], false, document.body);
@@ -133,7 +134,6 @@ function CalTaskFactory(dispRow, taskObj){
     const calTaskContainer = calSquare.querySelector(".sr-task-div");
     let calTaskDiv;
     function createCalRow(){
-        console.log(timeframeOption);
         calTaskDiv = elementCreator("div", ["class","cal-task",`cal-task-${timeframeOption.toLocaleLowerCase()}`], false, calTaskContainer);
         const title = elementCreator("p", ["class", "cal-task-title"], taskObj.title, calTaskDiv);
     }
@@ -141,6 +141,7 @@ function CalTaskFactory(dispRow, taskObj){
     return {calTaskDiv, createCalRow}
 }
 export function renderTasks(){
+    createSRCal()
     const taskDispDiv = document.getElementById("task-disp-main");
     const [fromDate, toDate] = getFromToDate();
     const tasksToDisplay = returnRangeTasks(mainTaskArr, fromDate, toDate);
@@ -177,6 +178,7 @@ export function renderTasks(){
             calRow.createCalRow();
         }
     })
+
 
 }
 
