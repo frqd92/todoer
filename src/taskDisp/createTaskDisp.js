@@ -7,87 +7,26 @@ import { returnRangeTasks, sortByDate } from '../utilities/sortTasks';
 import { createMiniCal } from '../Header/createHeader';
 import { prioToColor } from '../utilities/priorityColor';
 import { followMouseHoverText } from '../utilities/hoverDiv';
+import { findRelativeDate, returnMonth } from '../utilities/dateUtils';
+import { processRepeat } from './processRepeat';
 export function createTaskDisplay(){
     if(document.getElementById("task-disp-main")!==null) document.getElementById("task-disp-main").remove()
     const taskDispDiv = elementCreator("div", ["id", "task-disp-main"], false, document.body);
 
     if(isLogged) readUserTasksServer(true)
     else renderTasks()
-
 }
-
-
-export function renderTasks(){
-
-    const taskDispDiv = document.getElementById("task-disp-main");
-    const [fromDate, toDate] = getFromToDate();
-    const tasksToDisplay = returnRangeTasks(mainTaskArr, fromDate, toDate);
-
-    if(tasksToDisplay.length===0){
-        createEmptyMessage(taskDispDiv);
-        return
-    }
-    taskDispDiv.classList.remove("empty-task-div");
-    const sortedTasks = sortByDate(tasksToDisplay, true);
-  
-    sortedTasks.forEach((task, i)=>{
-        if((i>=1 && task.due!==sortedTasks[i-1].due) || i===0){
-            const taskDueGroup = TaskGroupFactory(taskDispDiv, task);
-            taskDueGroup.createTaskGroup();
-        }
-        const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
-        const row = TaskFactory(task, allGroups[allGroups.length-1]);
-        row.createTaskElements()
-    })
-
-
-
-}function TaskGroupFactory(dispDiv, task){
-    let taskDueGroup, tasksContainer, numOfTasks, arrow;
-    function createTaskGroup(){
-        taskDueGroup = elementCreator("div", ["class", "td-grouped"], false, dispDiv);
-        const dropDiv = elementCreator("div", ["class", "td-grouped-drop"], false, taskDueGroup);
-        const dropText = elementCreator("p", false, fullFormattedDate(task.due), dropDiv);
-        arrow = elementCreator("span", false, "<", dropDiv);
-        tasksContainer = elementCreator("div", ["class","td-grouped-tasks-div"], false, taskDueGroup);
-        numOfTasks = elementCreator("p", ["class", "td-group-num-tasks"], false, taskDueGroup);
-        numOfTasks.style.display = "none";
-
-        dropDiv.addEventListener("click", closeOpenTaskGroup)
-    }
-    function closeOpenTaskGroup(){
-        if(this.className.includes("td-group-hide")){
-            this.classList.remove("td-group-hide")
-            tasksContainer.classList.remove("td-group-container-hide");
-            numOfTasks.style.display = "none";
-            arrow.classList.remove("group-arrow-hide")
-            
-        }
-        else{
-            this.classList.add("td-group-hide")
-            tasksContainer.classList.add("td-group-container-hide")
-            const length = tasksContainer.children.length;
-            const txt = length>1?" hidden tasks":" hidden task";
-            numOfTasks.innerText = length + txt;
-            numOfTasks.style.display = "block";
-            arrow.classList.add("group-arrow-hide")
-        }
-    }
-
-    return {taskDueGroup, tasksContainer, createTaskGroup, closeOpenTaskGroup}
-}
-
-
-
-
-
 
 function TaskFactory(taskObj, dispDiv){
     let rowDiv, upperPart, lowerPart;
     function createTaskElements(){
         rowDiv = elementCreator("div", ["class", "task-row-main"], false, dispDiv);
-
         upperPart = elementCreator("div", ["class", "task-row-upper"], false, rowDiv );
+                // if repeated elem
+                if(taskObj.isRepObject){
+                    rowDiv.classList.add("task-row-repeated");
+                    const repLabel = elementCreator("div", ["class", "tr-repeated-label"], "Recurring", upperPart);
+                }
         const dueLine = elementCreator("div", ["class", "div-line"], false, upperPart)
         const titleDiv = elementCreator("div", ["class", "tr-title"], false, upperPart);
         elementCreator("p", false, taskObj.title, titleDiv)
@@ -189,6 +128,121 @@ function TaskFactory(taskObj, dispDiv){
     return {rowDiv, createTaskElements}
 }
 
+function CalTaskFactory(dispRow, taskObj){
+    const calSquare = document.getElementById(`datecal-${taskObj.due}`);
+    const calTaskContainer = calSquare.querySelector(".sr-task-div");
+    let calTaskDiv;
+    function createCalRow(){
+        console.log(timeframeOption);
+        calTaskDiv = elementCreator("div", ["class","cal-task",`cal-task-${timeframeOption.toLocaleLowerCase()}`], false, calTaskContainer);
+        const title = elementCreator("p", ["class", "cal-task-title"], taskObj.title, calTaskDiv);
+    }
+
+    return {calTaskDiv, createCalRow}
+}
+export function renderTasks(){
+    const taskDispDiv = document.getElementById("task-disp-main");
+    const [fromDate, toDate] = getFromToDate();
+    const tasksToDisplay = returnRangeTasks(mainTaskArr, fromDate, toDate);
+    //check for repeated tasks
+    const chosenDate = taskboxDateArray(document.querySelector(`.${timeframeOption.toLocaleLowerCase()}-date-range`), timeframeOption);
+    mainTaskArr.forEach(elem=>{
+        if(elem.repeat){
+            const repeatedElem = processRepeat(elem, chosenDate);
+            if(repeatedElem){
+                repeatedElem.forEach(repElem=>{tasksToDisplay.push(repElem)})
+            }
+        }
+
+    })
+
+    if(tasksToDisplay.length===0){
+        createEmptyMessage(taskDispDiv);
+        return;
+    }
+    taskDispDiv.classList.remove("empty-task-div");
+    //sort by date
+    const sortedTasks = sortByDate(tasksToDisplay, true);
+
+    sortedTasks.forEach((task, i)=>{
+        if((i>=1 && task.due!==sortedTasks[i-1].due) || i===0){
+            const taskDueGroup = TaskGroupFactory(taskDispDiv, task);
+            taskDueGroup.createTaskGroup();
+        }
+        const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
+        const row = TaskFactory(task, allGroups[allGroups.length-1]);
+        row.createTaskElements()
+        if(timeframeOption==="Week" || timeframeOption==="Month"){
+            const calRow = CalTaskFactory(row, task);
+            calRow.createCalRow();
+        }
+    })
+
+}
+
+function TaskGroupFactory(dispDiv, task){
+    let taskDueGroup, tasksContainer, numOfTasks, arrow;
+    function createTaskGroup(){
+        taskDueGroup = elementCreator("div", ["class", "td-grouped"], false, dispDiv);
+        const dropDiv = elementCreator("div", ["class", "td-grouped-drop"], false, taskDueGroup);
+        const dropText = elementCreator("p", false, fullFormattedDate(task.due), dropDiv);
+        arrow = elementCreator("span", false, "<", dropDiv);
+        tasksContainer = elementCreator("div", ["class","td-grouped-tasks-div"], false, taskDueGroup);
+        numOfTasks = elementCreator("p", ["class", "td-group-num-tasks"], false, taskDueGroup);
+        numOfTasks.style.display = "none";
+        dropDiv.addEventListener("click", closeOpenTaskGroup)
+    }
+    function closeOpenTaskGroup(){
+        if(this.className.includes("td-group-hide")){
+            this.classList.remove("td-group-hide")
+            tasksContainer.classList.remove("td-group-container-hide");
+            numOfTasks.style.display = "none";
+            arrow.classList.remove("group-arrow-hide")
+            
+        }
+        else{
+            this.classList.add("td-group-hide")
+            tasksContainer.classList.add("td-group-container-hide")
+            const length = tasksContainer.children.length;
+            const txt = length>1?" hidden tasks":" hidden task";
+            numOfTasks.innerText = length + txt;
+            numOfTasks.style.display = "block";
+            arrow.classList.add("group-arrow-hide")
+        }
+    }
+
+    return {taskDueGroup, tasksContainer, createTaskGroup, closeOpenTaskGroup}
+}
+
+
+
+//takes the selected range of time, and displays all the dates in an array
+function taskboxDateArray(dateDiv, type){
+    if(type==="Day"){
+        const [dd,mm,yy] = textDateToNum(dateDiv.innerText).split("/");
+        return [[Number(dd), Number(mm), Number(yy)]];
+    }
+    else if(type==="Week"){
+        const allArr = [];
+        const dateStart = dateDiv.querySelector(".week-date-range p").innerText;
+        for(let i=0;i<7;i++){
+            const [dd,mm,yy] = findRelativeDate(dateStart, i, true).split("/");
+            allArr.push([Number(dd), Number(mm), Number(yy)])
+        }
+        return allArr;
+    }
+    else if(type==="Month"){
+        const allArr = [];
+        const monthSquares = document.querySelectorAll(".sr-m-square");
+        let [mm,yy] = dateDiv.innerText.split(" ");
+        mm = returnMonth(mm);
+        for(let i=1;i<=monthSquares.length;i++){
+            allArr.push([i,mm,Number(yy)]);
+        }
+        return allArr;
+    }
+}
+
 
 
 
@@ -246,8 +300,8 @@ function getFromToDate(){
         case "Month":
             const allS = document.querySelectorAll(".sr-m-square");
             return [
-                dispDateStrToObjDate(allS[0].classList[1].split("-").pop()),
-                dispDateStrToObjDate(allS[allS.length-1].classList[1].split("-").pop())
+                dispDateStrToObjDate(allS[0].id.split("-").pop()),
+                dispDateStrToObjDate(allS[allS.length-1].id.split("-").pop())
             ];
     }
 

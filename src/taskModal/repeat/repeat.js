@@ -44,8 +44,9 @@ function createEffective(parent, outputBtn){
     }
 
     function saveRepeatOptions(){
-        if(readRepeatData()!==undefined){
-            outputBtn.innerText = readRepeatData();
+        const repeatData = readRepeatData()
+        if(repeatData!==undefined){
+            outputBtn.innerText = repeatData;
             const repeatMenu = this.closest(".add-menu-repeat");
             closeMenuOutside(repeatMenu);
             if(isOverflown(outputBtn)) outputBtn.classList.add("repeat-overflown")
@@ -110,8 +111,7 @@ function createEffective(parent, outputBtn){
         const effectiveBtnText = menu.querySelector(".effective-btn-text").innerText;
         repeatData += effectiveBtnText
 
-
-        return repeatData;
+        return repeatData.split(" ").slice(3).join(" ");
     }
 
     function noRepeatFunc(){

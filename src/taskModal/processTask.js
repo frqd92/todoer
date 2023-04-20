@@ -62,6 +62,7 @@ export function processTask(){
     const bgModal = createBodyModal(this.parentElement.parentElement);
     bgModal.closeDiv();
     createTaskDisplay()
+ 
 }
 
 
@@ -93,7 +94,7 @@ function validateTitle(titleDiv){
     
     
     
-function createID(){
+export function createID(){
     const arr=[];
     for(let i=0;i<10;i++) arr.push(Math.floor(Math.random()*10));
     const now = new Date();

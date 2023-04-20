@@ -1,6 +1,6 @@
 import '/src/singleRowCal/singleRow.css';
 import { elementCreator } from '../utilities/elementCreator';
-import { daysInMonth, returnMonth, weekDayFind} from '../utilities/dateUtils';
+import { addZeroDispDate, daysInMonth, returnMonth, weekDayFind} from '../utilities/dateUtils';
 
 
 export function createMonthCal(){
@@ -22,9 +22,12 @@ function createMonthSquares(parent){
     let currentWeekDay = weekNames.indexOf(weekDayFind(`${yyElem}/${returnMonth(mmElem) + 1}/1`).slice(0,3))
 
     for(let i=0;i<daysInCurrentMonth;i++){
-        const square = elementCreator("div", ["class", "sr-m-square", `datecal-${i+1}/${currentMonth.getMonth()+1}/${yyElem}`], false, parent);
+        const square = elementCreator("div", ["class", "sr-m-square"], false, parent);
+        const clDate = addZeroDispDate(`${i+1}/${currentMonth.getMonth()+1}/${yyElem}`)
+        square.id = `datecal-${clDate}`;
         const weekNum = elementCreator("div", ["class", "sr-month-num"],i+1 , square);
         const numOfTasksCont = elementCreator("div", ["class", "sr-month-task-cont"], false, square);
+        const taskDiv = elementCreator("div", ["class", "sr-task-div"], false, square)
         const weekLabel = elementCreator("div", ["class", "sr-month-label-week"],weekNames[currentWeekDay], square);
         currentWeekDay++;
         if(currentWeekDay===7)currentWeekDay=0;

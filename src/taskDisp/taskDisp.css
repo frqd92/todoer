@@ -107,6 +107,7 @@
 
 }
 
+/* upper part */
 .task-row-upper{
     user-select: none;
     position: relative;
@@ -119,6 +120,22 @@
     font-size: 1rem;
     background-color: rgba(255, 255, 255, 0.246);
 
+}
+/* repeated */
+
+.tr-repeated-label{
+    position: absolute;
+    border: 1px solid rgba(0, 0, 0, 0.7);
+    border-left: none;
+    border-bottom: none;
+    border-top-right-radius:3px;
+    padding: 1px 3px;
+    font-size: 80%;
+    background-color: rgba(255, 255, 255, 0.23);
+    font-family: zilla ;
+    letter-spacing: 0.02rem;
+    bottom: 0;
+    opacity: 0.6;
 }
 .upper-opened{
     border-radius: 5px 5px 0px 0px;
@@ -149,7 +166,7 @@
     border: 1px solid rgba(0, 0, 0, 0.248);
 
 }
-.task-row-upper> div{
+.task-row-upper> div:not(.tr-repeated-label){
    height: 100%;
 }
 .task-row-upper:hover{

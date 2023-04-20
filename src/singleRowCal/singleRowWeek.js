@@ -1,5 +1,5 @@
 import { elementCreator } from '../utilities/elementCreator';
-import { findRelativeDate, getToday, returnMonth } from '../utilities/dateUtils';
+import { addZero, addZeroDispDate, findRelativeDate, getToday, returnMonth } from '../utilities/dateUtils';
 import '/src/singleRowCal/singleRow.css'
 import { createAddModal } from '../taskModal/createModal';
 import { makeAdd } from '../Header/createHeader';
@@ -22,7 +22,9 @@ function createWeekSquares(parent){
         const weekLabel = elementCreator("div", ["class", "sr-week-label-week"], weekNames[i], square);
         let [squareDay, squareMonth, squareYear] = findRelativeDate(dateStart, i, true).split("/");
         const month = returnMonth(squareMonth).slice(0,3);
-        square.classList.add(`datecal-${squareDay}/${Number(squareMonth)+1}/${squareYear}`)
+        const clDate = addZeroDispDate(`${squareDay}/${Number(squareMonth)+1}/${squareYear}`)
+        square.id = `datecal-${clDate}`
+
         if(squareDay==todayDD && squareMonth===todayMM && squareYear===todayYY){
             elementCreator("p", ["class", "sr-week-day-num"], "Today", square)
             square.classList.add("sr-week-today");

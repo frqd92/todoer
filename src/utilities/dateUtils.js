@@ -1,4 +1,5 @@
-const monthArr = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
+export const monthArr = ["January", "February", "March","April","May", "June", "July", "August", "September", "October", "November", "December"];
+export const weeksExp = ["Monday","Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
 //if today is mon feb 2023... "day" returns Monday.... "month" returns February...year 2023
 //if no chosen date then date is today
 export function getCurrentDateText(value, chosenDate){
@@ -228,3 +229,21 @@ export function dispDateStrToObjDate(strDate){
 
 
 
+//converts arr to date obj
+
+export function arrToDateObj(arr){
+  const [dd, mm, yy] = arr;
+  return new Date(`${yy}/${Number(mm)+1}/${dd}`)
+}
+
+//same as the other one but fucked up with formats again
+export function findRelativeDateForRepeats(date, num){
+  const nextDate = new Date(date);
+  nextDate.setDate(date.getDate() + num);
+  return new Date(`${nextDate.getFullYear()}/${nextDate.getMonth()+1}/${nextDate.getDate()}`)
+}
+
+//same as other one but less stupid format
+export function daysInMonthRepeat(date){
+  return new Date(date.getFullYear(), date.getMonth()+1,0 ).getDate();
+}

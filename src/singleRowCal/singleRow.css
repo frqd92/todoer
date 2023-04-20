@@ -1,6 +1,6 @@
 
 .tf-cal-container{
- 
+
 }
 
 /* week cal */
@@ -18,6 +18,8 @@
     display: grid;
     grid-template-columns: 1fr 3fr;
     grid-template-rows: 1fr 5fr;
+    aspect-ratio: 1 / 1;
+    overflow: hidden;
 
 }
 .sr-week-label-week{
@@ -26,6 +28,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+  
 }
 .sr-week-day-num{
     grid-column: 2 / 3;
@@ -38,15 +41,41 @@
 }
 
 .sr-task-div{
-    border-top: 1px solid rgba(0, 0, 0, 0.135);
     grid-column: 1 / 3;
     grid-row: 2 / 3;
 }
 .sr-cal-add-task{
-    position: absolute;
-    bottom: 0;
-    right: 50%;
-    transform: translateX(50%);
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+
+}
+/* cal tasks */
+
+.sr-task-div{
+    overflow: scroll;
+    border-top: 1px solid rgba(0, 0, 0, 0.294);
+ }
+ .cal-task-week{
+     padding: 2% 0px;
+     padding-left: 3%;
+     border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+ }
+ 
+ .cal-task-title{
+     white-space: nowrap;
+     overflow: hidden;
+     text-overflow: ellipsis;
+     text-align:center;
+     font-size: calc(0.45rem + 0.45vw);
+     font-family: open;
+ 
+ }
+
+
+
+
+.sr-cal-add-task{
+    text-align: center;
     font-size: calc(0.6rem + 0.7vw);
     opacity: 0.5;
     transition: transform 0.15s linear;
@@ -57,7 +86,7 @@
 }
 
 .sr-cal-add-task:hover{
-    transform: translateX(50%) scale(1.4);
+    transform: scale(1.4);
     opacity: 0.8;
 
     
@@ -128,3 +157,4 @@
     text-align: center;
     align-self: center;
 }
+
