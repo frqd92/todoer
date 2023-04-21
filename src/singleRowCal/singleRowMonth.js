@@ -1,6 +1,8 @@
 import '/src/singleRowCal/singleRow.css';
 import { elementCreator } from '../utilities/elementCreator';
 import { addZeroDispDate, daysInMonth, returnMonth, weekDayFind} from '../utilities/dateUtils';
+import { countMonthTasks } from '../taskDisp/calTask';
+import { makeAdd } from '../Header/createHeader';
 
 
 export function createMonthCal(){
@@ -29,11 +31,14 @@ function createMonthSquares(parent){
         const numOfTasksCont = elementCreator("div", ["class", "sr-month-task-cont"], false, square);
         const taskDiv = elementCreator("div", ["class", "sr-task-div", "cal-month-task-hide"], false, square)
         const weekLabel = elementCreator("div", ["class", "sr-month-label-week"],weekNames[currentWeekDay], square);
+        const calAddBtn = elementCreator("div", ["class", "sr-cal-add-task", "sr-cal-add-task-hide"], "+", square);
+        calAddBtn.addEventListener("click", makeAdd)
+        
         currentWeekDay++;
         if(currentWeekDay===7)currentWeekDay=0;
         square.addEventListener("mouseover", showTaskDivHover, {once:true});
         square.addEventListener("click", showHideTaskDiv);
-
+   
     }
 
 
@@ -41,11 +46,12 @@ function createMonthSquares(parent){
         closeAll();
         const taskDiv = this.querySelector(".sr-task-div");
         const numOfTasksCont = this.querySelector(".sr-month-task-cont");
-
+        const callAddBtn = this.querySelector(".sr-cal-add-task");
         if(taskDiv.children.length<1) return;
         this.classList.add("cal-month-open");
         taskDiv.classList.remove("cal-month-task-hide")
         numOfTasksCont.style.visibility = "hidden";
+        callAddBtn.classList.remove("sr-cal-add-task-hide")
 
     }
 
@@ -53,6 +59,8 @@ function createMonthSquares(parent){
         if(this.className.includes("cal-month-open")) return;
         const taskDiv = this.querySelector(".sr-task-div");
         const numOfTasksCont = this.querySelector(".sr-month-task-cont");
+        const callAddBtn = this.querySelector(".sr-cal-add-task");
+        callAddBtn.classList.remove("sr-cal-add-task-hide")
         numOfTasksCont.style.visibility = "hidden";
         taskDiv.classList.remove("cal-month-task-hide")
         this.addEventListener("mouseleave", hideTaskDivHover, {once:true});
@@ -63,6 +71,9 @@ function createMonthSquares(parent){
 
         const taskDiv = this.querySelector(".sr-task-div");
         const numOfTasksCont = this.querySelector(".sr-month-task-cont");
+        const callAddBtn = this.querySelector(".sr-cal-add-task");
+
+        callAddBtn.classList.add("sr-cal-add-task-hide")
         taskDiv.classList.add("cal-month-task-hide")
         numOfTasksCont.style.visibility = "visible";
 
@@ -74,9 +85,13 @@ function createMonthSquares(parent){
     function closeAll(){
         document.querySelectorAll(".cal-month-open").forEach(elem=>{
             const taskDiv = elem.querySelector(".sr-task-div");
+            const callAddBtn  = elem.querySelector(".sr-cal-add-task");
+            callAddBtn.classList.add("sr-cal-add-task-hide")
+
             taskDiv.classList.add("cal-month-task-hide")
             elem.classList.remove("cal-month-open")
         })
     }
+    countMonthTasks()
 
 }

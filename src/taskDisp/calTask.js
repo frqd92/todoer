@@ -19,7 +19,8 @@ export function countMonthTasks(){
         const numOfTasksTxt= square.querySelector(".sr-month-task-cont")
         const numOfTasks = square.querySelector(".sr-task-div").children.length;
         if(numOfTasks>0){
-            numOfTasksTxt.innerText = numOfTasks + " tasks"
+            const taskTxt = numOfTasks===1?"task":"tasks";
+            numOfTasksTxt.innerText = numOfTasks +" "+ taskTxt;
         }
 
     })

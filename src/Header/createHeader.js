@@ -32,12 +32,12 @@ function createAddTaskBtn(parent){
     return div
 }
 export function makeAdd(){
-
     const div = elementCreator("div", ["class", "header-add-div"], false, document.body);
     const bgModal= createBodyModal(div);
     bgModal.createDiv();
-    if(this.parentElement.className.includes("datecal")){
-        const date = this.parentElement.classList[1].split("-").pop();
+    if(this.parentElement.id.includes("datecal")){
+        console.log("shart");
+        const date = this.parentElement.id.split("-").pop();
         div.appendChild(createAddModal(false, date))     
     }
     else div.appendChild(createAddModal(false, false))

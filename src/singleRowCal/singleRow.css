@@ -69,31 +69,34 @@
  }
  
  .cal-task-title{
-     white-space: nowrap;
-     overflow: hidden;
-     text-overflow: ellipsis;
-     text-align:center;
-     font-size: calc(0.45rem + 0.45vw);
-     font-family: open;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    text-align:center;
+    font-size: calc(0.45rem + 0.45vw);
+    font-family: open;
     padding: 1% 1%;
-     padding-left: 2%;
+    padding-left: 2%;
     flex-grow: 1;
  }
  .cal-task-title:hover{
     background-color: rgba(0, 0, 0, 0.096);
  }
+
+
+
 .sr-task-div::-webkit-scrollbar {
     width: 5px;
 }
 
-
 .sr-task-div::-webkit-scrollbar-track {
-    background-color: rgb(122, 122, 122);
+background: rgba(255, 255, 255, 0);
 
 }
 
 .sr-task-div::-webkit-scrollbar-thumb {
-   
+    background: black;
+
 
 }
 
@@ -109,7 +112,7 @@
     cursor: pointer;
     font-family: 'Times New Roman', Times, serif;
     width: fit-content;
-
+    
 }
 
 .sr-cal-add-task:hover{
@@ -141,45 +144,55 @@
 
 /* single row month------------------------------------------------------------------- */
 .sr-month-div{
-
     display: flex;
     justify-content: space-around;
     height: 100%;
     border: 1px solid rgba(0, 0, 0, 0.018);
+    min-width: 408px;
 }
 
 .sr-m-square{
     position: relative;
-    padding: 2px 0px;
     border-right: 1px solid rgba(0, 0, 0, 0.235);
     width: 100%;
     display: grid;
     grid-template-columns: 1fr;
-    grid-template-rows: 1fr 5fr 1fr;
+    grid-template-rows: 0.8fr 3fr 1fr;
     justify-items: center;
+    transition: width 0.3s ease;
+    aspect-ratio: 1 / 4;
     overflow: hidden;
-    transition: width 0.5s ease;
+    max-height: 13vw;
+    min-height: 70px;
+}
 
+
+.sr-m-square .sr-cal-add-task{
+    cursor: pointer;
+    
+
+}
+.sr-cal-add-task-hide{
+        display: none;
 }
 .cal-task-month{
     border-bottom: 1px solid rgba(0, 0, 0, 0.18);
+
+
 }
 .sr-m-square:hover, .cal-month-open{
     width: 400%;
-    /* flex: 0.01 0 15%; */
+    grid-template-columns: 1fr;
 
 }
 .cal-month-task-hide{
     display: none !important;
 }
-.sr-m-square  .sr-task-div{
-
-    position: absolute;
+.sr-m-square .sr-task-div{
+ 
     width: 100%;
   
 }
-
-
 
 .sr-month-task-cont{
     writing-mode: vertical-rl;text-orientation: mixed;
@@ -194,13 +207,30 @@
     color: rgba(0, 0, 0, 0.763);
     font-family: roboto-medium;
     font-size: calc(0.3rem + 0.6vw);
-
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .sr-month-label-week{
     font-family: roboto;
     font-size: calc(0.2rem + 0.4vw);
     text-align: center;
     align-self: center;
+    width: 100%;
+
+
+}
+.cal-month-open{
+  
+}
+.cal-month-open .sr-month-num{
+    grid-column: 1 / 3;
+
+}
+.cal-month-open .sr-month-label-week{
+    grid-column: 1 / 3;
+    align-self: end;
 }
 
 @media screen and (max-width: 600px) {
