@@ -1,13 +1,11 @@
 .timeframe-div{
-
     display: grid;
     grid-template-columns: 1fr 12fr;
     grid-template-rows: 1fr 13px;
-    height:12vw;
+    height: fit-content;
     min-height: 90px;
     max-height: 250px;
     min-width:  368px;
-
     user-select: none;
     transition: all 0.15s linear;
 
@@ -15,9 +13,8 @@
 
 .hidden-tf{
     display: block;
-    min-height: 26px;
+    min-height: 0px;
     max-height: 0px;
-
 
 
 }
@@ -42,7 +39,7 @@
 
 }
 .hidden-timeframe{
-    height: 0%;
+    height: 0px;
     overflow: hidden;
 
 }
@@ -72,9 +69,6 @@
 .tf-chosen-arrow{
     opacity: 0.7;
 }
-.tf-hidden{
-    border-top: none !important;
-}
 
 .tf-range-row:last-child{
   box-shadow: none;
@@ -99,13 +93,18 @@
     justify-content: center;
     align-items: center;
     text-shadow: 0px 0px 1px rgba(0, 0, 0, 0.579);
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    box-shadow: rgba(0, 0, 0, 0.3) 1.95px 1.95px 2.6px;
     border-bottom: 1px solid rgba(0, 0, 0, 0.4);
     cursor: pointer;
     font-size: 0.8rem;
-    opacity: 0.3;
     height: 13px;
-    border-top:1px solid black ;
+    border-top:1px solid black;
+    background-color: rgba(87, 102, 129, 0.995) !important; 
+}
+
+.tf-hidden{
+    border-top: none !important;
+    opacity:0.8 !important;
 }
 
 .hide-tf-btn:hover{
@@ -122,13 +121,13 @@
     transform: rotate(45deg);
     filter: drop-shadow(0px 1px 5px black);
     transition: all 0.25s linear;
-
 }
 .hide-tf-arrow-down{
     margin-top: -5px;
     transform: rotate(225deg);
  
 }
+
 
 @keyframes hideTFAnim {
     0%{
@@ -152,10 +151,7 @@
 
 
 @media screen and (max-width:1000px) and (min-width:670px) {
-    .timeframe-div{
-        height: 15vw;
 
-    }
     .tf-range-row{
         font-size: 0.9rem;
         

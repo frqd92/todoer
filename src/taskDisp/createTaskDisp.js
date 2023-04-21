@@ -10,6 +10,8 @@ import { followMouseHoverText } from '../utilities/hoverDiv';
 import { findRelativeDate, returnMonth } from '../utilities/dateUtils';
 import { processRepeat } from './processRepeat';
 import { createSRCal } from '../timeframe/createTimeframe';
+import { CalTaskFactory, countMonthTasks } from './calTask';
+import { checkForTasks } from '../mainPage/mainPage';
 export function createTaskDisplay(){
     if(document.getElementById("task-disp-main")!==null) document.getElementById("task-disp-main").remove()
     const taskDispDiv = elementCreator("div", ["id", "task-disp-main"], false, document.body);
@@ -43,8 +45,7 @@ function TaskFactory(taskObj, dispDiv){
         const checkBoxDiv = createCheckbox(upperPart);
         followMouseHoverText(trPriority, taskObj.priority + " priority");
         if(taskObj.group){ followMouseHoverText(trGroup, taskObj.group) }
-        followMouseHoverText(trRepeat, taskObj.repeat?taskObj.repeat:"no repeat");
-
+        followMouseHoverText(trRepeat,taskObj.repeat?"Repeat every " + taskObj.repeat:"no repeat");
         lowerPart = elementCreator("div", ["class", "task-row-lower"], false, rowDiv);
         const lowerBox = elementCreator("div", ["class", "tr-l-box"], false, lowerPart)
         const lowerPrioLabel = elementCreator("div", ["class", "tr-l-prio"], taskObj.priority + " priority", lowerBox);
@@ -129,17 +130,6 @@ function TaskFactory(taskObj, dispDiv){
     return {rowDiv, createTaskElements}
 }
 
-function CalTaskFactory(dispRow, taskObj){
-    const calSquare = document.getElementById(`datecal-${taskObj.due}`);
-    const calTaskContainer = calSquare.querySelector(".sr-task-div");
-    let calTaskDiv;
-    function createCalRow(){
-        calTaskDiv = elementCreator("div", ["class","cal-task",`cal-task-${timeframeOption.toLocaleLowerCase()}`], false, calTaskContainer);
-        const title = elementCreator("p", ["class", "cal-task-title"], taskObj.title, calTaskDiv);
-    }
-
-    return {calTaskDiv, createCalRow}
-}
 export function renderTasks(){
     createSRCal()
     const taskDispDiv = document.getElementById("task-disp-main");
@@ -156,9 +146,8 @@ export function renderTasks(){
         }
 
     })
-
     if(tasksToDisplay.length===0){
-        createEmptyMessage(taskDispDiv);
+        checkForTasks()
         return;
     }
     taskDispDiv.classList.remove("empty-task-div");
@@ -178,6 +167,9 @@ export function renderTasks(){
             calRow.createCalRow();
         }
     })
+    if(timeframeOption==="Month"){
+        countMonthTasks();
+    }
 
 
 }
@@ -187,7 +179,7 @@ function TaskGroupFactory(dispDiv, task){
     function createTaskGroup(){
         taskDueGroup = elementCreator("div", ["class", "td-grouped"], false, dispDiv);
         const dropDiv = elementCreator("div", ["class", "td-grouped-drop"], false, taskDueGroup);
-        const dropText = elementCreator("p", false, fullFormattedDate(task.due), dropDiv);
+        const dropText = elementCreator("p", false, fullFormattedDate(task.due, true), dropDiv);
         arrow = elementCreator("span", false, "<", dropDiv);
         tasksContainer = elementCreator("div", ["class","td-grouped-tasks-div"], false, taskDueGroup);
         numOfTasks = elementCreator("p", ["class", "td-group-num-tasks"], false, taskDueGroup);
@@ -264,10 +256,16 @@ function createRepeatIcon(bool){
 }
 
 
-function createEmptyMessage(parent){
+export function createEmptyMessage(parent){
+    if(document.getElementById("empty-task-div")){
+        document.getElementById("empty-task-div").remove()
+    }
+
     const msg = timeframeOption!=="All"?"No tasks in selected time range...":"No tasks to display...";
     parent.classList.add("empty-task-div");
     elementCreator("div", ["id", "task-empty-msg"], msg, parent);
+    
+
 }
 
 

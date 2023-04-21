@@ -27,11 +27,56 @@ function createMonthSquares(parent){
         square.id = `datecal-${clDate}`;
         const weekNum = elementCreator("div", ["class", "sr-month-num"],i+1 , square);
         const numOfTasksCont = elementCreator("div", ["class", "sr-month-task-cont"], false, square);
-        const taskDiv = elementCreator("div", ["class", "sr-task-div"], false, square)
+        const taskDiv = elementCreator("div", ["class", "sr-task-div", "cal-month-task-hide"], false, square)
         const weekLabel = elementCreator("div", ["class", "sr-month-label-week"],weekNames[currentWeekDay], square);
         currentWeekDay++;
         if(currentWeekDay===7)currentWeekDay=0;
+        square.addEventListener("mouseover", showTaskDivHover, {once:true});
+        square.addEventListener("click", showHideTaskDiv);
 
     }
-    
+
+
+    function showHideTaskDiv(){
+        closeAll();
+        const taskDiv = this.querySelector(".sr-task-div");
+        const numOfTasksCont = this.querySelector(".sr-month-task-cont");
+
+        if(taskDiv.children.length<1) return;
+        this.classList.add("cal-month-open");
+        taskDiv.classList.remove("cal-month-task-hide")
+        numOfTasksCont.style.visibility = "hidden";
+
+    }
+
+    function showTaskDivHover(){
+        if(this.className.includes("cal-month-open")) return;
+        const taskDiv = this.querySelector(".sr-task-div");
+        const numOfTasksCont = this.querySelector(".sr-month-task-cont");
+        numOfTasksCont.style.visibility = "hidden";
+        taskDiv.classList.remove("cal-month-task-hide")
+        this.addEventListener("mouseleave", hideTaskDivHover, {once:true});
+
+    }
+    function hideTaskDivHover(){
+        if(this.className.includes("cal-month-open")) return;
+
+        const taskDiv = this.querySelector(".sr-task-div");
+        const numOfTasksCont = this.querySelector(".sr-month-task-cont");
+        taskDiv.classList.add("cal-month-task-hide")
+        numOfTasksCont.style.visibility = "visible";
+
+        this.addEventListener("mouseover", showTaskDivHover, {once:true});
+
+
+    }
+
+    function closeAll(){
+        document.querySelectorAll(".cal-month-open").forEach(elem=>{
+            const taskDiv = elem.querySelector(".sr-task-div");
+            taskDiv.classList.add("cal-month-task-hide")
+            elem.classList.remove("cal-month-open")
+        })
+    }
+
 }

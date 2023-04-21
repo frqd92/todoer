@@ -3,25 +3,20 @@ import { readUserGroupsServer, readUserTasksServer } from '../firebase';
 import { isLogged, currentTheme, modifyTheme, changeDocumentTheme, mainGroupArr,updateGroupsLocal, mainTaskArr, updateTasksLocal, timeframeChange, timeframeOption } from '../state';
 import { createTimeframeDiv } from '../timeframe/createTimeframe';
 import { createTimeSpan } from '../timeframe/createTimeSpanDiv';
-import { createTaskDisplay } from '../taskDisp/createTaskDisp';
+import { createEmptyMessage, createTaskDisplay } from '../taskDisp/createTaskDisp';
+import { elementCreator } from '../utilities/elementCreator';
 
 export function createMainPageDom(){
     readTheme();
-    createHeaderDom();
-    readGroups();
+    const bodyUpperDiv = elementCreator("div", ["id", "main-upper-div"], false, document.body);
+    createHeaderDom(bodyUpperDiv);
+    readTasksGroups();
 
-    readTimeframe();
-    createTimeframeDiv();
+    readTimeframe(bodyUpperDiv);
+    createTimeframeDiv(bodyUpperDiv);
 
     createTaskDisplay();
-
-
-
-
-
-
-
-
+    if(isLogged)checkForTasks()
 
 
     //testing
@@ -35,7 +30,7 @@ export function createMainPageDom(){
 }
 
 
-function readGroups(){
+function readTasksGroups(){
     //reads user group and task in firebase and copies its value to mainGroupArr/task in state if available
     if(isLogged){
         readUserGroupsServer();
@@ -66,4 +61,10 @@ function readTimeframe(){
         timeframeChange(localStorage.getItem("timeframe-option"))
     }
 
+}
+
+export function checkForTasks(){
+    if(mainTaskArr.length<1){
+        createEmptyMessage(document.getElementById("task-disp-main"));
+    }
 }

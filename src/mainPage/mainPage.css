@@ -4,8 +4,16 @@
 }
 
 body{
-    display: flex;
-    flex-direction: column;
 
-  
+}
+
+
+#main-upper-div{
+    position: sticky;
+    top: 0;
+    background: rgba(255, 255, 255, 0.205);
+    z-index:20;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+
 }

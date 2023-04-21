@@ -1,14 +1,16 @@
 import '/src/timeframe/timeframe.css'
 import { elementCreator } from "../utilities/elementCreator";
-import { timeframeChange, timeframeOption } from '../state';
+import { timeframeChange, timeframeOption, isLogged } from '../state';
 import { createTimeSpan } from './createTimeSpanDiv';
 import { createWeekCal } from '../singleRowCal/singleRowWeek';
 import { createMonthCal } from '../singleRowCal/singleRowMonth';
 import { createTaskDisplay } from '../taskDisp/createTaskDisp';
+import { checkForTasks } from '../mainPage/mainPage';
 
-export function createTimeframeDiv(){
-    const timeSpanBtnsDiv = elementCreator("div", ["class", "timespan-div"], false, document.body);
-    const timeframeDiv = elementCreator("div", ["class", "timeframe-div"], false, document.body);
+
+export function createTimeframeDiv(bodyParent){
+    const timeSpanBtnsDiv = elementCreator("div", ["class", "timespan-div"], false, bodyParent);
+    const timeframeDiv = elementCreator("div", ["class", "timeframe-div"], false, bodyParent);
     createTimeSpan(timeSpanBtnsDiv)
     createTimeRange(timeframeDiv, timeSpanBtnsDiv);
     checkPrevChosen();
@@ -61,6 +63,7 @@ function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
             //single row cal from button;
             createSRCal();
             createTaskDisplay()
+            if(isLogged)checkForTasks()
         }
         
     }

@@ -1,10 +1,10 @@
-import { timeframeOption } from "../state";
+import { timeframeOption, isLogged } from "../state";
 import { elementCreator } from "../utilities/elementCreator";
 import { fullFormattedDate, addOneToMonth, recursiveFunc, formatNumDate, returnMonth, getToday, textDateToNum, findRelativeDate, whichWeekOfYear, dispDateStrToObjDate } from "../utilities/dateUtils";
 import '/src/timeframe/timespan.css';
 import { createSRCal } from "./createTimeframe";
 import { createTaskDisplay} from "../taskDisp/createTaskDisp";
-
+import { checkForTasks } from "../mainPage/mainPage";
 export function createTimeSpan(parent){
     const type = timeframeOption.toLocaleLowerCase();
     const div = elementCreator("div", ["class", "ts-main-div"], false, parent);
@@ -69,6 +69,8 @@ function arrowWeeklyFunc(left,right){
 
         createSRCal();
         createTaskDisplay()
+        if(isLogged)checkForTasks()
+        
     }
 
 }
@@ -85,9 +87,11 @@ function arrowMonthlyFunc(left,right){
        }
     createSRCal();
     createTaskDisplay()
-
+    if(isLogged)checkForTasks()
     }
 }
+
+
 function dateProcess(parent, type){
     const div = elementCreator("div", ["class", `${type}-date-range`], false, parent);
     if(type==="day"){

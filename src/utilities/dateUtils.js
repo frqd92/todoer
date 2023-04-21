@@ -133,9 +133,10 @@ export function weekDayFind(strDate){
 
 //displays full text formatted date
 //ex. string "2/2/2023" returns 2nd of march, 2023
-export function fullFormattedDate(date){
+export function fullFormattedDate(date, minusOne){
   const [dd,mm,yy] = date.split("/");
-  return `${addSuffix(Number(dd))} of ${returnMonth(Number(mm))}, ${yy}`
+  const month = minusOne?Number(mm)-1:Number(mm);
+  return `${addSuffix(Number(dd))} of ${returnMonth(month)}, ${yy}`
 }
 
 export function addOneToMonth(date, isSub){

@@ -4,8 +4,8 @@ import '/src/header/header.css'
 import { searchLoupe, inputBehaviour } from "./searchLogic";
 import { createAddModal } from "../taskModal/createModal";
 import { createBodyModal } from "../utilities/bodyModal";
-export function createHeaderDom(){
-    const header = elementCreator("header", false, false, document.body);
+export function createHeaderDom(bodyParent){
+    const header = elementCreator("header", false, false, bodyParent);
     const title = elementCreator("h1", ["class", "main-title", "title-hide"], "Todoer", header);
     createSearchBar(header);
     const btnDiv = elementCreator("div", ["class", "header-btn-div"], false, header);
