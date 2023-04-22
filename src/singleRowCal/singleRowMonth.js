@@ -36,10 +36,16 @@ function createMonthSquares(parent){
         
         currentWeekDay++;
         if(currentWeekDay===7)currentWeekDay=0;
-        square.addEventListener("mouseover", showTaskDivHover, {once:true});
+        // square.addEventListener("mouseover", showTaskDivHover, {once:true});
         square.addEventListener("click", showHideTaskDiv);
    
     }
+
+
+    function MonthSquareFact(){
+
+    }
+
 
 
     function showHideTaskDiv(){
