@@ -41,29 +41,53 @@ function createMonthSquares(parent){
         
         currentWeekDay++;
         if(currentWeekDay===7)currentWeekDay=0;
-        //square.addEventListener("mouseover", showTaskDivHover, {once:true});
-        square.addEventListener("click", openSquare);
+        square.addEventListener("click", openSquareClick);
+        square.addEventListener("mouseover", openSquareHover);
+        square.addEventListener("mouseleave", closeAllHover);
 
 
-        function openSquare(){
-            closeAll()
+        function openSquareHover(){
             square.classList.add("open-cal-square");
             numOfTasksCont.style.display = "none";
             taskDiv.classList.remove("cal-month-task-hide")
         }
-
-        function closeSquare(sqr){
-            const numTasks = sqr.querySelector(".sr-month-task-cont");
-            const divTask = sqr.querySelector(".sr-task-div")
-            sqr.classList.remove("open-cal-square");
-            numTasks.style.display = "block";
-            divTask.classList.add("cal-month-task-hide")
+        function openSquareClick(){
+            closePrevClick()
+            square.classList.add("open-cal-square");
+            square.classList.add("clicked-month")
+            numOfTasksCont.style.display = "none";
+            taskDiv.classList.remove("cal-month-task-hide")
         }
-        function closeAll(){
-            const prevOpen = document.querySelector(".open-cal-square");
-            console.log(prevOpen);
-            if(prevOpen!==null){
-                closeSquare(prevOpen)
+
+
+        function closePrevClick(){
+            const prevOpen = document.querySelectorAll(".open-cal-square");
+            if(prevOpen.length===0) return
+            prevOpen.forEach(elem=>{
+                const numTasks = elem.querySelector(".sr-month-task-cont");
+                const divTask = elem.querySelector(".sr-task-div")
+                elem.classList.remove("open-cal-square");
+                elem.classList.remove("clicked-month");
+                numTasks.style.display = "block";
+                divTask.classList.add("cal-month-task-hide")
+            })
+
+        }
+
+        function closeAllHover(){
+            const prevSquares = document.querySelectorAll(".sr-m-square");
+            if(prevSquares.length>0){
+                prevSquares.forEach(elem=>{
+                    if(elem.className.includes("clicked-month")) return;
+                    const numTasks = elem.querySelector(".sr-month-task-cont");
+                    const divTask = elem.querySelector(".sr-task-div")
+                    elem.classList.remove("open-cal-square");
+                    numTasks.style.display = "block";
+                    divTask.classList.add("cal-month-task-hide")
+                    
+                })
+
+
             }
         }
     }
