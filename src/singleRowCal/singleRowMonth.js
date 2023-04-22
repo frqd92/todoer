@@ -1,6 +1,6 @@
 import '/src/singleRowCal/singleRow.css';
 import { elementCreator } from '../utilities/elementCreator';
-import { addZeroDispDate, daysInMonth, returnMonth, weekDayFind} from '../utilities/dateUtils';
+import { addZeroDispDate, checkIfToday, daysInMonth, dispDateStrToObjDate, isPast, removeTime, returnMonth, weekDayFind} from '../utilities/dateUtils';
 import { countMonthTasks } from '../taskDisp/calTask';
 import { makeAdd } from '../Header/createHeader';
 
@@ -36,19 +36,27 @@ function createMonthSquares(parent){
         const numOfTasksCont = elementCreator("div", ["class", "sr-month-task-cont"], false, square);
         const taskDiv = elementCreator("div", ["class", "sr-task-div", "cal-month-task-hide"], false, square)
         const weekLabel = elementCreator("div", ["class", "sr-month-label-week"],weekNames[currentWeekDay], square);
-        const calAddBtn = elementCreator("div", ["class", "sr-cal-add-task", "sr-cal-add-task-hide"], "+", square);
-        calAddBtn.addEventListener("click", makeAdd)
-        
+        const calAddBtn = elementCreator("div", ["class", "sr-cal-add-task"], "+", false);
+        if(!isPast(dispDateStrToObjDate(clDate))){
+            square.appendChild(calAddBtn )
+            calAddBtn.style.display = "none"
+            calAddBtn.addEventListener("click", makeAdd)
+        }
+
         currentWeekDay++;
         if(currentWeekDay===7)currentWeekDay=0;
         square.addEventListener("click", openSquareClick);
         square.addEventListener("mouseover", openSquareHover);
         square.addEventListener("mouseleave", closeAllHover);
-
+        if(checkIfToday(dispDateStrToObjDate(clDate))){
+            square.classList.add("today-cal-month-square")
+        }
 
         function openSquareHover(){
             square.classList.add("open-cal-square");
             numOfTasksCont.style.display = "none";
+            weekLabel.style.display = "none";
+            calAddBtn.style.display = "block"
             taskDiv.classList.remove("cal-month-task-hide")
         }
         function openSquareClick(){
@@ -56,6 +64,8 @@ function createMonthSquares(parent){
             square.classList.add("open-cal-square");
             square.classList.add("clicked-month")
             numOfTasksCont.style.display = "none";
+            weekLabel.style.display = "none"
+            calAddBtn.style.display = "block"
             taskDiv.classList.remove("cal-month-task-hide")
         }
 
@@ -70,6 +80,9 @@ function createMonthSquares(parent){
                 elem.classList.remove("clicked-month");
                 numTasks.style.display = "block";
                 divTask.classList.add("cal-month-task-hide")
+                weekLabel.style.display = "block";
+                calAddBtn.style.display = "none"
+
             })
 
         }
@@ -84,7 +97,8 @@ function createMonthSquares(parent){
                     elem.classList.remove("open-cal-square");
                     numTasks.style.display = "block";
                     divTask.classList.add("cal-month-task-hide")
-                    
+                    weekLabel.style.display = "block"
+                    if(calAddBtn!==null) calAddBtn.style.display = "none";
                 })
 
 

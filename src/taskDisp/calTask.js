@@ -6,12 +6,37 @@ export function CalTaskFactory(dispRow, taskObj){
     const calTaskContainer = calSquare.querySelector(".sr-task-div");
     let calTaskDiv;
     function createCalRow(){
+     
         calTaskDiv = elementCreator("div", ["class","cal-task",`cal-task-${timeframeOption.toLocaleLowerCase()}`], false, calTaskContainer);
         const title = elementCreator("p", ["class", "cal-task-title"], taskObj.title, calTaskDiv);
+        calTaskDiv.addEventListener("mouseover", highlightTasks)    
+        calTaskDiv.addEventListener("mouseleave", dehighlightTasks)
+        calTaskDiv.addEventListener("click", scrollTask)   
+        dispRow.addEventListener("mouseover", highlightTasks) 
+        dispRow.addEventListener("mouseleave", dehighlightTasks)   
     }
 
+    function scrollTask(){
+        dispRow.scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+    }
+    function highlightTasks(){
+        calTaskDiv.classList.add("highlighted-task")
+        dispRow.classList.add("highlighted-task")
+    
+
+    }
+
+    function dehighlightTasks(){
+        calTaskDiv.classList.remove("highlighted-task")
+        dispRow.classList.remove("highlighted-task")
+
+    }
     return {calTaskDiv, createCalRow}
 }
+
+
+
+
 
 export function countMonthTasks(){
     const allSquares = document.querySelectorAll(".sr-m-square");

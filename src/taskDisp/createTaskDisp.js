@@ -106,6 +106,7 @@ function TaskFactory(taskObj, dispDiv){
             if(!this.className.includes("upper-opened")) showLowerTask()
             else hideLowerTask()
         }
+        return rowDiv
     }
 
     function showLowerTask(){
@@ -127,7 +128,7 @@ function TaskFactory(taskObj, dispDiv){
         })
     }
 
-    return {rowDiv, createTaskElements}
+    return {createTaskElements}
 }
 
 export function renderTasks(){
@@ -160,11 +161,12 @@ export function renderTasks(){
             taskDueGroup.createTaskGroup();
         }
         const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
-        const row = TaskFactory(task, allGroups[allGroups.length-1]);
-        row.createTaskElements()
+        const rowCreate = TaskFactory(task, allGroups[allGroups.length-1]);
+        const row = rowCreate.createTaskElements();
+        
         if(timeframeOption==="Week" || timeframeOption==="Month"){
-            const calRow = CalTaskFactory(row, task);
-            calRow.createCalRow();
+            const createRow = CalTaskFactory(row, task);
+            createRow.createCalRow();
         }
     })
     if(timeframeOption==="Month"){

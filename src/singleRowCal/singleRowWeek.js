@@ -1,5 +1,5 @@
 import { elementCreator } from '../utilities/elementCreator';
-import { addZero, addZeroDispDate, findRelativeDate, getToday, returnMonth } from '../utilities/dateUtils';
+import { addZero, addZeroDispDate, dispDateStrToObjDate, findRelativeDate, getToday, isPast, returnMonth } from '../utilities/dateUtils';
 import '/src/singleRowCal/singleRow.css'
 import { createAddModal } from '../taskModal/createModal';
 import { makeAdd } from '../Header/createHeader';
@@ -40,8 +40,11 @@ function createWeekSquares(parent){
         }
         //where tasks are stored
         const calTasksDiv = elementCreator("div", ["class", "sr-task-div"], false, square);
-        const calAddTask = elementCreator("div", ["class", "sr-cal-add-task"], "+", square);
-        calAddTask.addEventListener("click", makeAdd)
+        if(!isPast(dispDateStrToObjDate(clDate))){
+            const calAddTask = elementCreator("div", ["class", "sr-cal-add-task"], "+", square);
+            calAddTask.addEventListener("click", makeAdd)
+        }
+
     }
 }
 

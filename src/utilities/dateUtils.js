@@ -248,3 +248,17 @@ export function findRelativeDateForRepeats(date, num){
 export function daysInMonthRepeat(date){
   return new Date(date.getFullYear(), date.getMonth()+1,0 ).getDate();
 }
+
+//returns bool if date is today
+export function checkIfToday(date){
+  const today = removeTime(new Date());
+  return date.getTime()===today.getTime()?true:false;
+}
+
+//returns bool if date has passed
+export function isPast(date){
+  const today = removeTime(new Date());
+  return date.getTime()<today.getTime()?true:false;
+
+
+}
