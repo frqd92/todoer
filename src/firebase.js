@@ -63,13 +63,13 @@ export function writeUserGroupsServer(group) {
 
 
 //read
-export function readUserTasksServer(){
+export function readUserTasksServer(bool){
   const userID = auth.currentUser.uid;
   const dbRef = ref(getDatabase());
   get(child(dbRef, `users/${userID}/tasks`)).then((snapshot) => {
     if (snapshot.exists()) {
         modifyTasksArr(snapshot.val());
-        renderTasks();
+        if(bool)renderTasks();
     } else {
       console.log("No data available")
     }

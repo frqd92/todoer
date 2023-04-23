@@ -3,6 +3,29 @@
 
 }
 
+
+/* task complete line */
+.cal-task{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.cal-task-title{
+    position: relative;
+}
+.cal-task-line{
+    position: absolute;
+    width: 0%;
+    height: 1px;
+    border-top: 1px solid black;
+    top: 55%;
+    transition: width 0.3s linear;
+ 
+}
+.cal-line-complete{
+    width: 100%;
+}
+
 /* week cal */
 .sr-week-div{
     display: grid;
@@ -61,13 +84,8 @@
     display: flex;
     flex-direction: column;
  }
- .sr-w-square .cal-task{
-    display: flex;
- }
 
- .cal-task-week{
-     border-bottom: 1px solid rgba(0, 0, 0, 0.18);
- }
+
  
  .cal-task-title{
     white-space: nowrap;
@@ -78,7 +96,8 @@
     font-family: open;
     padding: 1% 1%;
     padding-left: 2%;
-    flex-grow: 1;
+    width: fit-content;
+
  }
 
 
@@ -176,13 +195,17 @@ background: rgba(255, 255, 255, 0);
 
 .open-cal-square{
     width: 400%;
-
+    background-color: rgba(159, 165, 207, 0.124);
 
 }
 
 .sr-m-square .sr-task-div{
     width: 100%;
     overflow: auto;
+}
+
+.cal-task-month:first-child{
+    border-top: 1px solid rgba(0, 0, 0, 0.414);
 }
 /* grid elements when hidden */
 

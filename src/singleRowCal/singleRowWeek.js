@@ -42,7 +42,7 @@ function createWeekSquares(parent){
         const calTasksDiv = elementCreator("div", ["class", "sr-task-div"], false, square);
         if(!isPast(dispDateStrToObjDate(clDate))){
             const calAddTask = elementCreator("div", ["class", "sr-cal-add-task"], "+", square);
-            calAddTask.addEventListener("click", makeAdd)
+            calAddTask.addEventListener("click", makeAdd);
         }
 
     }

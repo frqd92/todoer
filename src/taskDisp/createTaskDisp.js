@@ -1,5 +1,5 @@
 import { elementCreator } from '../utilities/elementCreator';
-import { mainTaskArr, isLogged, timeframeOption } from '../state';
+import { mainTaskArr, isLogged, timeframeOption, updateTasksLocal, addNewTaskLocal } from '../state';
 import '/src/taskDisp/taskDisp.css'
 import { readUserTasksServer} from '../firebase';
 import { dispDateStrToObjDate, fullFormattedDate} from '../utilities/dateUtils';
@@ -12,6 +12,7 @@ import { processRepeat } from './processRepeat';
 import { createSRCal } from '../timeframe/createTimeframe';
 import { CalTaskFactory, countMonthTasks } from './calTask';
 import { checkForTasks } from '../mainPage/mainPage';
+import { writeUserTasksServer } from '../firebase';
 export function createTaskDisplay(){
     if(document.getElementById("task-disp-main")!==null) document.getElementById("task-disp-main").remove()
     const taskDispDiv = elementCreator("div", ["id", "task-disp-main"], false, document.body);
@@ -42,7 +43,7 @@ function TaskFactory(taskObj, dispDiv){
         trPriority.style.background = prioToColor(taskObj.priority)
         const trRepeat = createRepeatIcon(taskObj.repeat?true:false);
         otherInfoDiv.appendChild(trRepeat) ;
-        const checkBoxDiv = createCheckbox(upperPart);
+        const checkBoxDiv = createCheckbox(upperPart, taskObj);
         followMouseHoverText(trPriority, taskObj.priority + " priority");
         if(taskObj.group){ followMouseHoverText(trGroup, taskObj.group) }
         followMouseHoverText(trRepeat,taskObj.repeat?"Repeat every " + taskObj.repeat:"no repeat");
@@ -128,7 +129,7 @@ function TaskFactory(taskObj, dispDiv){
         })
     }
 
-    return {createTaskElements}
+    return {createTaskElements, showLowerTask}
 }
 
 export function renderTasks(){
@@ -165,7 +166,7 @@ export function renderTasks(){
         const row = rowCreate.createTaskElements();
         
         if(timeframeOption==="Week" || timeframeOption==="Month"){
-            const createRow = CalTaskFactory(row, task);
+            const createRow = CalTaskFactory(row, task, rowCreate.showLowerTask);
             createRow.createCalRow();
         }
     })
@@ -176,11 +177,13 @@ export function renderTasks(){
 
 }
 
-function TaskGroupFactory(dispDiv, task){
-    let taskDueGroup, tasksContainer, numOfTasks, arrow;
+export function TaskGroupFactory(dispDiv, task){
+
+    let taskDueGroup, dropDiv, tasksContainer, numOfTasks, arrow;
+  
     function createTaskGroup(){
         taskDueGroup = elementCreator("div", ["class", "td-grouped"], false, dispDiv);
-        const dropDiv = elementCreator("div", ["class", "td-grouped-drop"], false, taskDueGroup);
+        dropDiv = elementCreator("div", ["class", "td-grouped-drop"], false, taskDueGroup);
         const dropText = elementCreator("p", false, fullFormattedDate(task.due, true), dropDiv);
         arrow = elementCreator("span", false, "<", dropDiv);
         tasksContainer = elementCreator("div", ["class","td-grouped-tasks-div"], false, taskDueGroup);
@@ -189,21 +192,24 @@ function TaskGroupFactory(dispDiv, task){
         dropDiv.addEventListener("click", closeOpenTaskGroup)
     }
     function closeOpenTaskGroup(){
-        if(this.className.includes("td-group-hide")){
-            this.classList.remove("td-group-hide")
+        if(dropDiv.className.includes("td-group-hide")){
+            dropDiv.classList.remove("td-group-hide")
             tasksContainer.classList.remove("td-group-container-hide");
             numOfTasks.style.display = "none";
             arrow.classList.remove("group-arrow-hide")
-            
+            taskDueGroup.classList.remove("td-grouped-hide")
+
         }
         else{
-            this.classList.add("td-group-hide")
+            dropDiv.classList.add("td-group-hide")
             tasksContainer.classList.add("td-group-container-hide")
             const length = tasksContainer.children.length;
             const txt = length>1?" hidden tasks":" hidden task";
             numOfTasks.innerText = length + txt;
             numOfTasks.style.display = "block";
             arrow.classList.add("group-arrow-hide")
+            taskDueGroup.classList.add("td-grouped-hide")
+
         }
     }
 
@@ -271,27 +277,46 @@ export function createEmptyMessage(parent){
 }
 
 
-function createCheckbox(rowParent){
+function createCheckbox(rowParent, taskObj){
     const outerDiv = elementCreator("div", ["class", "tr-check-outer"], false, rowParent);
     const check = elementCreator("p", false, "✓", outerDiv);
     const checkLine = rowParent.querySelector(".div-line");
+    if(taskObj.isComplete) checkFunc()
+
     outerDiv.addEventListener("click", checkFunc);
     function checkFunc(){
-        if(!this.className.includes("tr-outer-true")){
-            this.classList.add("tr-outer-true");
+        if(!outerDiv.className.includes("tr-outer-true")){
+            outerDiv.classList.add("tr-outer-true");
             check.classList.add("tr-check-true");
             setTimeout(()=>{checkLine.classList.add("div-line-checked")}, 200)
-        }
-        else{
-            this.classList.remove("tr-outer-true");
-            check.classList.remove("tr-check-true");
-            checkLine.classList.remove("div-line-checked")
+            taskObj.isComplete = true;
 
         }
+        else{
+            outerDiv.classList.remove("tr-outer-true");
+            check.classList.remove("tr-check-true");
+            checkLine.classList.remove("div-line-checked")
+            taskObj.isComplete = false;
+        }
+        alterCompleteStatus(taskObj)
     }
 }
 
-
+function alterCompleteStatus(obj){
+    const taskID = obj.uniqueID;
+    mainTaskArr.forEach(task=>{
+        if(task.uniqueID===taskID){
+            task.isComplete = obj.isComplete;
+            return;
+        }
+    })
+    if(isLogged){
+      writeUserTasksServer(mainTaskArr)
+    }
+    else{
+        addNewTaskLocal()
+    }
+}
 
 
 function getFromToDate(){
