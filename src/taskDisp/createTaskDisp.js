@@ -11,8 +11,9 @@ import { findRelativeDate, returnMonth } from '../utilities/dateUtils';
 import { processRepeat } from './processRepeat';
 import { createSRCal } from '../timeframe/createTimeframe';
 import { CalTaskFactory, countMonthTasks } from './calTask';
-import { checkForTasks } from '../mainPage/mainPage';
+
 import { writeUserTasksServer } from '../firebase';
+import { deleteTaskFunc, editTaskFunc } from './editDelTask';
 export function createTaskDisplay(){
     if(document.getElementById("task-disp-main")!==null) document.getElementById("task-disp-main").remove()
     const taskDispDiv = elementCreator("div", ["id", "task-disp-main"], false, document.body);
@@ -51,8 +52,10 @@ function TaskFactory(taskObj, dispDiv){
         const lowerBox = elementCreator("div", ["class", "tr-l-box"], false, lowerPart)
         const lowerPrioLabel = elementCreator("div", ["class", "tr-l-prio"], taskObj.priority + " priority", lowerBox);
         lowerPrioLabel.style.background = prioToColor(taskObj.priority);
-        const editBtn = elementCreator("div", ["class", "tr-l-edit"], "Edit",lowerBox);
-        
+        const editDltDiv = elementCreator("div", ["class", "tr-btn-div"], false, lowerBox)
+        const editBtn = elementCreator("div", ["class", "tr-l-edit"], "Edit",editDltDiv);
+        const deleteBtn = elementCreator("div", ["class", "tr-l-delete"], "Delete",editDltDiv);
+
         const lowerTitleDiv = elementCreator("div", ["class", "tr-l-title-div"], false, lowerPart)
         const title = elementCreator("div", ["class", "tr-l-title"], taskObj.title , lowerTitleDiv)
         const descTxt = taskObj.description?taskObj.description:"No description..."
@@ -102,6 +105,8 @@ function TaskFactory(taskObj, dispDiv){
         }
 
         upperPart.addEventListener("click", showHideLower);
+        editBtn.addEventListener("click",()=>{editTaskFunc(taskObj)});
+        deleteBtn.addEventListener("click", deleteTaskFunc)
         function showHideLower(e){
             if(e.target.closest(".tr-check-outer")) return;
             if(!this.className.includes("upper-opened")) showLowerTask()
@@ -148,10 +153,7 @@ export function renderTasks(){
         }
 
     })
-    if(tasksToDisplay.length===0){
-        checkForTasks()
-        return;
-    }
+
     taskDispDiv.classList.remove("empty-task-div");
     //sort by date
     const sortedTasks = sortByDate(tasksToDisplay, true);

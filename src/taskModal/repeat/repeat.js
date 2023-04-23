@@ -49,13 +49,10 @@ function createEffective(parent, outputBtn){
             outputBtn.innerText = repeatData;
             const repeatMenu = this.closest(".add-menu-repeat");
             closeMenuOutside(repeatMenu);
+            console.log(outputBtn);
             if(isOverflown(outputBtn)) outputBtn.classList.add("repeat-overflown")
             else outputBtn.classList.remove("repeat-overflown")
         }
-
-        function isOverflown(element){//thank you stackoverflow
-            return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
-          }
 
     }
     function readRepeatData(){
@@ -197,7 +194,9 @@ function createEffective(parent, outputBtn){
     };
     
 }
-
+export function isOverflown(element){//thank you stackoverflow
+    return element.scrollHeight > element.clientHeight || element.scrollWidth > element.clientWidth;
+  }
 
 export function closeMenuFromCal(dropBtn, dropMenu, arrow){
     dropBtn.classList.remove("effective-clicked");
@@ -278,7 +277,7 @@ function createRepeatFactor(parent){
     }
 }
 
-function getRepMonthDay(repBtn ){
+function getRepMonthDay(repBtn){
     const modalDiv = repBtn.closest(".modal-add")
     let dueBtnText = modalDiv.querySelector(".add-btn-due").innerText;
     if(dueBtnText==="Today"){dueBtnText= getToday(false, true);}

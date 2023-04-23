@@ -31,16 +31,22 @@ function createAddTaskBtn(parent){
 
     return div
 }
-export function makeAdd(){
+export function makeAdd(taskEditObj){
     const div = elementCreator("div", ["class", "header-add-div"], false, document.body);
     const bgModal= createBodyModal(div);
     bgModal.createDiv();
-    if(this.parentElement.id.includes("datecal")){
-        console.log("shart");
+
+    if(this===undefined){
+        div.appendChild(createAddModal(true, false, taskEditObj))   
+    }
+    else if(this.className.includes("sr-cal-add-task")){
         const date = this.parentElement.id.split("-").pop();
         div.appendChild(createAddModal(false, date))     
     }
-    else div.appendChild(createAddModal(false, false))
+    else if(this.id.includes("header-add-btn")){
+        div.appendChild(createAddModal(false, false))
+    }
+
     
 }
 // theme, bulb---------------------------------------------------------------------------------------

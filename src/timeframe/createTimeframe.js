@@ -5,7 +5,7 @@ import { createTimeSpan } from './createTimeSpanDiv';
 import { createWeekCal } from '../singleRowCal/singleRowWeek';
 import { createMonthCal } from '../singleRowCal/singleRowMonth';
 import { createTaskDisplay } from '../taskDisp/createTaskDisp';
-import { checkForTasks } from '../mainPage/mainPage';
+
 
 
 export function createTimeframeDiv(bodyParent){
@@ -63,7 +63,7 @@ function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
             //single row cal from button;
             createSRCal();
             createTaskDisplay()
-            if(isLogged)checkForTasks()
+
         }
         
     }

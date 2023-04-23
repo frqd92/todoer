@@ -4,7 +4,7 @@ import { fullFormattedDate, addOneToMonth, recursiveFunc, formatNumDate, returnM
 import '/src/timeframe/timespan.css';
 import { createSRCal } from "./createTimeframe";
 import { createTaskDisplay} from "../taskDisp/createTaskDisp";
-import { checkForTasks } from "../mainPage/mainPage";
+
 export function createTimeSpan(parent){
     const type = timeframeOption.toLocaleLowerCase();
     const div = elementCreator("div", ["class", "ts-main-div"], false, parent);
@@ -69,7 +69,7 @@ function arrowWeeklyFunc(left,right){
 
         createSRCal();
         createTaskDisplay()
-        if(isLogged)checkForTasks()
+ 
         
     }
 
@@ -87,7 +87,7 @@ function arrowMonthlyFunc(left,right){
        }
     createSRCal();
     createTaskDisplay()
-    if(isLogged)checkForTasks()
+
     }
 }
 

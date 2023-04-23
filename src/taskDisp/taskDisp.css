@@ -362,13 +362,6 @@ font-size: 0.75rem;
     flex-direction: column;
   
 }
-.tr-l-box{
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    margin-top: -10px;
-}
-
 
 .tr-l-prio{
     border: 1px solid rgba(0, 0, 0, 0.097);
@@ -387,11 +380,23 @@ font-size: 0.75rem;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     opacity: 0.8;
 }
-.tr-l-edit{
+.tr-l-box{
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-top: -10px;
+}
+
+
+.tr-btn-div{
+    display: flex;
+}
+.tr-l-edit, .tr-l-delete{
     border: 1px solid rgba(0, 0, 0, 0.13);
     border-top: none;
     padding: 2px 7px;
     border-right: none;
+    font-size: calc(0.6rem + 0.6vw);
     font-family: montserrat;
     user-select: none;
     cursor: pointer;
@@ -400,10 +405,15 @@ font-size: 0.75rem;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 2px 6px 2px;
     border-radius: 0px 0px 0px 4px;
 }
-.tr-l-edit:active{
-    box-shadow: rgb(204, 219, 232) 3px 3px 6px 0px inset, rgba(255, 255, 255, 0.5) -3px -3px 6px 1px inset;
+.tr-l-edit:active, .tr-l-delete:active{
     transform: scale(0.95);
 }
+.tr-l-delete{
+    background-color: rgba(255, 0, 0, 0.07);
+}
+
+
+
 
 .tr-l-title-div{
     margin-bottom: 0.5%;

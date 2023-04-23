@@ -2,13 +2,13 @@ import { elementCreator } from "../utilities/elementCreator";
 import { CreateMainCal } from "../calendar/mainCal";
 import { createModalGroup } from "./modalGroup/modalGroup";
 import { makePriorityMenu } from "./priority/prio";
-import { createModalRepeat } from "./repeat/repeat";
+import { createModalRepeat, isOverflown } from "./repeat/repeat";
 import { displayCharCount } from "../utilities/inputUtils";
 import { processTask } from "./processTask";
 import { formatNumDate } from "../utilities/dateUtils";
-export function createAddModal(isEdit, fromCalDate){
+export function createAddModal(isEdit, fromCalDate, editTaskObj){
     const classL = !isEdit?"add":"edit";
-    const mainDiv = elementCreator("div", ["class", `modal-${classL}`], false, false);
+    const mainDiv = elementCreator("div", ["class", `modal-add`], false, false);
 
     const addInputDiv = createInput(mainDiv, "Title*");
     const addDescDiv = createInput(mainDiv, "Description");
@@ -17,6 +17,9 @@ export function createAddModal(isEdit, fromCalDate){
     if(!isEdit){
         if(!fromCalDate) feedValues(mainDiv);
         else feedValues(mainDiv, [fromCalDate])
+    }
+    else{
+        feedEditValues(mainDiv, editTaskObj)
     }
 
     const btnText = isEdit?"Edit task":"Add task";
@@ -30,13 +33,47 @@ export function createAddModal(isEdit, fromCalDate){
 
 
 
+function feedEditValues(div, obj){
+        const [titleInput, descInput] = div.querySelectorAll(".modal-input");
+        const [dueBtn, groupBtn, prioBtn, repeatBtn, notesBtn] = div.querySelectorAll(".add-btn");
 
+        const taskContent = [obj.title, obj.description, obj.due, obj.group, obj.priority, obj.repeat, obj.notes];
+        
+        titleInput.innerText = obj.title;
+        const titlePlaceholder = titleInput.previousSibling
+        titlePlaceholder.innerText="";
+
+        if(obj.description){
+            const descPlaceholder = descInput.previousSibling;
+            descPlaceholder.innerText="";
+            descInput.innerText = obj.description;
+        }
+        dueBtn.innerText = obj.due;
+
+        groupBtn.innerText = obj.group?obj.group:"None";
+        if(obj.group){
+            descInput.innerText = obj.description;
+        }
+        const prioBtns = prioBtn.querySelectorAll(".prio-btn");
+        const prioBack = prioBtn.querySelector(".prio-back-div");
+        const prioArr = ["normal", "high", "highest"];
+        prioBtns[prioArr.indexOf(obj.priority)].classList.add("selected-prio-btn");
+        prioBack.classList.add(`prio-${obj.priority}`)
+        repeatBtn.innerText = obj.repeat?"Repeat every "+obj.repeat:"No repeat";
+        repeatBtn.classList.add("repeat-overflown")
+        notesBtn.innerText = obj.notes?obj.notes:"None"
+
+}
 
 
 function feedValues(div, arr){
     const allElements = div.querySelectorAll(".add-btn");
     let content = ["Today", "None", null, "No repeat", "None"];
-    if(arr){if(arr.length===1) content[0] = formatNumDate(arr[0])};
+    if(arr){
+        if(arr.length===1){
+            content[0] = formatNumDate(arr[0])
+        }
+    };
     allElements.forEach((elem, i)=>{
         if(i!==2){
             elem.innerText=content[i];

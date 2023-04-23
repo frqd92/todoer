@@ -16,7 +16,7 @@ export function createMainPageDom(){
     createTimeframeDiv(bodyUpperDiv);
 
     createTaskDisplay();
-    if(isLogged)checkForTasks()
+
 
 
     //testing
@@ -63,8 +63,3 @@ function readTimeframe(){
 
 }
 
-export function checkForTasks(){
-    if(mainTaskArr.length<1){
-        createEmptyMessage(document.getElementById("task-disp-main"));
-    }
-}
