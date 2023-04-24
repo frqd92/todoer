@@ -42,6 +42,8 @@ function arrowDailyFunc(left, right){
         else{
             text.innerText = fullFormattedDate(findRelativeDate(date,1));
         }
+        createSRCal();
+        createTaskDisplay()
     }
 }
 function arrowWeeklyFunc(left,right){

@@ -2,7 +2,7 @@ import { elementCreator } from '../utilities/elementCreator';
 import { mainTaskArr, isLogged, timeframeOption, updateTasksLocal, addNewTaskLocal } from '../state';
 import '/src/taskDisp/taskDisp.css'
 import { readUserTasksServer} from '../firebase';
-import { dispDateStrToObjDate, fullFormattedDate} from '../utilities/dateUtils';
+import { dispDateStrToObjDate, fullFormattedDate, textDateToNum} from '../utilities/dateUtils';
 import { returnRangeTasks, sortByDate } from '../utilities/sortTasks';
 import { createMiniCal, makeAdd } from '../Header/createHeader';
 import { prioToColor } from '../utilities/priorityColor';
@@ -183,7 +183,7 @@ export function renderTasks(){
         const rowCreate = TaskFactory(task, allGroups[allGroups.length-1]);
         const row = rowCreate.createTaskElements();
         
-        if(timeframeOption==="Week" || timeframeOption==="Month"){
+        if(timeframeOption!=="Year"){
             const createRow = CalTaskFactory(row, task, rowCreate.showLowerTask);
             createRow.createCalRow();
         }
@@ -348,6 +348,10 @@ function getFromToDate(){
                 dispDateStrToObjDate(allS[0].id.split("-").pop()),
                 dispDateStrToObjDate(allS[allS.length-1].id.split("-").pop())
             ];
+        case "Day":
+            const dayDate = document.querySelector(".day-date-range").innerText;
+            const date = dispDateStrToObjDate(textDateToNum(dayDate, true));
+            return [date, date];
     }
 
 }

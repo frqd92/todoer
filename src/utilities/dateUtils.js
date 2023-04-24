@@ -202,14 +202,15 @@ export function findRelativeDate(date, num, isMonth){
 }
 
 //"3rd of march, 2023" becomes 3/2/2023
-export function textDateToNum(str){
+export function textDateToNum(str, addOne){
   const arr = str.split(" ");
   const day = arr[0].split("").filter(elem=>!isNaN(elem)).join("")
   const monthComma = arr[arr.length-2].split("");
-  monthComma.pop()
-  const month = returnMonth(monthComma.join(""));
+  monthComma.pop();
+  let month = returnMonth(monthComma.join(""));
+  if(addOne) month++;
   const year = arr[arr.length-1];
-  return `${day}/${month}/${year}`
+  return `${day}/${month}/${year}`;
 
 }
 
@@ -259,6 +260,5 @@ export function checkIfToday(date){
 export function isPast(date){
   const today = removeTime(new Date());
   return date.getTime()<today.getTime()?true:false;
-
 
 }

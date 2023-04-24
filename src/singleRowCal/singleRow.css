@@ -240,3 +240,29 @@ background: rgba(255, 255, 255, 0);
 }
 
 
+/* day cal--------------------------- */
+.sr-day-div{
+    display: grid;
+    grid-template-rows: 5fr 1fr;
+
+}
+
+.sr-day-div .sr-task-div{
+    max-height: 200px;
+    overflow: auto;
+    border-top: 1px solid rgba(0, 0, 0, 0.207);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.205);
+
+    
+}
+
+.cal-task-day{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.104);
+}
+
+
+.sr-day-div  .sr-cal-add-task{
+    justify-self: center;
+
+
+}
