@@ -381,3 +381,24 @@
     background-color: rgba(207, 26, 26, 0.148);
 
 }
+.edit-repeat-msg {
+    position: relative;
+    opacity: 0.8;
+}
+.edit-repeat-msg span{
+    right:1%;
+    top: 0;
+    position: absolute;
+    cursor: pointer;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: calc(0.5rem + 0.5vw);
+
+}
+.edit-repeat-msg p{
+    text-align: center;
+    color: rgb(0, 0, 0);
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: calc(0.5rem + 0.5vw);
+    border: 1px solid black;
+    padding: 1% 0;
+}

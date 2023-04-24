@@ -3,9 +3,10 @@ import { mainTaskArr, isLogged } from "../state";
 import { writeUserTasksServer } from "../firebase";
 import { createBodyModal } from "../utilities/bodyModal";
 import { createTaskDisplay } from '/src/taskDisp/createTaskDisp';
+
 export function processTask(){
     const [titleDiv, descDiv, dueDiv, groupDiv, priorityDiv, repeatDiv, notesDiv,] = this.parentElement.childNodes;
-
+    console.log(this.uID);
     if(!validateTitle(titleDiv))return
     if(!isPrioEmpty(priorityDiv))return
 
@@ -33,24 +34,44 @@ export function processTask(){
     obj.priority = priority.classList[1].split("-").pop();
     //repeat
     const repeat = repeatDiv.querySelector(".add-btn-repeat").innerText
-    console.log();
     obj.repeat= repeat==="No repeat"?false:repeat;
-    console.log(obj.repeat);
+ 
     //notes
     const notes = notesDiv.querySelector(".add-btn-notes").innerText
     obj.notes = notes==="None"?false:notes;
 
-    //id, not sure if it's the right way to do it 
-    obj.uniqueID = createID();
-    //date of task entry
-    obj.dateEntered = getToday(false, true);
 
-    //isPast, plan is each time a user logs in the program will check if the task due has passed and update accordingly
-    obj.isPast = false;
+    if(this.innerText==="EDIT TASK"){
+        //edit values that stay the same
+        mainTaskArr.forEach(task=>{
+            if(task.uniqueID===this.uID){
+                task.title = obj.title;
+                task.description = obj.description;
+                task.due = dueDate;
+                task.group = obj.group;
+                task.priority = obj.priority;
+                task.repeat = obj.repeat;
+                task.notes = obj.notes;
+            }
+        })
+    }
 
-    //user can update isComplete through the task element itself
-    obj.isComplete = false;
-    mainTaskArr.push(obj);
+    else{
+        //id, not sure if it's the right way to do it 
+        obj.uniqueID = createID();
+        //date of task entry
+        obj.dateEntered = getToday(false, true);
+
+        //isPast, plan is each time a user logs in the program will check if the task due has passed and update accordingly
+        obj.isPast = false;
+
+        //user can update isComplete through the task element itself
+        obj.isComplete = false;
+        mainTaskArr.push(obj);
+
+    }
+
+
     if(isLogged){
         writeUserTasksServer(mainTaskArr)
     }

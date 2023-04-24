@@ -14,19 +14,27 @@ export function createAddModal(isEdit, fromCalDate, editTaskObj){
     const addDescDiv = createInput(mainDiv, "Description");
     const modalElements = ["Due date", "Group", "Priority", "Repeat", "Notes"];
     for(let i=0;i<5;i++){addFactory(mainDiv, modalElements[i])};
+    const btnText = isEdit?"Edit task":"Add task";
+    const addEditTaskBtn = elementCreator("div", ["class", "modal-task-add-btn"], btnText, mainDiv);
     if(!isEdit){
         if(!fromCalDate) feedValues(mainDiv);
         else feedValues(mainDiv, [fromCalDate])
     }
     else{
-        feedEditValues(mainDiv, editTaskObj)
-    }
 
-    const btnText = isEdit?"Edit task":"Add task";
-    
-    const addEditTaskBtn = elementCreator("div", ["class", "modal-task-add-btn"], btnText, mainDiv);
-    
-    addEditTaskBtn.addEventListener("click", processTask);
+        addEditTaskBtn.uID = editTaskObj.repeatedElement?editTaskObj.originalID:editTaskObj.uniqueID;
+        feedEditValues(mainDiv, editTaskObj);
+        if(editTaskObj.repeat){
+            const editMsg = elementCreator("div", ["class", "edit-repeat-msg"], false, false)
+            const removeMsg = elementCreator("span", false, "x", editMsg);
+            elementCreator("p", false,"Warning!\nThis is a recurring task, changes will be applied to all repeated tasks of this element.", editMsg)
+            mainDiv.insertBefore(editMsg, addEditTaskBtn);
+            removeMsg.addEventListener("click", ()=>{
+                editMsg.remove();
+            })
+        }
+    }   
+        addEditTaskBtn.addEventListener("click", processTask);
     return mainDiv;
 }
 
@@ -37,8 +45,6 @@ function feedEditValues(div, obj){
         const [titleInput, descInput] = div.querySelectorAll(".modal-input");
         const [dueBtn, groupBtn, prioBtn, repeatBtn, notesBtn] = div.querySelectorAll(".add-btn");
 
-        const taskContent = [obj.title, obj.description, obj.due, obj.group, obj.priority, obj.repeat, obj.notes];
-        
         titleInput.innerText = obj.title;
         const titlePlaceholder = titleInput.previousSibling
         titlePlaceholder.innerText="";
@@ -59,8 +65,8 @@ function feedEditValues(div, obj){
         const prioArr = ["normal", "high", "highest"];
         prioBtns[prioArr.indexOf(obj.priority)].classList.add("selected-prio-btn");
         prioBack.classList.add(`prio-${obj.priority}`)
-        repeatBtn.innerText = obj.repeat?"Repeat every "+obj.repeat:"No repeat";
-        repeatBtn.classList.add("repeat-overflown")
+        repeatBtn.innerText = obj.repeat?obj.repeat:"No repeat";
+        if(obj.repeat) repeatBtn.classList.add("repeat-overflown")
         notesBtn.innerText = obj.notes?obj.notes:"None"
 
 }

@@ -4,7 +4,7 @@ import '/src/taskDisp/taskDisp.css'
 import { readUserTasksServer} from '../firebase';
 import { dispDateStrToObjDate, fullFormattedDate} from '../utilities/dateUtils';
 import { returnRangeTasks, sortByDate } from '../utilities/sortTasks';
-import { createMiniCal } from '../Header/createHeader';
+import { createMiniCal, makeAdd } from '../Header/createHeader';
 import { prioToColor } from '../utilities/priorityColor';
 import { followMouseHoverText } from '../utilities/hoverDiv';
 import { findRelativeDate, returnMonth } from '../utilities/dateUtils';
@@ -13,7 +13,7 @@ import { createSRCal } from '../timeframe/createTimeframe';
 import { CalTaskFactory, countMonthTasks } from './calTask';
 
 import { writeUserTasksServer } from '../firebase';
-import { deleteTaskFunc, editTaskFunc } from './editDelTask';
+
 export function createTaskDisplay(){
     if(document.getElementById("task-disp-main")!==null) document.getElementById("task-disp-main").remove()
     const taskDispDiv = elementCreator("div", ["id", "task-disp-main"], false, document.body);
@@ -103,9 +103,8 @@ function TaskFactory(taskObj, dispDiv){
             }
         
         }
-
         upperPart.addEventListener("click", showHideLower);
-        editBtn.addEventListener("click",()=>{editTaskFunc(taskObj)});
+        editBtn.addEventListener("click",()=>{makeAdd(taskObj)});
         deleteBtn.addEventListener("click", deleteTaskFunc)
         function showHideLower(e){
             if(e.target.closest(".tr-check-outer")) return;
@@ -137,6 +136,10 @@ function TaskFactory(taskObj, dispDiv){
     return {createTaskElements, showLowerTask}
 }
 
+
+function deleteTaskFunc(){
+
+}
 export function renderTasks(){
     createSRCal()
     const taskDispDiv = document.getElementById("task-disp-main");

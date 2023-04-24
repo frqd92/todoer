@@ -50,7 +50,6 @@ export function processRepeat(taskObj, dDate){
     else if(repEvery==="year"){
         const foundDate = yearFunc(dDate, dueDate, repFactorNum);
         if(foundDate!==undefined){
-            console.log(dateArrToTaskObj([foundDate], taskObj));
             return dateArrToTaskObj([foundDate], taskObj);
         }
 
@@ -91,6 +90,7 @@ function dateArrToTaskObj(arr, taskObj){
             taskCopy.isRepObject = true;
             taskCopy.originalID = taskCopy.uniqueID;
             taskCopy.uniqueID = createID();
+            taskCopy.repeatedElement = true;
             repeatedTaskObj.push(taskCopy);
         })
 

@@ -37,7 +37,7 @@ export function makeAdd(taskEditObj){
     bgModal.createDiv();
 
     if(this===undefined){
-        div.appendChild(createAddModal(true, false, taskEditObj))   
+        div.appendChild(createAddModal(true, false, taskEditObj)) 
     }
     else if(this.className.includes("sr-cal-add-task")){
         const date = this.parentElement.id.split("-").pop();
