@@ -519,23 +519,69 @@ font-size: 0.75rem;
     border-top: 1px solid rgba(0, 0, 0, 0.168);
 
 }
-/* width */
 .tr-notes-disp::-webkit-scrollbar {
     width: 10px;
 }
   
-  /* Track */
 .tr-notes-disp::-webkit-scrollbar-track {
     background: white;
     border-radius: 2px;
 }
   
-  /* Handle */
 .tr-notes-disp::-webkit-scrollbar-thumb {
     background: rgba(0, 0, 0, 0.622);
     border-radius: 2px;
 
 }
+
+
+/* delete task */
+.delete-task-div{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 100;
+    background-color: rgb(255, 255, 255);
+    padding: 2%;
+    white-space: nowrap;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    align-items: center;
+    user-select: none;
+}
+.delete-task-div p{
+    font-family: open;
+    font-size: calc(0.6rem + 0.6vw);
+}
+.delete-task-div > div{
+    display: flex;
+    justify-content: center;
+
+    width: 100%;
+    gap: 10%;
+}
+.delete-btn-task{
+    border: 1px solid rgba(0, 0, 0, 0.149);
+    text-align: center;
+    padding: 1% 2%;
+    border-radius: 2px;
+    font-family: ptserif;
+    font-size: calc(0.5rem + 0.5vw);
+    background-color: rgba(114, 0, 0, 0.125);
+    cursor: pointer;
+    box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
+    color: rgba(0, 0, 0, 0.67);
+}
+.delete-btn-task:active{
+    transform: scale(0.98);
+    box-shadow: none;
+}
+
+
+
+
 @media screen and (max-width: 1000px) and (min-width:675px) {
     #task-disp-main{
         margin-top: 5%;

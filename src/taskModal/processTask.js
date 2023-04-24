@@ -6,7 +6,6 @@ import { createTaskDisplay } from '/src/taskDisp/createTaskDisp';
 
 export function processTask(){
     const [titleDiv, descDiv, dueDiv, groupDiv, priorityDiv, repeatDiv, notesDiv,] = this.parentElement.childNodes;
-    console.log(this.uID);
     if(!validateTitle(titleDiv))return
     if(!isPrioEmpty(priorityDiv))return
 
@@ -34,8 +33,7 @@ export function processTask(){
     obj.priority = priority.classList[1].split("-").pop();
     //repeat
     const repeat = repeatDiv.querySelector(".add-btn-repeat").innerText
-    obj.repeat= repeat==="No repeat"?false:repeat;
- 
+    obj.repeat = repeat==="No repeat"?false:repeat;
     //notes
     const notes = notesDiv.querySelector(".add-btn-notes").innerText
     obj.notes = notes==="None"?false:notes;
@@ -59,6 +57,7 @@ export function processTask(){
     else{
         //id, not sure if it's the right way to do it 
         obj.uniqueID = createID();
+        if(repeat!=="No repeat") obj.originalID = obj.uniqueID;
         //date of task entry
         obj.dateEntered = getToday(false, true);
 
@@ -68,7 +67,9 @@ export function processTask(){
         //user can update isComplete through the task element itself
         obj.isComplete = false;
         mainTaskArr.push(obj);
-
+        
+        //if user wants to delete a specific repeated task, that date is pushed to this array and when the repeated tasks are calculated this date is ignored
+        obj.repeatException = [];
     }
 
 

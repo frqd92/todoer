@@ -13,6 +13,9 @@ import { createSRCal } from '../timeframe/createTimeframe';
 import { CalTaskFactory, countMonthTasks } from './calTask';
 
 import { writeUserTasksServer } from '../firebase';
+import { createBodyModal } from '../utilities/bodyModal';
+import { deleteTaskFunc } from './deleteTask';
+import { strDateToArr } from '../utilities/dateUtils';
 
 export function createTaskDisplay(){
     if(document.getElementById("task-disp-main")!==null) document.getElementById("task-disp-main").remove()
@@ -105,6 +108,7 @@ function TaskFactory(taskObj, dispDiv){
         }
         upperPart.addEventListener("click", showHideLower);
         editBtn.addEventListener("click",()=>{makeAdd(taskObj)});
+        deleteBtn.btnObj = taskObj; 
         deleteBtn.addEventListener("click", deleteTaskFunc)
         function showHideLower(e){
             if(e.target.closest(".tr-check-outer")) return;
@@ -137,9 +141,6 @@ function TaskFactory(taskObj, dispDiv){
 }
 
 
-function deleteTaskFunc(){
-
-}
 export function renderTasks(){
     createSRCal()
     const taskDispDiv = document.getElementById("task-disp-main");
@@ -151,7 +152,19 @@ export function renderTasks(){
         if(elem.repeat){
             const repeatedElem = processRepeat(elem, chosenDate);
             if(repeatedElem){
-                repeatedElem.forEach(repElem=>{tasksToDisplay.push(repElem)})
+                repeatedElem.forEach(repElem=>{
+                    //check for exception
+                    let isExc = false;
+                    if(elem.repeatException.length>0){
+                        elem.repeatException.forEach(exception=>{
+                            if(exception===repElem.due){
+                                isExc = true;
+                                return;
+                            }
+                        })
+                    }
+                    if(!isExc) tasksToDisplay.push(repElem)
+                })
             }
         }
 
