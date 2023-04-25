@@ -173,7 +173,10 @@ export function renderTasks(){
     taskDispDiv.classList.remove("empty-task-div");
     //sort by date
     const sortedTasks = sortByDate(tasksToDisplay, true);
-
+    if(sortedTasks.length===0){
+        createEmptyMessage(taskDispDiv)
+        return;
+    }
     sortedTasks.forEach((task, i)=>{
         if((i>=1 && task.due!==sortedTasks[i-1].due) || i===0){
             const taskDueGroup = TaskGroupFactory(taskDispDiv, task);
