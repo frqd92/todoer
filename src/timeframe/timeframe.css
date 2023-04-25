@@ -55,7 +55,6 @@
     background: rgba(255, 255, 255, 0.073);
     transition: font-size, background-color 0.15s linear;
     border: 1px solid rgba(0, 0, 0, 0.012);
-    
 
 }
 .tf-chosen-row{
@@ -143,7 +142,6 @@
         opacity: 0.5;
     }
 }
-
 
 
 

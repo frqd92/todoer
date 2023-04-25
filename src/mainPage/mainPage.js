@@ -5,6 +5,7 @@ import { createTimeframeDiv } from '../timeframe/createTimeframe';
 import { createTimeSpan } from '../timeframe/createTimeSpanDiv';
 import { createEmptyMessage, createTaskDisplay } from '../taskDisp/createTaskDisp';
 import { elementCreator } from '../utilities/elementCreator';
+import { fillAllCalSquares } from '../singleRowCal/singleRowAll';
 
 export function createMainPageDom(){
     readTheme();
@@ -17,7 +18,9 @@ export function createMainPageDom(){
 
     createTaskDisplay();
 
-
+    if(timeframeOption==="All"){
+       fillAllCalSquares(true);
+    }
 
     //testing
     document.querySelector(".main-title").addEventListener("click", ()=>{

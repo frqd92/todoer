@@ -4,13 +4,13 @@ import { fullFormattedDate, addOneToMonth, recursiveFunc, formatNumDate, returnM
 import '/src/timeframe/timespan.css';
 import { createSRCal } from "./createTimeframe";
 import { createTaskDisplay} from "../taskDisp/createTaskDisp";
+import { fillAllCalSquares } from "../singleRowCal/singleRowAll";
 
 export function createTimeSpan(parent){
     const type = timeframeOption.toLocaleLowerCase();
     const div = elementCreator("div", ["class", "ts-main-div"], false, parent);
     const leftArrow = createArrow(div, true);
     const timeSpanDiv = elementCreator("div", ["class", "ts-div"], false, div);
-
     const rightArrow = createArrow(div);
     arrowEffect([leftArrow, rightArrow]);
     arrowFunc(div, type)
@@ -28,9 +28,22 @@ function arrowFunc(div, type){
         case "day": arrowDailyFunc(leftArr,rightArr);break;
         case "week": arrowWeeklyFunc(leftArr, rightArr);break;
         case "month": arrowMonthlyFunc(leftArr, rightArr);
+        case "all" : arrowAllFunc(leftArr, rightArr);break;
     }
 }
 
+function arrowAllFunc(left, right){
+    [left,right].forEach(btn=>{btn.addEventListener("click", incrDecrYears)})
+    function incrDecrYears(){
+        const firstYear = Number(document.querySelector(".sr-year-square").innerText)
+        if(this.className.includes("taskbox-left-div")){
+            fillAllCalSquares(false, firstYear-7);
+        }
+        else{
+            fillAllCalSquares(false, firstYear+7);
+        }
+    }
+}
 function arrowDailyFunc(left, right){
     [left,right].forEach(btn=>{btn.addEventListener("click", incrDecrDay);})
     function incrDecrDay(){
@@ -100,7 +113,6 @@ function dateProcess(parent, type){
         div.innerText = fullFormattedDate(getToday());
     }
     else if(type==="week"){
-
         const [lText, rText] = formatForWeek();
         const left = elementCreator("p", ["class", "ts-from"], lText, false);
         const right = elementCreator("p", ["class", "ts-to"], rText, false);
@@ -110,6 +122,9 @@ function dateProcess(parent, type){
     }
     else if(type==="month"){
         div.innerText = returnMonth(getToday("month")) + " " + getToday("year");
+    }
+    else if(type==="all"){
+      div.innerText= "All tasks"
     }
     return div;
 

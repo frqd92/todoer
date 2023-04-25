@@ -249,10 +249,9 @@ background: rgba(255, 255, 255, 0);
 
 .sr-day-div .sr-task-div{
     min-height: 120px;
-    max-height: 220px;
+    max-height: 200px;
     overflow: auto;
     border-top: 1px solid rgba(0, 0, 0, 0.207);
-    border-bottom: 1px solid rgba(0, 0, 0, 0.205);
 
     
 }
@@ -264,6 +263,62 @@ background: rgba(255, 255, 255, 0);
 
 .sr-day-div  .sr-cal-add-task{
     justify-self: center;
+    align-self: flex-end;
+
+}
 
 
+/* all call----------------------- */
+
+.sr-all-div{
+    display: grid;
+    grid-template-columns: minmax(50px, 10%) 90%;
+    height: 100%;
+    min-height: 9vw;
+    max-height: 200px;
+}
+
+.sr-all-square, .sr-year-square{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    transition: background-color 0.25s linear;
+}
+.sr-all-square{
+    border: 1px solid rgba(0, 0, 0, 0.361);
+    border-right: none;
+    background-color: rgba(0, 46, 55, 0.219);
+}
+
+.sr-year-square{
+    border-right: 1px solid rgba(0, 0, 0, 0.202) ;
+}
+.sr-year-square:hover{
+    background-color: rgba(0, 0, 0, 0.066);
+
+}
+.this-year-square{
+    position: relative;
+
+}
+.selected-year-square{
+    background-color: rgba(65, 71, 95, 0.099);
+}
+.this-year-square::before{
+    content: "This year";
+    position: absolute;
+    top: 5%;
+    font-size: calc(0.3rem + 0.3vw)
+}
+.sr-years-div{
+    border: 1px solid rgba(9, 22, 64, 0.5);
+
+    display: flex;
+
+}
+
+.sr-year-square{
+    flex-grow: 1;
 }

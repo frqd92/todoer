@@ -6,6 +6,7 @@ import { createWeekCal } from '../singleRowCal/singleRowWeek';
 import { createMonthCal } from '../singleRowCal/singleRowMonth';
 import { createDayCal } from '../singleRowCal/singleRowDay';
 import { createTaskDisplay } from '../taskDisp/createTaskDisp';
+import { createAllCal, fillAllCalSquares } from '../singleRowCal/singleRowAll';
 
 
 
@@ -26,6 +27,7 @@ export function createSRCal(){
         case "Week": createWeekCal(); break;
         case "Month": createMonthCal(); break;
         case "Day": createDayCal(); break;
+        case "All": createAllCal();fillAllCalSquares(true); break;
     }
     
 }
@@ -49,7 +51,6 @@ function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
     
     function tfRowChoose(){
         if(!this.className.includes("tf-chosen-row")){
-                console.log("shart");
             // row stuff
             const pElem = this.querySelector(".tf-range-p");
             timeframeChange(pElem.innerText, true);

@@ -1,5 +1,5 @@
 import { elementCreator } from '../utilities/elementCreator';
-import { mainTaskArr, isLogged, timeframeOption, updateTasksLocal, addNewTaskLocal } from '../state';
+import { mainTaskArr, isLogged, timeframeOption, addNewTaskLocal } from '../state';
 import '/src/taskDisp/taskDisp.css'
 import { readUserTasksServer} from '../firebase';
 import { dispDateStrToObjDate, fullFormattedDate, textDateToNum} from '../utilities/dateUtils';
@@ -11,11 +11,9 @@ import { findRelativeDate, returnMonth } from '../utilities/dateUtils';
 import { processRepeat } from './processRepeat';
 import { createSRCal } from '../timeframe/createTimeframe';
 import { CalTaskFactory, countMonthTasks } from './calTask';
-
 import { writeUserTasksServer } from '../firebase';
-import { createBodyModal } from '../utilities/bodyModal';
 import { deleteTaskFunc } from './deleteTask';
-import { strDateToArr } from '../utilities/dateUtils';
+
 
 export function createTaskDisplay(){
     if(document.getElementById("task-disp-main")!==null) document.getElementById("task-disp-main").remove()
@@ -140,11 +138,35 @@ function TaskFactory(taskObj, dispDiv){
     return {createTaskElements, showLowerTask}
 }
 
+function getFromToDateAll(){
+    const allSelection = document.querySelector(".all-date-range").innerText;
+    let sorted;
 
+    if(allSelection==="All tasks"){
+        sorted = sortByDate(mainTaskArr, true);
+    }
+    else{
+        const from = new Date(`${allSelection}/01/01`);
+        const to = new Date(`${allSelection}/12/31`);
+
+        const yearArr = returnRangeTasks(mainTaskArr,from, to);
+        sorted = sortByDate(yearArr, true);
+    }
+    if(sorted.length<1) return [false]
+    return [
+        dispDateStrToObjDate(sorted[0].due),
+        dispDateStrToObjDate(sorted[sorted.length-1].due)
+    ]
+
+}
 export function renderTasks(){
-    createSRCal()
+    if(timeframeOption!=="All")createSRCal()
     const taskDispDiv = document.getElementById("task-disp-main");
-    const [fromDate, toDate] = getFromToDate();
+    let fromDate, toDate;
+    if(timeframeOption!=="All"){[fromDate, toDate] = getFromToDate()}
+    else{
+        [fromDate, toDate] = getFromToDateAll()
+    }
     const tasksToDisplay = returnRangeTasks(mainTaskArr, fromDate, toDate);
     //check for repeated tasks
     const chosenDate = taskboxDateArray(document.querySelector(`.${timeframeOption.toLocaleLowerCase()}-date-range`), timeframeOption);
@@ -186,7 +208,7 @@ export function renderTasks(){
         const rowCreate = TaskFactory(task, allGroups[allGroups.length-1]);
         const row = rowCreate.createTaskElements();
         
-        if(timeframeOption!=="Year"){
+        if(timeframeOption!=="All"){
             const createRow = CalTaskFactory(row, task, rowCreate.showLowerTask);
             createRow.createCalRow();
         }
@@ -354,10 +376,11 @@ function getFromToDate(){
         case "Day":
             const dayDate = document.querySelector(".day-date-range").innerText;
             const date = dispDateStrToObjDate(textDateToNum(dayDate, true));
-            return [date, date];
+            return [date, date];          
     }
 
 }
+
 
 
 
