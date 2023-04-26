@@ -156,10 +156,46 @@
 }
 
 /*filter div------------------------------------*/
+.f-filter-menu{
+    border: 1px solid black;
+}
+.f-row{
+    width: 200px;
+    display: flex;
+    justify-content: space-between;
+    padding: 5% 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.112);
+}
+.f-row:nth-child(5){
+    border-top: 1px solid rgba(0, 0, 0, 0.112);
 
+}
+.f-row:hover{
+    background-color: rgba(0, 0, 0, 0.08);
+}
+.f-row-checked{
+
+}
+.f-row-text{
+    padding-left: 5%;
+}
+.f-check-outer{
+    padding-right: 3%;
+}
+.f-check-outer span{
+    transition: opacity 0.13s linear;
+}
+.f-row-prio-text{
+    padding: 8% 10% 3% 5%;
+    letter-spacing: 0.05rem;
+    cursor: default;
+    font-family: roboto-medium;
+}
+
+
+/* filter and group */
 .f-filter-main-div, .f-group-main-div{
     position: relative;
-
 }
 
 .f-filter-btn, .f-group-btn{
@@ -171,9 +207,9 @@
 }
 .f-filter-menu, .f-group-menu{
     display: flex;
+    flex-direction: column;
     position: absolute;
-    height: 200px;
-    width: 200px;
+    height: fit-content;
     background-color: white;
     top: 37px;
     width: inherit;
@@ -185,8 +221,9 @@
 /* menu logic for filter and group */
 
 .f-menu-hidden{
-    height: 0px !important;
+    height: 0% !important;
     overflow: hidden;
+    border: none;
 }
 
 

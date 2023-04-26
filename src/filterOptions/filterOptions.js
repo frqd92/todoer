@@ -54,11 +54,78 @@ function createGroupsDiv(par){
 }
 function createFilterDiv(par){
     const mainFilterDiv = elementCreator("div", ["class", "f-filter-main-div"], false, par);
-    const filterBtn = elementCreator("div", ["class", "f-filter-btn"], "Filter", mainFilterDiv);
-    const menu = elementCreator("div", ["class", "f-filter-menu", "f-menu-hidden"], "cdsxds", mainFilterDiv);
-    
+    const filterBtn = elementCreator("div", ["class", "f-filter-btn"], "Show", mainFilterDiv);
+    const menu = elementCreator("div", ["class", "f-filter-menu", "f-menu-hidden"], false, mainFilterDiv);
+    const contentArr = ["Completed", "Incomplete", "Repeated", "Normal", "High", "Highest"]
+    for(let i=0;i<6;i++){
+        const row = elementCreator("div", ["class", "f-row", "f-row-checked"], false,menu);
+        const text = elementCreator("p", ["class", "f-row-text"], contentArr[i], row);
+        const checkBox = createCheckboxFilter(row);
+        if(i==2){elementCreator("div", ["class", "f-row-prio-text"],"Priority", menu)}
+    }
     settingsMenuFunc(filterBtn, menu)
 }
+
+function createCheckboxFilter(par){
+    const outer = elementCreator("div", ["class", "f-check-outer"], false, par);
+    const inner = elementCreator("span", ["class", "f-check-inner"], "✓", outer);
+    par.addEventListener("click", markCheck);
+
+    function markCheck(){
+        const text = this.querySelector(".f-row-text").innerText.toLowerCase();
+        if(par.className.includes("f-row-checked")){
+            par.classList.remove("f-row-checked");
+            inner.style.opacity = "0";
+            settingsObj.filter[text]=true;
+        }
+        else{
+            par.classList.add("f-row-checked");
+            inner.style.opacity = "1";
+            settingsObj.filter[text]=false;
+        }
+        checkityCheck(this);
+        console.log(settingsObj.filter);
+    }
+    //so users cant deselect both complete and incomplete, or all 3 priorities
+    function checkityCheck(btn, obj){
+        const allBtns = document.querySelectorAll(".f-row");
+        const [completed, incomplete, , normal, high, highest] = allBtns;
+        const inners = document.querySelectorAll(".f-check-inner");
+        
+        if(btn===completed || btn===incomplete){
+            if(!completed.className.includes("f-row-checked") && !incomplete.className.includes("f-row-checked")){
+                if(btn===completed){
+                    inners[1].style.opacity = "1";
+                    incomplete.classList.add("f-row-checked")
+                    settingsObj.filter.incomplete = false;
+                }
+                else{
+                    inners[0].style.opacity = "1";
+                    completed.classList.add("f-row-checked")
+                    settingsObj.filter.completed = false;
+
+                }
+            }
+        }
+        if(btn===normal || btn===high || btn===highest){
+            const arr = [normal, high, highest];
+            let count = 0;
+            arr.forEach(elem=>{
+                if(!elem.className.includes("f-row-checked")){
+                    count++;
+                }
+            })
+            if(count===3){
+                normal.classList.add("f-row-checked");
+                inners[3].style.opacity = "1";
+                settingsObj.filter.normal = false;
+
+            }
+        }
+    }
+}
+
+
 
 function settingsMenuFunc(btn, menu){
         btn.addEventListener("click", showHideMenu);
