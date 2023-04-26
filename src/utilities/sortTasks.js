@@ -8,8 +8,6 @@ export function sortByDate(arr, isAsc){
 }
 
 export function returnRangeTasks(arr, from, to){
-    console.log(from);
-    console.log(to);
     return makeDeepCopy(arr).filter(elem=>{
         const date = dispDateStrToObjDate(elem.due);
 

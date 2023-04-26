@@ -7,9 +7,9 @@
 
 .f-main-btn-div{
     position: relative;
-     background-color: rgba(255, 255, 255, 0.198);
     padding: 3px 0px;
     box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+    cursor: pointer;
   }
   .f-main-btn-div:active{
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
@@ -20,9 +20,11 @@
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    cursor: pointer;
+
     width: 40px;
     height: 30px;
+
+
   }
 
   /* settings div */
@@ -110,22 +112,23 @@
 
 /* sort-div ------------------------------------*/
 .f-sort{
-    display: flex;
-    gap: 3%;
-}
 
-.f-sort > p{
-    white-space: nowrap;
-    font-family: roboto-medium;
-    opacity: 0.7;
+    gap: 5%;
  
 }
 
+.f-sort > p{
+    justify-self: center;
+    white-space: nowrap;
+    font-family: roboto-medium;
+    opacity: 0.7;
+}
+
 .f-sort > div{
+    justify-self: start;
 
 }
 .f-sort-arrow{
-
 }
 
 .f-sort-text{
@@ -135,18 +138,8 @@
 
 
 
-/*filter div------------------------------------*/
 
-.f-filter-main-div{
- 
-}
 
-.f-filter-btn{
-  
-}
-.f-filter-menu{
-
-}
 
 
 /*group div------------------------------------*/
@@ -159,14 +152,42 @@
   
 }
 .f-group-menu{
+   
+}
+
+/*filter div------------------------------------*/
+
+.f-filter-main-div, .f-group-main-div{
+    position: relative;
 
 }
 
+.f-filter-btn, .f-group-btn{
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.f-filter-menu, .f-group-menu{
+    display: flex;
+    position: absolute;
+    height: 200px;
+    width: 200px;
+    background-color: white;
+    top: 37px;
+    width: inherit;
+    transition: height 0.12s ease; 
+   
+}
 
 
+/* menu logic for filter and group */
 
-
-
+.f-menu-hidden{
+    height: 0px !important;
+    overflow: hidden;
+}
 
 
 

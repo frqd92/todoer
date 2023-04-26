@@ -287,8 +287,8 @@ background: rgba(255, 255, 255, 0);
     transition: background-color 0.25s linear;
 }
 .sr-all-square{
-    border: 1px solid rgba(0, 0, 0, 0.361);
-    border-right: none;
+    border: 1px solid rgba(0, 0, 0, 0.199);
+    border-right: 2px dashed rgba(0, 0, 0, 0.186);
     background-color: rgba(0, 46, 55, 0.219);
 }
 
@@ -313,7 +313,7 @@ background: rgba(255, 255, 255, 0);
     font-size: calc(0.3rem + 0.3vw)
 }
 .sr-years-div{
-    border: 1px solid rgba(9, 22, 64, 0.5);
+
 
     display: flex;
 
