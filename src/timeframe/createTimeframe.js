@@ -77,6 +77,7 @@ function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
             timeRangeDiv.classList.add("hidden-timeframe")
             timeframeDiv.classList.add("hidden-tf");
             hideArrow.classList.add("hide-tf-arrow-down");
+            document.querySelector(".filter-options-div").style.marginTop= "13px";
 
         }
         else{
@@ -85,6 +86,8 @@ function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
             calContainer.classList.remove("hidden-timeframe")
             timeframeDiv.classList.remove("hidden-tf")
             hideArrow.classList.remove("hide-tf-arrow-down");
+            document.querySelector(".filter-options-div").style.marginTop= "0px";
+
         }
     }
     function moveArrow(){

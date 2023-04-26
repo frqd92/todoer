@@ -1,6 +1,5 @@
 #task-disp-main{
     position: relative;
-    margin-top: 2%;
     padding: 2% 10%;
     display: flex;
     flex-direction: column;
@@ -584,8 +583,7 @@ font-size: 0.75rem;
 
 @media screen and (max-width: 1000px) and (min-width:675px) {
     #task-disp-main{
-        margin-top: 5%;
-        padding: 0% 13%;
+        padding: 4% 13%;
     }
     .task-row-upper{
         grid-template-columns: 250px 1fr 0.5fr 20px;
@@ -604,8 +602,7 @@ font-size: 0.75rem;
 
 @media screen and (max-width: 674px){
     #task-disp-main{
-        margin-top: 10%;
-        padding: 0% 10%;
+        padding: 5% 10%;
     }
     .task-row-main{
         min-width: 312px;

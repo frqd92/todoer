@@ -1,0 +1,219 @@
+.filter-options-div{
+    display: flex;
+    user-select: none;
+    min-width: 400px;
+}
+
+
+.f-main-btn-div{
+    position: relative;
+     background-color: rgba(255, 255, 255, 0.198);
+    padding: 3px 0px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+  }
+  .f-main-btn-div:active{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+  }
+
+  .f-filterMenu-btn{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    cursor: pointer;
+    width: 40px;
+    height: 30px;
+  }
+
+  /* settings div */
+.f-settings-div{
+    transition: opacity 0.16s linear;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    width: 100%;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    background-color: rgba(255, 255, 255, 0.305);
+}
+.f-settings-div > div{
+    border-right: 1px solid rgba(0, 0, 0, 0.5173);
+    border-top: none;
+    border-bottom: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    font-family: roboto;
+    transition: background-color 0.13s linear;
+    box-shadow: inset -7px 0 3px -7px rgba(0,0,0,0.4);
+
+}
+.f-settings-div > div:hover:not(.f-collExp), .f-collExp > div:hover{
+  background-color: rgba(0, 50, 54, 0.092);
+}
+.f-settings-hidden{
+    opacity: 0;
+}
+
+/* collp/exp div------------------------------------*/
+.f-collExp{
+    display: flex;
+
+}
+.f-collExp > div{
+    display: flex;
+    white-space: nowrap;
+    align-items: center;
+    justify-content: center;
+   width: 100%;
+   height: 100%;
+   transition: background-color 0.13s linear;
+}
+
+.f-collExp > p{
+    border-right: 1px dashed rgba(0, 0, 0, 0.32);
+    height: 100%;
+}
+.f-collExp-left,.f-collExp-right{
+    display: flex;
+    gap: 3px;
+
+}
+.f-collExp-right{
+ 
+
+}
+.f-collExp-arrow-div{
+    position: relative;
+    width: 20px;
+    height: 22px;
+    opacity: 0.7;
+}
+.f-collExp-arrow-div span{
+    position: absolute;
+
+}
+
+.f-collExp-arrow-div span:first-child{
+    left: 0;
+    transform: rotate(40deg) ;
+    top: 5px;
+
+}
+.f-collExp-arrow-div span:nth-child(2){
+    right: -1px;
+    transform: rotate(40deg) ;
+    top: -0px;
+}
+.f-collExp-left span:nth-child(2){
+    right: -2px;
+}
+
+/* sort-div ------------------------------------*/
+.f-sort{
+    display: flex;
+    gap: 3%;
+}
+
+.f-sort > p{
+    white-space: nowrap;
+    font-family: roboto-medium;
+    opacity: 0.7;
+ 
+}
+
+.f-sort > div{
+
+}
+.f-sort-arrow{
+
+}
+
+.f-sort-text{
+
+}
+
+
+
+
+/*filter div------------------------------------*/
+
+.f-filter-main-div{
+ 
+}
+
+.f-filter-btn{
+  
+}
+.f-filter-menu{
+
+}
+
+
+/*group div------------------------------------*/
+
+.f-group-main-div{
+ 
+}
+
+.f-group-btn{
+  
+}
+.f-group-menu{
+
+}
+
+
+
+
+
+
+
+
+
+
+
+  /* menu effect thing */
+.op-line-0, .op-line-1, .op-line-2{
+    height: 0px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 5px rgb(174, 183, 182, 0.3);
+    width: 65%;
+    border: 1px solid rgba(227, 227, 227, 1);
+    background-color: white;
+  }
+  .op-line-0, .op-line-2{
+    transition: width, transform 0.2s linear;
+    border: 1px solid rgb(0, 0, 0, 0.7);
+  }
+  .op-line-1{
+    transition: opacity, width 0.2s linear;
+    border: 1px solid rgb(0, 0, 0, 0.7);
+  }
+  
+  .op-line-0-show{
+    transform: translate(6.4px, 5px) rotate(25deg);
+    width: 40%;
+  }
+  .op-line-1-show{
+    width: 70%;
+  }
+  .op-line-2-show{
+    transform: translate(6.4px, -5px) rotate(-25deg);
+    border-radius: 10px;
+    width: 40%;
+  }
+  
+  
+
+  @media screen and (max-width: 600px) {
+    .f-settings-div{
+        font-size: 0.85rem;
+        gap: 0px;
+    }
+  }
+
+  @media screen and (max-width: 400px) {
+    .f-settings-div{
+        font-size: 0.75rem;
+    }
+  }
