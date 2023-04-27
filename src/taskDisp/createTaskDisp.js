@@ -13,6 +13,7 @@ import { createSRCal } from '../timeframe/createTimeframe';
 import { CalTaskFactory, countMonthTasks } from './calTask';
 import { writeUserTasksServer } from '../firebase';
 import { deleteTaskFunc } from './deleteTask';
+import { settingsObj } from '../filterOptions/filterOptions';
 
 
 export function createTaskDisplay(){
@@ -27,6 +28,14 @@ function TaskFactory(taskObj, dispDiv){
     let rowDiv, upperPart, lowerPart;
     function createTaskElements(){
         rowDiv = elementCreator("div", ["class", "task-row-main"], false, dispDiv);
+
+        //details attached to row in order to filter after
+        rowDiv.objFilter = {
+            complete : false,
+            repeat : taskObj.repeat,
+            priority: taskObj.priority
+        }
+
         upperPart = elementCreator("div", ["class", "task-row-upper"], false, rowDiv );
                 // if repeated elem
                 if(taskObj.isRepObject){
@@ -194,7 +203,8 @@ export function renderTasks(){
 
     taskDispDiv.classList.remove("empty-task-div");
     //sort by date
-    const sortedTasks = sortByDate(tasksToDisplay, true);
+    let sortedTasks = sortByDate(tasksToDisplay, true);
+    sortedTasks = checkForFilter(sortedTasks);
     if(sortedTasks.length===0){
         createEmptyMessage(taskDispDiv)
         return;
@@ -219,6 +229,56 @@ export function renderTasks(){
 
 
 }
+function checkForFilter(tasks){
+    const filteredArr = [];
+    const setObj = settingsObj.filter;
+    let isValid = true;
+  
+    tasks.forEach(task=>{
+        if(!setObj.completed){
+            if(task.isComplete){
+                isValid = false;
+                return;
+            }
+            else{isValid= true}
+        }
+        if(!setObj.incomplete){
+            if(!task.isComplete){
+                isValid = false;
+                return;
+            }
+            else{isValid= true}
+        }
+
+        if(!setObj[task.priority]){
+            isValid=false;
+            return;
+        }
+        else{
+            isValid=true;
+        }
+        if(!setObj.repeated){
+            if(task.repeat){
+                isValid=false;
+                return;
+            }
+            else{
+                isValid=true;
+            }
+        }
+
+        if(isValid){
+            filteredArr.push(task)
+        }
+        isValid=true;
+    })
+
+ 
+    return filteredArr;
+}
+
+
+
 
 export function TaskGroupFactory(dispDiv, task){
 
@@ -321,6 +381,7 @@ export function createEmptyMessage(parent){
 
 
 function createCheckbox(rowParent, taskObj){
+    const taskRowMain = rowParent.parentElement;
     const outerDiv = elementCreator("div", ["class", "tr-check-outer"], false, rowParent);
     const check = elementCreator("p", false, "✓", outerDiv);
     const checkLine = rowParent.querySelector(".div-line");
@@ -333,13 +394,14 @@ function createCheckbox(rowParent, taskObj){
             check.classList.add("tr-check-true");
             setTimeout(()=>{checkLine.classList.add("div-line-checked")}, 200)
             taskObj.isComplete = true;
-
+            taskRowMain.objFilter.complete = true;
         }
         else{
             outerDiv.classList.remove("tr-outer-true");
             check.classList.remove("tr-check-true");
             checkLine.classList.remove("div-line-checked")
             taskObj.isComplete = false;
+            taskRowMain.objFilter.complete = false;
         }
         alterCompleteStatus(taskObj)
     }

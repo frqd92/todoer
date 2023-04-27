@@ -1,4 +1,5 @@
 import { isLogged, mainGroupArr } from '../state';
+import { createTaskDisplay } from '../taskDisp/createTaskDisp';
 import { elementCreator } from '../utilities/elementCreator'
 import { followMouseHoverText } from '../utilities/hoverDiv';
 import '/src/filterOptions/filterOptions.css'
@@ -6,12 +7,12 @@ import '/src/filterOptions/filterOptions.css'
 export const settingsObj = {
     sort: false,
     filter: {
-        completed: false,
-        incomplete: false,
-        repeated: false,
-        normal: false,
-        high: false,
-        highest: false
+        completed: true,
+        incomplete: true,
+        repeated: true,
+        normal: true,
+        high: true,
+        highest: true
     }
 }
 export function createFilterOptions(parent){
@@ -59,7 +60,6 @@ function createGroupsDiv(par){
     selectAll.addEventListener("click", selectFunc)
     deselectAll.addEventListener("click", selectFunc)
 
-
     function selectFunc(){
         groupCont.childNodes.forEach(row=>{
             if(row.className.includes("f-group-not-disp")) return
@@ -79,9 +79,9 @@ function createGroupsDiv(par){
 
 
     input.addEventListener("input", (e)=>{
-        const inputVal = e.target.value.toLowerCase().replaceAll(/[\s]/g, "");
+        const inputVal = e.target.value.toLowerCase().replaceAll(/[\s]/g,"");
         groupCont.childNodes.forEach(row=>{
-            const group = row.querySelector("p").innerText.toLowerCase().replaceAll(/[\s]/g, "");
+            const group = row.querySelector("p").innerText.toLowerCase().replaceAll(/[\s]/g,"");
             if(!group.includes(inputVal)){row.style.display="none"}
             else{row.style.display="flex"};
         })
@@ -100,7 +100,6 @@ function createGroupsDiv(par){
 
     function generateGroups(){
         groupCont.querySelectorAll("div").forEach(div=>{div.remove()})
-    
         if(mainGroupArr.length>0){
             mainGroupArr.forEach(group=>{
                 const isDisp = checkIfGroupIsInDisp(group)
@@ -112,34 +111,33 @@ function createGroupsDiv(par){
         else{elementCreator("div", ["class", "f-no-group-msg"], "Your group list is empty", groupCont)}
     }
 
-        function GroupRowFact(groupName, isDisp){
-            const row = elementCreator("div", ["class", "f-group-row"], false, false);
-            const text = elementCreator("p", false, groupName, row);
-            const outer = elementCreator("div", false, false, row);
-            const inner = elementCreator("span", false, "✓", outer);
-            inner.classList.add("f-inner-hidden")
-            if(!isDisp){
-                row.classList.add("f-group-not-disp")
-                followMouseHoverText(row, "No tasks with this group in current date range")
+    function GroupRowFact(groupName, isDisp){
+        const row = elementCreator("div", ["class", "f-group-row"], false, false);
+        const text = elementCreator("p", false, groupName, row);
+        const outer = elementCreator("div", false, false, row);
+        const inner = elementCreator("span", false, "✓", outer);
+        inner.classList.add("f-inner-hidden")
+        if(!isDisp){
+            row.classList.add("f-group-not-disp")
+            followMouseHoverText(row, "No tasks with this group in current date range")
+        }
+        else{
+            row.addEventListener("click", selectDesRow);
+
+        }
+        return row;
+
+        function selectDesRow(){
+            if(!this.className.includes(("f-selected-group"))){
+                this.classList.add("f-selected-group")
+                inner.classList.remove("f-inner-hidden")
             }
             else{
-                row.addEventListener("click", selectDesRow);
-
-            }
-            return row;
-
-            function selectDesRow(){
-                if(!this.className.includes(("f-selected-group"))){
-                    this.classList.add("f-selected-group")
-                    inner.classList.remove("f-inner-hidden")
-                }
-                else{
-                    this.classList.remove("f-selected-group")
-                    inner.classList.add("f-inner-hidden")
-                }
+                this.classList.remove("f-selected-group")
+                inner.classList.add("f-inner-hidden")
             }
         }
-
+    }
 
 
 
@@ -188,8 +186,9 @@ function createFilterDiv(par){
             inner.style.opacity=1;
         })
         for(let [key] of Object.entries(settingsObj.filter)){
-            settingsObj.filter[key]=false;
+            settingsObj.filter[key]=true;
         }
+        createTaskDisplay()
     }
     return createFilterDiv;
 }
@@ -204,14 +203,15 @@ function createCheckboxFilter(par){
         if(par.className.includes("f-row-checked")){
             par.classList.remove("f-row-checked");
             inner.style.opacity = "0";
-            settingsObj.filter[text]=true;
+            settingsObj.filter[text]=false;
         }
         else{
             par.classList.add("f-row-checked");
             inner.style.opacity = "1";
-            settingsObj.filter[text]=false;
+            settingsObj.filter[text]=true;
         }
         checkityCheck(this);
+        createTaskDisplay()
     }
     //so users cant deselect both complete and incomplete, or all 3 priorities
     function checkityCheck(btn, obj){
@@ -224,12 +224,12 @@ function createCheckboxFilter(par){
                 if(btn===completed){
                     inners[1].style.opacity = "1";
                     incomplete.classList.add("f-row-checked")
-                    settingsObj.filter.incomplete = false;
+                    settingsObj.filter.incomplete = true;
                 }
                 else{
                     inners[0].style.opacity = "1";
                     completed.classList.add("f-row-checked")
-                    settingsObj.filter.completed = false;
+                    settingsObj.filter.completed = true;
 
                 }
             }
@@ -244,7 +244,7 @@ function createCheckboxFilter(par){
                 btn.classList.add("f-row-checked");
                 btn.querySelector(".f-check-inner").style.opacity = "1";
                 const text = btn.querySelector(".f-row-text").innerText.toLowerCase();
-                settingsObj.filter[text] = false;
+                settingsObj.filter[text] = true;
             }
         }
     }
