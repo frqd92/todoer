@@ -6,7 +6,7 @@ import { createTimeSpan } from '../timeframe/createTimeSpanDiv';
 import { createEmptyMessage, createTaskDisplay } from '../taskDisp/createTaskDisp';
 import { elementCreator } from '../utilities/elementCreator';
 import { fillAllCalSquares } from '../singleRowCal/singleRowAll';
-import { createFilterOptions } from '../filterOptions/filterOptions';
+import { createFilterOptions, settingsObj } from '../filterOptions/filterOptions';
 
 export function createMainPageDom(){
     readTheme();
@@ -31,6 +31,8 @@ export function createMainPageDom(){
         console.log(mainTaskArr);
         console.log("groups:");
         console.log(mainGroupArr);
+        console.log("settings:");
+        console.log(settingsObj);
     })
 
 }

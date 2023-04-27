@@ -1,4 +1,6 @@
+import { isLogged, mainGroupArr } from '../state';
 import { elementCreator } from '../utilities/elementCreator'
+import { followMouseHoverText } from '../utilities/hoverDiv';
 import '/src/filterOptions/filterOptions.css'
 
 export const settingsObj = {
@@ -40,18 +42,128 @@ function createSettingsDiv(par){
     return settingsDiv;
 }
 
-
-
-
-
-
 function createGroupsDiv(par){
     const mainGroupDiv = elementCreator("div", ["class", "f-group-main-div"], false, par);
-    const groupBtn = elementCreator("div", ["class", "f-group-btn"], "Group", mainGroupDiv);
-    const menu = elementCreator("div", ["class", "f-group-menu", "f-menu-hidden"], "false", mainGroupDiv);
-    settingsMenuFunc(groupBtn, menu)
+    const groupBtn = elementCreator("div", ["class", "f-group-btn"], "Filter groups", mainGroupDiv);
+    const menu = elementCreator("div", ["class", "f-group-menu", "f-menu-hidden"], false, mainGroupDiv);
+    settingsMenuFunc(groupBtn, menu);
 
+    const input = elementCreator("input", ["class", "f-search-input"], "Search groups", menu, false, true);
+    const groupCont = elementCreator("div", ["class", "f-group-row-div"], false, menu);
+    const btnsDiv = elementCreator("div", ["class", "f-group-btns-div"], false, menu);
+    const selectAll = elementCreator("div", false, "Select all", btnsDiv);
+    const deselectAll = elementCreator("div", false, "Deselect all", btnsDiv);
+    selectAll.isSel = true;
+    deselectAll.isSel = false;
+    mainGroupDiv.addEventListener("click", groupFunc)
+    selectAll.addEventListener("click", selectFunc)
+    deselectAll.addEventListener("click", selectFunc)
+
+
+    function selectFunc(){
+        groupCont.childNodes.forEach(row=>{
+            if(row.className.includes("f-group-not-disp")) return
+            if(this.isSel){
+                row.classList.add("f-selected-group");
+                row.querySelector("span").classList.remove("f-inner-hidden")
+            }
+            else{
+                row.classList.remove("f-selected-group");
+                row.querySelector("span").classList.add("f-inner-hidden")
+            }
+
+        })  
+    }
+
+
+
+
+    input.addEventListener("input", (e)=>{
+        const inputVal = e.target.value.toLowerCase().replaceAll(/[\s]/g, "");
+        groupCont.childNodes.forEach(row=>{
+            const group = row.querySelector("p").innerText.toLowerCase().replaceAll(/[\s]/g, "");
+            if(!group.includes(inputVal)){row.style.display="none"}
+            else{row.style.display="flex"};
+        })
+    })
+
+    function groupFunc(e){
+        if(e.target.closest(".f-group-menu")) return
+        if(!this.className.includes("f-group-open")){
+            this.classList.add("f-group-open")
+            generateGroups();
+        }
+        else{
+            this.classList.remove("f-group-open")
+        }
+    }
+
+    function generateGroups(){
+        groupCont.querySelectorAll("div").forEach(div=>{div.remove()})
+    
+        if(mainGroupArr.length>0){
+            mainGroupArr.forEach(group=>{
+                const isDisp = checkIfGroupIsInDisp(group)
+                const groupRow = GroupRowFact(group, isDisp);
+                if(isDisp){groupCont.prepend(groupRow)}
+                else{ groupCont.appendChild(groupRow)}
+            })
+        }
+        else{elementCreator("div", ["class", "f-no-group-msg"], "Your group list is empty", groupCont)}
+    }
+
+        function GroupRowFact(groupName, isDisp){
+            const row = elementCreator("div", ["class", "f-group-row"], false, false);
+            const text = elementCreator("p", false, groupName, row);
+            const outer = elementCreator("div", false, false, row);
+            const inner = elementCreator("span", false, "✓", outer);
+            inner.classList.add("f-inner-hidden")
+            if(!isDisp){
+                row.classList.add("f-group-not-disp")
+                followMouseHoverText(row, "No tasks with this group in current date range")
+            }
+            else{
+                row.addEventListener("click", selectDesRow);
+
+            }
+            return row;
+
+            function selectDesRow(){
+                if(!this.className.includes(("f-selected-group"))){
+                    this.classList.add("f-selected-group")
+                    inner.classList.remove("f-inner-hidden")
+                }
+                else{
+                    this.classList.remove("f-selected-group")
+                    inner.classList.add("f-inner-hidden")
+                }
+            }
+        }
+
+
+
+
+    function checkIfGroupIsInDisp(groupFromMain){
+        const allDispGroups = document.querySelectorAll(".tr-group");
+        let isDisp = false;
+        allDispGroups.forEach(taskGroup=>{
+            if(taskGroup.innerText!=="No group"){
+                if(taskGroup.innerText===groupFromMain){
+                    isDisp=true;
+                }
+            }
+        })
+        return isDisp;
+    }
+    return mainGroupDiv;
+    
 }
+
+
+
+
+
+
 function createFilterDiv(par){
     const mainFilterDiv = elementCreator("div", ["class", "f-filter-main-div"], false, par);
     const filterBtn = elementCreator("div", ["class", "f-filter-btn"], "Show", mainFilterDiv);
@@ -61,9 +173,25 @@ function createFilterDiv(par){
         const row = elementCreator("div", ["class", "f-row", "f-row-checked"], false,menu);
         const text = elementCreator("p", ["class", "f-row-text"], contentArr[i], row);
         const checkBox = createCheckboxFilter(row);
-        if(i==2){elementCreator("div", ["class", "f-row-prio-text"],"Priority", menu)}
+        if(i===2) elementCreator("div", ["class", "f-row-prio-text"],"Priority", menu)
+        if(i===5){
+            const showAllBtn = elementCreator("div", ["class", "f-show-all-btn"], "Show all", menu)
+            showAllBtn.addEventListener("click", showAll)
+        }
     }
     settingsMenuFunc(filterBtn, menu)
+    
+    function showAll(){
+        document.querySelectorAll(".f-row").forEach(elem=>{
+            const inner = elem.querySelector(".f-check-inner");
+            elem.classList.add("f-row-checked")
+            inner.style.opacity=1;
+        })
+        for(let [key] of Object.entries(settingsObj.filter)){
+            settingsObj.filter[key]=false;
+        }
+    }
+    return createFilterDiv;
 }
 
 function createCheckboxFilter(par){
@@ -84,7 +212,6 @@ function createCheckboxFilter(par){
             settingsObj.filter[text]=false;
         }
         checkityCheck(this);
-        console.log(settingsObj.filter);
     }
     //so users cant deselect both complete and incomplete, or all 3 priorities
     function checkityCheck(btn, obj){
@@ -111,15 +238,13 @@ function createCheckboxFilter(par){
             const arr = [normal, high, highest];
             let count = 0;
             arr.forEach(elem=>{
-                if(!elem.className.includes("f-row-checked")){
-                    count++;
-                }
+                if(!elem.className.includes("f-row-checked")) count++ 
             })
             if(count===3){
-                normal.classList.add("f-row-checked");
-                inners[3].style.opacity = "1";
-                settingsObj.filter.normal = false;
-
+                btn.classList.add("f-row-checked");
+                btn.querySelector(".f-check-inner").style.opacity = "1";
+                const text = btn.querySelector(".f-row-text").innerText.toLowerCase();
+                settingsObj.filter[text] = false;
             }
         }
     }
@@ -129,8 +254,6 @@ function createCheckboxFilter(par){
 
 function settingsMenuFunc(btn, menu){
         btn.addEventListener("click", showHideMenu);
-
-
         function showHideMenu(){
             if(menu.className.includes("f-menu-hidden")){
                 menu.classList.remove("f-menu-hidden")
@@ -146,12 +269,9 @@ function settingsMenuFunc(btn, menu){
             if(!e.target.closest("."+parentClass)){
                 menu.classList.add("f-menu-hidden")
                 window.removeEventListener("click", hideMenu);
+                btn.parentElement.classList.remove("f-group-open")
             }
         }
-
-        
-
-        
 }
 
 

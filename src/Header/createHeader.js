@@ -51,7 +51,7 @@ export function makeAdd(taskEditObj){
 }
 // theme, bulb---------------------------------------------------------------------------------------
 function createLightBulb(parent){
-    const div = elementCreator("div", ["class", "bulb-container"], false, parent);
+    const div = elementCreator("div", ["class", "bulb-container", "bulb-on"], false, parent);
     const top = elementCreator("div", ["class", "bulb-top"], false, div);
     const thatShinyThing = elementCreator("div", ["class", "bulb-shiny-thing"], false, div);
     const middle = elementCreator("div", ["class", "bulb-middle"], false, div);
@@ -64,12 +64,16 @@ function createLightBulb(parent){
     div.addEventListener("click", bulbLogic);
     return div;
     function bulbLogic(){
+        console.log("jdkadka");
         if(!this.className.includes("bulb-on")){
+            console.log("shart");
+
             this.classList.add("bulb-on");
             modifyTheme("dark-theme");
             bulbLum.style.display = "block";
         }
         else{
+            console.log("fart");
             this.classList.remove("bulb-on");
             modifyTheme("light-theme");
             bulbLum.style.display = "none";
@@ -81,6 +85,10 @@ function createLightBulb(parent){
         if(currentTheme==="dark-theme"){
             div.classList.add("bulb-on");
             bulbLum.style.display = "block";
+        }
+        else{
+            div.classList.remove("bulb-on");
+            bulbLum.style.display = "none";
         }
     }
 }

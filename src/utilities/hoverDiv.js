@@ -14,6 +14,7 @@ export function followMouseHoverText(div, txt){
             background: white;
             border: 1px solid black;
             padding: 2px 5px;
+            z-index: 100;
         }
         `
         div.addEventListener("mouseleave", makeInvisible, {once:true});

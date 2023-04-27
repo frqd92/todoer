@@ -43,7 +43,6 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
     font-family: roboto;
     transition: background-color 0.13s linear;
     box-shadow: inset -7px 0 3px -7px rgba(0,0,0,0.4);
@@ -137,62 +136,6 @@
 
 
 
-
-
-
-
-
-/*group div------------------------------------*/
-
-.f-group-main-div{
- 
-}
-
-.f-group-btn{
-  
-}
-.f-group-menu{
-   
-}
-
-/*filter div------------------------------------*/
-.f-filter-menu{
-    border: 1px solid black;
-}
-.f-row{
-    width: 200px;
-    display: flex;
-    justify-content: space-between;
-    padding: 5% 0;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.112);
-}
-.f-row:nth-child(5){
-    border-top: 1px solid rgba(0, 0, 0, 0.112);
-
-}
-.f-row:hover{
-    background-color: rgba(0, 0, 0, 0.08);
-}
-.f-row-checked{
-
-}
-.f-row-text{
-    padding-left: 5%;
-}
-.f-check-outer{
-    padding-right: 3%;
-}
-.f-check-outer span{
-    transition: opacity 0.13s linear;
-}
-.f-row-prio-text{
-    padding: 8% 10% 3% 5%;
-    letter-spacing: 0.05rem;
-    cursor: default;
-    font-family: roboto-medium;
-}
-
-
 /* filter and group */
 .f-filter-main-div, .f-group-main-div{
     position: relative;
@@ -209,26 +152,176 @@
     display: flex;
     flex-direction: column;
     position: absolute;
-    height: fit-content;
     background-color: white;
     top: 37px;
-    width: inherit;
-    transition: height 0.12s ease; 
-   
+    transition: all 0.12s ease; 
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
 }
 
 
-/* menu logic for filter and group */
+
+/*filter div------------------------------------*/
+.f-filter-menu{
+    border: 1px solid rgba(0, 0, 0, 0.292);
+    width: 200px;
+    max-height: 400px;
+    padding: 3%;
+}
+.f-row{
+    display: flex;
+    justify-content: space-between;
+    padding: 5% 0;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.112);
+}
+.f-row:nth-child(5){
+    border-top: 1px solid rgba(0, 0, 0, 0.112);
+
+}
+.f-row:hover{
+    background-color: rgba(0, 0, 0, 0.08);
+}
+.f-row-checked{
+
+}
+.f-row-text{
+ 
+}
+.f-check-outer{
+
+    border: 1px solid black;
+    width: 20px;
+    height: 20px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+    border-radius: 3px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+
+}
+.f-check-outer span{
+    transition: opacity 0.13s linear;
+}
+.f-row-prio-text{
+    padding: 4% 0% 3% 0%;
+    letter-spacing: 0.05rem;
+    cursor: default;
+    text-align: center;
+    font-family: roboto-medium;
+}
+.f-show-all-btn{
+    margin-top: 5%;
+}
+
+
+
+/*group div------------------------------------*/
+.f-group-main-div{
+
+}
+
+.f-group-btn{
+  
+}
+.f-group-menu{
+   max-height: 400px;
+   max-width: 250px;
+    border: 1px solid rgba(0, 0, 0, 0.265);
+    padding: 3%;
+    display: flex;
+    flex-direction: column;
+    gap:calc(5px + 0.4vw);
+}
+
+.f-search-input{
+    text-align: center;
+    outline: none;
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.594);
+    border-top: 1px solid rgba(0, 0, 0, 0.594);
+    font-size: 100%;
+    padding: 2% 0;
+}
+
+.f-group-btns-div{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 12px;
+}
+
+.f-group-btns-div > div, .f-show-all-btn{
+    white-space: nowrap;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2% 0%;
+    font-size: 90%;
+    border: 1px solid rgba(0, 0, 0, 0.204);
+    border-radius: 3px;
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 1px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+
+}
+
+.f-group-btns-div > div:active, .f-show-all-btn:active{
+    box-shadow: rgba(78, 78, 109, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+    transform: scale(0.92);
+}
+
+.f-group-row-div{
+    max-height: 2000px;
+    overflow: auto;
+
+}
+.f-group-row{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.2s linear;
+    padding: 5px 3px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.207);
+    cursor: pointer;
+}
+
+.f-group-row:not(.f-group-not-disp):hover{
+    background-color: rgba(0, 0, 0, 0.086);
+}
+.f-group-not-disp{
+    cursor: not-allowed;
+    
+}
+.f-group-not-disp > p, .f-group-not-disp > div{
+    opacity: 0.5;
+}
+.f-group-row > p{
+
+}
+
+.f-group-row > div{
+    border: 1px solid black;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+}
+.f-group-row span{
+    font-size: 85%;
+    transition: opacity linear 0.2s;
+}
+.f-inner-hidden{
+    opacity: 0;
+}
+
+
 
 .f-menu-hidden{
-    height: 0% !important;
+    max-height: 0px !important;
+    padding: 0;
     overflow: hidden;
-    border: none;
+    border: none !important;
 }
-
-
-
-
 
   /* menu effect thing */
 .op-line-0, .op-line-1, .op-line-2{
@@ -268,10 +361,16 @@
         font-size: 0.85rem;
         gap: 0px;
     }
+    .f-filter-menu{
+       width: 150px;
+    }
   }
 
   @media screen and (max-width: 400px) {
     .f-settings-div{
         font-size: 0.75rem;
     }
+    .f-filter-menu{
+        width: 100px;
+     }
   }
