@@ -45,7 +45,7 @@ function createSettingsDiv(par){
 
 function createGroupsDiv(par){
     const mainGroupDiv = elementCreator("div", ["class", "f-group-main-div"], false, par);
-    const groupBtn = elementCreator("div", ["class", "f-group-btn"], "Filter groups", mainGroupDiv);
+    const groupBtn = elementCreator("div", ["class", "f-group-btn"], "Filter by group", mainGroupDiv);
     const menu = elementCreator("div", ["class", "f-group-menu", "f-menu-hidden"], false, mainGroupDiv);
     settingsMenuFunc(groupBtn, menu);
 
@@ -71,7 +71,6 @@ function createGroupsDiv(par){
                 row.classList.remove("f-selected-group");
                 row.querySelector("span").classList.add("f-inner-hidden")
             }
-
         })  
     }
 
@@ -109,6 +108,7 @@ function createGroupsDiv(par){
             })
         }
         else{elementCreator("div", ["class", "f-no-group-msg"], "Your group list is empty", groupCont)}
+        filterGroupsFunc()
     }
 
     function GroupRowFact(groupName, isDisp){
@@ -136,9 +136,39 @@ function createGroupsDiv(par){
                 this.classList.remove("f-selected-group")
                 inner.classList.add("f-inner-hidden")
             }
+            filterGroupsFunc();
         }
     }
-
+    function filterGroupsFunc(){
+        const allTasks = document.querySelectorAll(".task-row-main");
+        const allSelected = groupCont.querySelectorAll(".f-selected-group");
+        const allTotal = groupCont.querySelectorAll(".f-group-row");
+        if(allSelected.length===0 || allSelected.length===allTotal.length){
+            allTasks.forEach(task=>task.style.display="block")
+            return;
+        }
+        const shownGroups = [];
+        groupCont.childNodes.forEach(row=>{
+            if(row.className.includes("f-selected-group")){
+                const filterGroup = row.querySelector("p").innerText;
+                allTasks.forEach(task=>{
+                    const taskGroup = task.objFilter.group;
+                    if(filterGroup===taskGroup){
+                        shownGroups.push(taskGroup);
+                    }
+                })
+            }
+        })
+        allTasks.forEach(task=>{
+            if(shownGroups.includes(task.objFilter.group)){
+                task.style.display="block";
+            }
+            else{
+                task.style.display="none"
+            }
+        })
+        console.log(shownGroups);
+    }
 
 
     function checkIfGroupIsInDisp(groupFromMain){
@@ -287,9 +317,18 @@ function createCollExpDiv(settingsDiv){
     const right = elementCreator("div", ["class", "f-collExp-right"], false, collExpDiv);
     elementCreator("span", false, "Expand all", right);
     const expArrs = createCollArrows(false, right);
-
-
+    left.collapse = true;
+    right.collapse = false;
+    left.addEventListener("click", collExpAllFunc)
+    right.addEventListener("click", collExpAllFunc)
     return collExpDiv;
+
+    function collExpAllFunc(){
+        const allGroups = document.querySelectorAll(".td-grouped");
+        allGroups.forEach(group=>{
+            this.collapse?group.closeFunc():group.openFunc();
+        })
+    }
 
     function createCollArrows(bool, parDiv){
         const arrDiv = elementCreator("div", ["class", "f-collExp-arrow-div"], false, parDiv);

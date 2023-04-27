@@ -24,11 +24,12 @@ export function CalTaskFactory(dispRow, taskObj, showLowerTask){
     function scrollTask(){
         showLowerTask();
         dispRow.scrollIntoView({ behavior: "smooth", block: "end", inline: "end" });
+        if(rowGroup.className.includes("td-grouped-hide")){
+            rowGroup.openFunc();
+        }
     }
     function highlightTasks(){
-        if(rowGroup.className.includes("td-grouped-hide")){
-            rowGroup.classList.add("highlighted-task");
-        }
+
         calTaskDiv.classList.add("highlighted-task")
         dispRow.classList.add("highlighted-task")
         
@@ -38,9 +39,7 @@ export function CalTaskFactory(dispRow, taskObj, showLowerTask){
     function dehighlightTasks(){
         calTaskDiv.classList.remove("highlighted-task")
         dispRow.classList.remove("highlighted-task")
-        if(rowGroup.className.includes("td-grouped-hide")){
-            rowGroup.classList.remove("highlighted-task");
-        }
+
     }
 
     function updateCalComplete(){
