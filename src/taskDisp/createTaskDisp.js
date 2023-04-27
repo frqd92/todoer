@@ -230,7 +230,7 @@ export function renderTasks(){
 
 }
 function checkForFilter(tasks){
-    const filteredArr = [];
+    let filteredArr = [];
     const setObj = settingsObj.filter;
     let isValid = true;
   
@@ -273,7 +273,10 @@ function checkForFilter(tasks){
         isValid=true;
     })
 
- 
+
+    //sorting
+    filteredArr = settingsObj.sort?sortByDate(filteredArr, false):sortByDate(filteredArr, true)
+
     return filteredArr;
 }
 

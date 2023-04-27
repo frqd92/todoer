@@ -326,8 +326,8 @@ function createSortDiv(par){
             sortArrow.innerText = "↓";
             sortText.innerText = "Earliest";
             settingsObj.sort=false;
-
         }
+        createTaskDisplay();
     }
 }
 
