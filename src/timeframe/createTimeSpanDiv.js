@@ -27,12 +27,13 @@ function arrowFunc(div, type){
     switch(type){
         case "day": arrowDailyFunc(leftArr,rightArr);break;
         case "week": arrowWeeklyFunc(leftArr, rightArr);break;
-        case "month": arrowMonthlyFunc(leftArr, rightArr);
+        case "month": arrowMonthlyFunc(leftArr, rightArr); break;
         case "all" : arrowAllFunc(leftArr, rightArr);break;
     }
 }
 
 function arrowAllFunc(left, right){
+    console.log("shart");
     [left,right].forEach(btn=>{btn.addEventListener("click", incrDecrYears)})
     function incrDecrYears(){
         const firstYear = Number(document.querySelector(".sr-year-square").innerText)
