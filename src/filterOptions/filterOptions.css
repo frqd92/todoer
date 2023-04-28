@@ -353,7 +353,11 @@
     border-radius: 10px;
     width: 40%;
   }
-  
+  /* 
+  */
+  .hide-group-filter{
+    display: none;
+  }
   
 
   @media screen and (max-width: 600px) {

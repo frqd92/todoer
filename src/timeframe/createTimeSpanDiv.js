@@ -33,7 +33,6 @@ function arrowFunc(div, type){
 }
 
 function arrowAllFunc(left, right){
-    console.log("shart");
     [left,right].forEach(btn=>{btn.addEventListener("click", incrDecrYears)})
     function incrDecrYears(){
         const firstYear = Number(document.querySelector(".sr-year-square").innerText)

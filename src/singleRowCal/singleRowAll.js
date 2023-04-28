@@ -2,11 +2,11 @@ import { createTaskDisplay, renderTasks } from "../taskDisp/createTaskDisp";
 import { elementCreator } from "../utilities/elementCreator";
 
 export function createAllCal(){
-    console.log("shit");
     const calContainer = document.querySelector(".tf-cal-container");
     const allMainDiv = elementCreator("div", ["class", "sr-all-div"], false, calContainer)
-    const allSquare = elementCreator("div", ["class", "sr-all-square"], "All", allMainDiv);
+    const allSquare = elementCreator("div", ["class", "sr-all-square", "selected-year-square"], "All", allMainDiv);
     allSquare.addEventListener("click", allSquareFunc)
+    allSquare.isAll = true;
     const yearsDiv = elementCreator("div", ["class", "sr-years-div"], false, allMainDiv);
     for(let i=0;i<7;i++){
         const calYearSquare = elementCreator("div", ["class", "sr-year-square"], false, yearsDiv);
@@ -15,16 +15,19 @@ export function createAllCal(){
 }
 
 function allSquareFunc(){
+    if(!this.isAll){
+        const allSquare = document.querySelector(".sr-all-square");
+        allSquare.classList.remove("selected-year-square")
+    }
     changeYearText(this);
     createTaskDisplay();
     removeOtherCL();
     this.classList.add("selected-year-square");
-
 }
 
 
 function removeOtherCL(){
-    document.querySelectorAll(".sr-year-square").forEach(square=>{
+    document.querySelectorAll(".sr-year-square").forEach((square, index)=>{
         square.classList.remove("selected-year-square")
     })
 }

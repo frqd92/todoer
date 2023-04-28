@@ -1,3 +1,4 @@
+import { mainTaskArr } from "../state";
 import { dispDateStrToObjDate } from "./dateUtils";
 export function sortByDate(arr, isAsc){
     return makeDeepCopy(arr).sort((a,b)=>{
@@ -34,4 +35,11 @@ function makeDeepCopy(arr){
       copiedArr[key] = makeDeepCopy(value);
     }
     return copiedArr;
+}
+
+
+//gets the date of the first task
+export function getFirstTaskDay(){
+    const sorted = sortByDate(mainTaskArr, true);
+    return dispDateStrToObjDate(sorted[0].due);
 }

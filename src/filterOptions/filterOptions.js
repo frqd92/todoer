@@ -72,6 +72,7 @@ function createGroupsDiv(par){
                 row.querySelector("span").classList.add("f-inner-hidden")
             }
         })  
+        filterGroupsFunc()
     }
 
 
@@ -144,7 +145,11 @@ function createGroupsDiv(par){
         const allSelected = groupCont.querySelectorAll(".f-selected-group");
         const allTotal = groupCont.querySelectorAll(".f-group-row");
         if(allSelected.length===0 || allSelected.length===allTotal.length){
-            allTasks.forEach(task=>task.style.display="block")
+            allTasks.forEach(task=>{
+                task.style.display="block"
+                task.classList.remove("filtered-group-task");
+            })
+            checkGroupVisibility()
             return;
         }
         const shownGroups = [];
@@ -159,15 +164,33 @@ function createGroupsDiv(par){
                 })
             }
         })
+
         allTasks.forEach(task=>{
             if(shownGroups.includes(task.objFilter.group)){
                 task.style.display="block";
+                task.classList.remove("filtered-group-task");
+                
             }
             else{
                 task.style.display="none"
+                task.classList.add("filtered-group-task");
             }
         })
-        console.log(shownGroups);
+        checkGroupVisibility()
+        function checkGroupVisibility(){
+            document.querySelectorAll(".td-grouped").forEach(group=>{
+                const allRows = group.querySelectorAll(".task-row-main");
+                const allFiltered = group.querySelectorAll(".filtered-group-task")
+    
+                if(allRows.length === allFiltered.length && allFiltered.length>1){
+                    group.classList.add("hide-group-filter");
+                }
+                else{
+                    group.classList.remove("hide-group-filter");
+                }
+            })
+        }
+
     }
 
 

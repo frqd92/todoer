@@ -3,7 +3,7 @@ import { mainTaskArr, isLogged, timeframeOption, addNewTaskLocal } from '../stat
 import '/src/taskDisp/taskDisp.css'
 import { readUserTasksServer} from '../firebase';
 import { dispDateStrToObjDate, fullFormattedDate, textDateToNum} from '../utilities/dateUtils';
-import { returnRangeTasks, sortByDate } from '../utilities/sortTasks';
+import { getFirstTaskDay, returnRangeTasks, sortByDate } from '../utilities/sortTasks';
 import { createMiniCal, makeAdd } from '../Header/createHeader';
 import { prioToColor } from '../utilities/priorityColor';
 import { followMouseHoverText } from '../utilities/hoverDiv';
@@ -357,7 +357,31 @@ function taskboxDateArray(dateDiv, type){
         for(let i=1;i<=monthSquares.length;i++){
             allArr.push([i,mm,Number(yy)]);
         }
+
         return allArr;
+    }
+    else if(type==="All"){
+        if(mainTaskArr.length<1) return
+        const allArr = [];
+        const allRange = document.querySelector(".all-date-range").innerText;
+        if(allRange!=="All tasks"){
+            let firstDayYear = new Date(`${allRange}/1/1`);
+            const lastDayYear = new Date(`${allRange}/12/31`);
+            while(firstDayYear.getTime()<=lastDayYear.getTime()){
+                allArr.push([firstDayYear.getDate(), firstDayYear.getMonth(), firstDayYear.getFullYear()])
+                firstDayYear.setDate(firstDayYear.getDate()+1);
+            }
+        }
+        else{
+            let firstDayTask = getFirstTaskDay();
+            let lastDayTask = new Date();
+            lastDayTask.setFullYear(firstDayTask.getFullYear()+1)
+            while(firstDayTask.getTime()<=lastDayTask.getTime()){
+                allArr.push([firstDayTask.getDate(), firstDayTask.getMonth(), firstDayTask.getFullYear()])
+                firstDayTask.setDate(firstDayTask.getDate()+1);
+            }
+        }
+        return allArr
     }
 }
 

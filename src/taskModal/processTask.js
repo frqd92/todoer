@@ -66,10 +66,14 @@ export function processTask(){
 
         //user can update isComplete through the task element itself
         obj.isComplete = false;
-        mainTaskArr.push(obj);
         
         //if user wants to delete a specific repeated task, that date is pushed to this array and when the repeated tasks are calculated this date is ignored
         obj.repeatException = [];
+        obj.fartTest = "dfsofds"
+        obj.pissTest = "dasdasddfsofds"
+        obj.otherArrTest = []
+        mainTaskArr.push(obj);
+        console.log(mainTaskArr);
     }
 
 
