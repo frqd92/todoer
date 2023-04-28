@@ -213,26 +213,51 @@ export function renderTasks(){
         createEmptyMessage(taskDispDiv)
         return;
     }
-    sortedTasks.forEach((task, i)=>{
-        if((i>=1 && task.due!==sortedTasks[i-1].due) || i===0){
+
+    //renders the tasks from the arr to the display
+
+    for(let i=0; i<sortedTasks.length; i++){
+        if((i>=1 && sortedTasks[i].due!==sortedTasks[i-1].due) || i===0){
             const taskDueGroup = TaskGroupFactory();
-            taskDueGroup.createTaskGroup(taskDispDiv, task);
+            taskDueGroup.createTaskGroup(taskDispDiv, sortedTasks[i]);
         }
         const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
-        const rowCreate = TaskFactory(task, allGroups[allGroups.length-1]);
+        const rowCreate = TaskFactory(sortedTasks[i], allGroups[allGroups.length-1]);
         const row = rowCreate.createTaskElements();
-        
+
         if(timeframeOption!=="All"){
-            const createRow = CalTaskFactory(row, task, rowCreate.showLowerTask);
+            const createRow = CalTaskFactory(row, sortedTasks[i], rowCreate.showLowerTask);
             createRow.createCalRow();
         }
-    })
+        //only show 25 tasks per page creates a button to load more
+        if(i>25){
+            const loadMoreDiv = elementCreator("div", ["class", "load-more-tasks"], false, taskDispDiv)
+            elementCreator("p", false, "More tasks available", loadMoreDiv);
+            elementCreator("span", false, "↓", loadMoreDiv)
+            loadMoreDiv.addEventListener("click", loadMoreFunc);
+            break;
+        }
+    }
+
     if(timeframeOption==="Month"){
         countMonthTasks();
     }
+}
 
+
+
+
+
+
+
+function loadMoreFunc(){
 
 }
+
+
+
+
+
 function checkForFilter(tasks){
     let filteredArr = [];
     const setObj = settingsObj.filter;
