@@ -187,13 +187,16 @@ export function renderTasks(){
                 repeatedElem.forEach(repElem=>{
                     //check for exception
                     let isExc = false;
-                    if(elem.repeatException.length>0){
-                        elem.repeatException.forEach(exception=>{
-                            if(exception===repElem.due){
-                                isExc = true;
-                                return;
+                    if(Object.keys(elem.repeatException).length>1){
+                        elem.repeatException.none = false;
+                        for(let [key, exception] of Object.entries(elem.repeatException)){
+                            if(exception!=="none"){
+                                if(exception===repElem.due){
+                                    isExc = true;
+                                    return;
+                                }
                             }
-                        })
+                        }
                     }
                     if(!isExc) tasksToDisplay.push(repElem)
                 })

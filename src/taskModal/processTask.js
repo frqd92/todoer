@@ -68,12 +68,9 @@ export function processTask(){
         obj.isComplete = false;
         
         //if user wants to delete a specific repeated task, that date is pushed to this array and when the repeated tasks are calculated this date is ignored
-        obj.repeatException = [];
-        obj.fartTest = "dfsofds"
-        obj.pissTest = "dasdasddfsofds"
-        obj.otherArrTest = []
+        obj.repeatException = {none:true};
         mainTaskArr.push(obj);
-        console.log(mainTaskArr);
+
     }
 
 

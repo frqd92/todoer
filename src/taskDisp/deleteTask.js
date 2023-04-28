@@ -40,7 +40,9 @@ export function deleteTaskFunc(){
 
     function deleteSingleRepTask(){
         const index = findIndexOfTask(taskObj.originalID);
-        mainTaskArr[index].repeatException.push(taskObj.due)
+        const keyValue = taskObj.due.replaceAll("/", "s");
+        console.log(keyValue);
+        mainTaskArr[index].repeatException[keyValue] = taskObj.due
         isLogged?writeUserTasksServer(mainTaskArr):addNewTaskLocal();
         createTaskDisplay();
         hoverDiv.closeDiv();
