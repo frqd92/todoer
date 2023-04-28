@@ -209,13 +209,23 @@ export function renderTasks(){
     //sort by date
     let sortedTasks = sortByDate(tasksToDisplay, true);
     sortedTasks = checkForFilter(sortedTasks);
-    if(sortedTasks.length===0){
+    let finalTasks = settingsObj.sort?sortByDate(tasksToDisplay, false):sortByDate(tasksToDisplay, true);
+
+    if(finalTasks.length===0){
         createEmptyMessage(taskDispDiv)
         return;
     }
 
     //renders the tasks from the arr to the display
+    renderTasksToDisp(finalTasks, taskDispDiv)
 
+    if(timeframeOption==="Month"){
+        countMonthTasks();
+    }
+}
+
+function renderTasksToDisp(sortedTasks, taskDispDiv){
+    
     for(let i=0; i<sortedTasks.length; i++){
         if((i>=1 && sortedTasks[i].due!==sortedTasks[i-1].due) || i===0){
             const taskDueGroup = TaskGroupFactory();
@@ -229,28 +239,49 @@ export function renderTasks(){
             const createRow = CalTaskFactory(row, sortedTasks[i], rowCreate.showLowerTask);
             createRow.createCalRow();
         }
-        //only show 25 tasks per page creates a button to load more
-        if(i>25){
-            const loadMoreDiv = elementCreator("div", ["class", "load-more-tasks"], false, taskDispDiv)
-            elementCreator("p", false, "More tasks available", loadMoreDiv);
-            elementCreator("span", false, "↓", loadMoreDiv)
-            loadMoreDiv.addEventListener("click", loadMoreFunc);
+        //only show 31 tasks per page creates a button to load more
+        if(i>30){
+            loadMoreFunc(sortedTasks);
             break;
         }
-    }
-
-    if(timeframeOption==="Month"){
-        countMonthTasks();
     }
 }
 
 
+function loadMoreFunc(sortedTasks){
+    const taskDispDiv = document.getElementById("task-disp-main");
+
+    const numDiv = Math.ceil(sortedTasks.length/30)
+    const arrDiv =  Array.from({length: numDiv},()=>[])
+    
+    for(let i=0;i<arrDiv.length;i++){
+        for(let x=0;x<30;x++){
+            arrDiv[i].push(sortedTasks[x])
+            sortedTasks.splice(x, 1)
+            if(arrDiv[i][x]===undefined) break; 
+        }
+    }
+
+    if(document.querySelector(".load-more-tasks")===null)createLoadBtn()
 
 
+    function createLoadBtn(){
+        const loadMoreDiv = elementCreator("div", ["class", "load-more-tasks"], false, taskDispDiv)
+        elementCreator("p", false, "More tasks available", loadMoreDiv);
+        elementCreator("span", false, "↓", loadMoreDiv);
+        loadMoreDiv.dividedArr = arrDiv;
+        loadMoreDiv.clickCount = 0;
+        loadMoreDiv.addEventListener("click", loadMoreBtnFunc);
+    }
 
+}
 
-
-function loadMoreFunc(){
+function loadMoreBtnFunc(){
+    const taskDispDiv = document.getElementById("task-disp-main");
+    this.clickCount++;
+    renderTasksToDisp(this.dividedArr[0], taskDispDiv)
+    this.dividedArr.splice(0,1);
+    this.remove()
 
 }
 
@@ -302,11 +333,8 @@ function checkForFilter(tasks){
         isValid=true;
     })
 
-
-    //sorting
-    filteredArr = settingsObj.sort?sortByDate(filteredArr, false):sortByDate(filteredArr, true)
-
     return filteredArr;
+
 }
 
 
