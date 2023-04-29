@@ -3,7 +3,7 @@ import { mainTaskArr, isLogged, timeframeOption, addNewTaskLocal } from '../stat
 import '/src/taskDisp/taskDisp.css'
 import { readUserTasksServer} from '../firebase';
 import { dispDateStrToObjDate, fullFormattedDate, textDateToNum} from '../utilities/dateUtils';
-import { getFirstTaskDay, returnRangeTasks, sortByDate } from '../utilities/sortTasks';
+import { getFirstTaskDay, makeDeepCopy, returnRangeTasks, sortByDate } from '../utilities/sortTasks';
 import { createMiniCal, makeAdd } from '../Header/createHeader';
 import { prioToColor } from '../utilities/priorityColor';
 import { followMouseHoverText } from '../utilities/hoverDiv';
@@ -225,66 +225,53 @@ export function renderTasks(){
 }
 
 function renderTasksToDisp(sortedTasks, taskDispDiv){
-    
-    for(let i=0; i<sortedTasks.length; i++){
-        if((i>=1 && sortedTasks[i].due!==sortedTasks[i-1].due) || i===0){
-            const taskDueGroup = TaskGroupFactory();
-            taskDueGroup.createTaskGroup(taskDispDiv, sortedTasks[i]);
-        }
-        const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
-        const rowCreate = TaskFactory(sortedTasks[i], allGroups[allGroups.length-1]);
-        const row = rowCreate.createTaskElements();
-
-        if(timeframeOption!=="All"){
-            const createRow = CalTaskFactory(row, sortedTasks[i], rowCreate.showLowerTask);
-            createRow.createCalRow();
-        }
-        //only show 31 tasks per page creates a button to load more
-        if(i>30){
-            loadMoreFunc(sortedTasks);
-            break;
-        }
-    }
-}
-
-
-function loadMoreFunc(sortedTasks){
-    const taskDispDiv = document.getElementById("task-disp-main");
-
     const numDiv = Math.ceil(sortedTasks.length/30)
-    const arrDiv =  Array.from({length: numDiv},()=>[])
+    const arrDiv =  Array.from({length: numDiv},()=>[]);
+
+    const copySorted = makeDeepCopy(sortedTasks);
+    let indexArrDiv = 0;
+    let count = 0;
+    for(let i=0;i<copySorted.length;i++){
+        arrDiv[indexArrDiv].push(copySorted[i]);
+        count++;
+        if(count%30===0){indexArrDiv++}
+    }
+
+    for(let x=0;x<arrDiv.length;x++){
+        for(let i=0;i<arrDiv[x].length;i++){
+            if((i>=1 && arrDiv[x][i].due!==arrDiv[x][i-1].due) || i===0){
+                const taskDueGroup = TaskGroupFactory();
+                taskDueGroup.createTaskGroup(taskDispDiv, arrDiv[x][i]);
+            }
+            const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
+            const rowCreate = TaskFactory(arrDiv[x][i], allGroups[allGroups.length-1]);
+            const row = rowCreate.createTaskElements();
     
-    for(let i=0;i<arrDiv.length;i++){
-        for(let x=0;x<30;x++){
-            arrDiv[i].push(sortedTasks[x])
-            sortedTasks.splice(x, 1)
-            if(arrDiv[i][x]===undefined) break; 
+            if(timeframeOption!=="All"){
+                const createRow = CalTaskFactory(row, arrDiv[x][i], rowCreate.showLowerTask);
+                createRow.createCalRow();
+            }
         }
     }
-
-    if(document.querySelector(".load-more-tasks")===null)createLoadBtn()
-
-
-    function createLoadBtn(){
-        const loadMoreDiv = elementCreator("div", ["class", "load-more-tasks"], false, taskDispDiv)
-        elementCreator("p", false, "More tasks available", loadMoreDiv);
-        elementCreator("span", false, "↓", loadMoreDiv);
-        loadMoreDiv.dividedArr = arrDiv;
-        loadMoreDiv.clickCount = 0;
-        loadMoreDiv.addEventListener("click", loadMoreBtnFunc);
+    if(arrDiv.length>0 && document.querySelector(".load-more-tasks")===null){
+        taskDispDiv.appendChild(createLoadMoreBtn(arrDiv.length))
+       
     }
-
 }
 
-function loadMoreBtnFunc(){
-    const taskDispDiv = document.getElementById("task-disp-main");
-    this.clickCount++;
-    renderTasksToDisp(this.dividedArr[0], taskDispDiv)
-    this.dividedArr.splice(0,1);
-    this.remove()
-
+function createLoadMoreBtn(destroy){
+    const loadMoreDiv = elementCreator("div", ["class", "load-more-tasks"], false, false)
+    loadMoreDiv.count=0;
+    elementCreator("p", false, "More tasks available", loadMoreDiv);
+    elementCreator("span", false, "↓", loadMoreDiv);
+    loadMoreDiv.addEventListener("click", increaseLoad);
+    function increaseLoad(){
+        this.count++;
+        //where you left off, call renderTasksToDisp again but line 240 , x  has to be dynamic
+        if(this.count===destroy) loadMoreDiv.remove()
+    }
+    return loadMoreDiv;
 }
-
 
 
 

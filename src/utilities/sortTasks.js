@@ -26,7 +26,7 @@ export function returnRangeTasks(arr, from, to){
 
 function zeroAdder(num){return num<10?"0"+num:num;}
 
-function makeDeepCopy(arr){
+export function makeDeepCopy(arr){
     let copiedArr, value, key;
     if(typeof arr !=="object" || arr ===null) return arr;
     copiedArr = Array.isArray(arr) ? [] : {};
