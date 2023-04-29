@@ -169,20 +169,23 @@ function createGroupsDiv(par){
             if(shownGroups.includes(task.objFilter.group)){
                 task.style.display="block";
                 task.classList.remove("filtered-group-task");
-                
             }
             else{
                 task.style.display="none"
                 task.classList.add("filtered-group-task");
+                console.log(task);
+
             }
         })
         checkGroupVisibility()
         function checkGroupVisibility(){
+
             document.querySelectorAll(".td-grouped").forEach(group=>{
+                console.log(group);
                 const allRows = group.querySelectorAll(".task-row-main");
                 const allFiltered = group.querySelectorAll(".filtered-group-task")
     
-                if(allRows.length === allFiltered.length && allFiltered.length>1){
+                if(allRows.length === allFiltered.length && allFiltered.length>0){
                     group.classList.add("hide-group-filter");
                 }
                 else{
@@ -252,6 +255,7 @@ function createCheckboxFilter(par){
     par.addEventListener("click", markCheck);
 
     function markCheck(){
+  
         const text = this.querySelector(".f-row-text").innerText.toLowerCase();
         if(par.className.includes("f-row-checked")){
             par.classList.remove("f-row-checked");

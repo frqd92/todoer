@@ -28,8 +28,6 @@ export function followMouseHoverText(div, txt){
     const rect = div.getBoundingClientRect();
 
     function followMouse(e){
-        console.log("shart");
-        console.log(window.scrollY);
         hoverDiv.style.top= (e.pageY - 22 - window.scrollY)+"px";
         hoverDiv.style.left= (e.pageX + 12)+"px";
     }

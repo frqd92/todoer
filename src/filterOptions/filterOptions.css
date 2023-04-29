@@ -356,7 +356,7 @@
   /* 
   */
   .hide-group-filter{
-    display: none;
+    display: none !important;
   }
   
 
