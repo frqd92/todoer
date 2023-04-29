@@ -25,8 +25,12 @@ export function followMouseHoverText(div, txt){
         div.addEventListener("mouseover", makeVisible, {once:true});
         div.removeEventListener("mousemove", followMouse);
     }
+    const rect = div.getBoundingClientRect();
+
     function followMouse(e){
-        hoverDiv.style.top= (e.pageY - 22)+"px";
+        console.log("shart");
+        console.log(window.scrollY);
+        hoverDiv.style.top= (e.pageY - 22 - window.scrollY)+"px";
         hoverDiv.style.left= (e.pageX + 12)+"px";
     }
 }

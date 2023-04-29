@@ -217,27 +217,31 @@ export function renderTasks(){
     }
 
     //renders the tasks from the arr to the display
-    renderTasksToDisp(finalTasks, taskDispDiv)
+    renderTasksToDisp(finalTasks, false)
 
     if(timeframeOption==="Month"){
         countMonthTasks();
     }
 }
 
-function renderTasksToDisp(sortedTasks, taskDispDiv){
-    const numDiv = Math.ceil(sortedTasks.length/30)
-    const arrDiv =  Array.from({length: numDiv},()=>[]);
+function renderTasksToDisp(sortedTasks, loadMore){
+    const taskDispDiv = document.getElementById("task-disp-main");
+    let arrDiv, initialVal;
+    if(!loadMore){
+        arrDiv = divideTasks();
+        initialVal=0;
+    }
+    else{
+        if(loadMore.count===sortedTasks.length){
+            loadMore.remove()
+            return;
+        }
+        arrDiv=sortedTasks;
+        initialVal=loadMore.count;
 
-    const copySorted = makeDeepCopy(sortedTasks);
-    let indexArrDiv = 0;
-    let count = 0;
-    for(let i=0;i<copySorted.length;i++){
-        arrDiv[indexArrDiv].push(copySorted[i]);
-        count++;
-        if(count%30===0){indexArrDiv++}
     }
 
-    for(let x=0;x<arrDiv.length;x++){
+    for(let x=initialVal;x<initialVal+1;x++){
         for(let i=0;i<arrDiv[x].length;i++){
             if((i>=1 && arrDiv[x][i].due!==arrDiv[x][i-1].due) || i===0){
                 const taskDueGroup = TaskGroupFactory();
@@ -253,22 +257,46 @@ function renderTasksToDisp(sortedTasks, taskDispDiv){
             }
         }
     }
-    if(arrDiv.length>0 && document.querySelector(".load-more-tasks")===null){
-        taskDispDiv.appendChild(createLoadMoreBtn(arrDiv.length))
-       
+    if(arrDiv.length>1 && document.querySelector(".load-more-tasks")===null){
+        const loadMoreBtn = createLoadMoreBtn(arrDiv)
+        taskDispDiv.appendChild(loadMoreBtn)
     }
+    if(loadMore){
+        taskDispDiv.appendChild(loadMore)
+    }
+
+    function divideTasks(){
+        const numDiv = Math.ceil(sortedTasks.length/20)
+        const dividedArr =  Array.from({length: numDiv},()=>[]);
+    
+        const copySorted = makeDeepCopy(sortedTasks);
+        let indexArrDiv = 0;
+        let count = 0;
+        for(let i=0;i<copySorted.length;i++){
+            dividedArr[indexArrDiv].push(copySorted[i]);
+            count++;
+            if(count%20===0){indexArrDiv++}
+        } 
+        return dividedArr;
+    }
+
 }
 
-function createLoadMoreBtn(destroy){
-    const loadMoreDiv = elementCreator("div", ["class", "load-more-tasks"], false, false)
+function createLoadMoreBtn(arrDiv){
+    const destroyAt = arrDiv.length;
+    const loadMoreDiv = elementCreator("div", ["class", "load-more-tasks"], false, false);
+
+
     loadMoreDiv.count=0;
     elementCreator("p", false, "More tasks available", loadMoreDiv);
     elementCreator("span", false, "↓", loadMoreDiv);
     loadMoreDiv.addEventListener("click", increaseLoad);
     function increaseLoad(){
         this.count++;
-        //where you left off, call renderTasksToDisp again but line 240 , x  has to be dynamic
-        if(this.count===destroy) loadMoreDiv.remove()
+        renderTasksToDisp(arrDiv, this)
+        if(this.count===destroyAt){
+            loadMoreDiv.remove()
+        }
     }
     return loadMoreDiv;
 }
