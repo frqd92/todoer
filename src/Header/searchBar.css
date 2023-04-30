@@ -1,0 +1,182 @@
+/* search bar ----------------------------------------------------------------------------*/
+.searchbar-div{
+    position: relative;
+    display: grid;
+    width:100%;
+    height: 90%;
+    align-items: center;
+    
+}
+#header-input{
+    width: 30px;
+    height: 100%;
+    font-size: 1.4rem;
+    border-radius: 15px;
+    padding-left: 40px;
+    border: none;
+    outline: none;
+    transition: width .15s linear;
+    box-shadow: 0px 0px 5px rgba(150, 150, 152, 0.3);
+    background-color: rgba(255, 255, 255, 0.506);
+    font-family: roboto;
+    letter-spacing: 0.05rem;
+    box-shadow: rgba(9, 30, 66, 0.25) 0px 4px 8px -2px, rgba(9, 30, 66, 0.08) 0px 0px 0px 1px;
+
+}
+#header-input:focus{
+   border: 1px solid rgba(25, 25, 117, 0.554);
+
+}
+.header-loop-div{
+    position: absolute;
+    width: 38px;
+    height: 37px;
+    opacity: 0.6;
+}
+.header-loup{
+    position: relative;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    bottom: 0;
+
+}
+
+.header-loup div:first-child{
+    position: absolute;
+    top: 5px;
+    left: 7px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50px;
+    border: 1px solid black;
+}
+
+.header-loup div:nth-child(2){
+    position: absolute;
+    border-left: 1px solid black;
+    height: 33%;
+    width: 0;
+    bottom: 6px;
+    right: 11px;
+    transform: rotate(-45deg);
+    
+}
+
+/* search bar content menu */
+
+.search-bar-menu{
+    position: absolute;
+    top: 36px;
+    left: 2%;
+    width: 96%;
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.2s linear;
+    z-index: 99;
+    display: flex;
+    flex-direction: column;
+    padding: 0;
+}
+
+.search-bar-menu-shown{
+
+    min-width: 160px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    max-height: 500px;
+
+    background-color: rgba(220, 226, 227, 0.945);
+    border-radius: 0px 0px 10px 10px;
+
+}
+.s-menu-task-num, .search-menu-no-tasks{
+    text-align: center;
+    padding: 1% 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgba(0, 0, 0, 0.669);
+    background-color: rgba(0, 0, 0, 0.181);
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.543);
+}
+.search-menu-no-tasks{
+    border: none;
+}
+.s-row-container{
+    max-height: 400px;
+    overflow: auto;
+}
+.s-menu-row{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    border-left: none;
+    border-right: none;
+    background-color: rgba(63, 74, 71, 0.082);
+ 
+}
+.s-menu-row:nth-child(odd){
+    background-color: rgba(1, 41, 66, 0.077);
+}
+.s-menu-upper{
+    display: flex;
+    padding: 10px 4%;
+    font-size: calc(60% + 0.7vw);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.s-menu-row:first-child{
+    border-top: 1px solid rgba(0, 0, 0, 0.2);
+
+}
+.s-menu-row:hover{
+    background-color: rgba(255, 255, 255, 0.14);
+}
+.s-menu-upper > div{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.s-menu-upper > div:nth-child(1){
+    flex-grow: 1;
+
+}
+
+.s-menu-upper > div:nth-child(3){
+
+
+
+}
+
+.s-menu-lower{
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    max-height: 150px;
+    transition: 0.2s linear all;
+    padding: 1% 0%;
+}
+.s-menu-lower > div{
+    text-align: center;
+}
+
+.s-menu-hidden{
+    max-height: 0px;
+    padding: 0;
+    overflow: hidden;
+}
+.s-lower-element span{
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.s-lower-element p{
+    font-family: roboto;
+}
+
+
+
+.s-row-container::-webkit-scrollbar{
+    width: 8px;
+}
+.s-row-container::-webkit-scrollbar-track{/*theme*/
+    background: #f1f1f1a9;
+}
+.s-row-container::-webkit-scrollbar-thumb{/*theme*/
+    background: #060606c2;
+    border-radius: 0px 0px 10px 0px;
+
+}

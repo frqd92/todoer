@@ -98,8 +98,9 @@ function createSearchBar(parent){
     const searchDiv = elementCreator("div", ["class", "searchbar-div"], false, parent);
     const loupe = createLoupe(searchDiv);
     const input = elementCreator("input", ["id", "header-input"], false, searchDiv);
+    const taskMenu = elementCreator("div", ["class", "search-bar-menu"], false, searchDiv)
     searchLoupe(loupe, input);
-    inputBehaviour(input);
+    inputBehaviour(searchDiv);
 }
 
 function createLoupe(parent){

@@ -208,6 +208,8 @@ export function renderTasks(){
     taskDispDiv.classList.remove("empty-task-div");
     //sort by date
     const boolSort = settingsObj.sort?false:true;
+
+    //final arr, filtered and sorted
     const finalTasks = checkForFilter(sortByDate(tasksToDisplay, boolSort));
 
     if(finalTasks.length===0){

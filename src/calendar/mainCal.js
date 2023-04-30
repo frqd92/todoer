@@ -82,7 +82,10 @@ function CalFactory(calParent, mmYY, output, type){
                 
             }
             if(getToday("day")===(currentMonthDays-1)){
-                square.classList.add("cal-today-square");
+                if(!square.className.includes("next-month-square") &&!square.className.includes("prev-month-square")  ){
+                    square.classList.add("cal-today-square");
+
+                }
             }
         }
         if(square.className.includes("valid-square")){
