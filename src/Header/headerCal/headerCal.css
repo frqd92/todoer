@@ -1,0 +1,116 @@
+.header-cal-main{
+    position: fixed;
+    width: 400px;
+    height: fit-content;
+    background-color: white;
+    top: 50px;
+    right: 0;
+    border-radius: 0px 0px 0px 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    overflow: hidden;
+    z-index: 90;
+    border: 1px solid rgba(0, 0, 0, 0.363);
+    user-select: none;
+    -webkit-user-select: none; 
+    padding-bottom: 20px;
+}
+.header-cal-detached{
+    border-radius:10px;
+    top: 70px;
+    right: 20px;
+}
+.header-move-anim{
+    transform: skew(-10deg);
+    transition: all 0.15s linear;
+}
+.header-cal-title-bar{
+    padding:5px 7px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: background-color 0.75s linear;
+}
+
+.header-title-detached{
+    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+    background-color: rgba(0, 25, 135, 0.247);
+    cursor:grab;
+}
+
+.header-title-detached:active{
+    cursor:grabbing;
+    
+}
+
+.h-close-btn{
+    cursor: default;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 23px;
+    height: 23px;
+    font-family: Arial, Helvetica, sans-serif;
+    border-radius: 3px;
+    background-color: rgba(174, 24, 24, 0.249);
+    box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+}
+.h-close-btn:active{
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
+}
+
+
+
+
+
+
+
+
+
+
+/* detach icon */
+.h-detach-div{
+   
+    left: 3px;
+    top: 4px;
+    width: 25px;
+    height: 25px;
+    cursor: pointer;
+    opacity: 0.5;
+  }
+  
+  .h-detach-div > div{
+    position: relative;
+  }
+  .h-detach-div > div p{
+    position: absolute;
+    color: white;
+    display: none;
+    white-space: nowrap;
+    left: 30px;
+    font-size: 0.7rem;
+    top: 3px;
+  }
+  .h-detach-upper, .h-detach-lower{
+    position: absolute;
+    border: 1px solid rgb(253, 255, 254, 0.8);
+    width: 20px;
+    height: 20px;
+    background-color: rgba(0, 0, 0, 0.90);
+    color: rgba(254, 254, 254, 0.995);
+    font-size: 0.76rem;
+    text-shadow: 0px 0px 2px white;
+    border-radius: 3px;
+    box-shadow: 0px 0px 3px rgba(100, 212, 176, 0.508);
+  }
+  .h-detach-upper{
+    display: flex;
+    justify-content: center;
+    right: -1px;
+    top: 0;
+    transition: transform 0.15s linear;
+  }
+  .h-detach-lower{
+   top: 4px;
+   left: 2px;
+  }
+  

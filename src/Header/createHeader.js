@@ -4,6 +4,7 @@ import '/src/header/header.css'
 import { searchLoupe, inputBehaviour } from "./searchLogic";
 import { createAddModal } from "../taskModal/createModal";
 import { createBodyModal } from "../utilities/bodyModal";
+import { headerCalFunc } from '/src/Header/headerCal/headerCal.js'; 
 export function createHeaderDom(bodyParent){
     const header = elementCreator("header", false, false, bodyParent);
     const title = elementCreator("h1", ["class", "main-title", "title-hide"], "Todoer", header);
@@ -118,7 +119,7 @@ export function createMiniCal(dateCal, type){
     const clickDiv = elementCreator("div", ["class", "calender-click-div"], false, div)
     const monthDiv = elementCreator("div", ["class", "header-calender-month"], getDate()[0],div);
     const dayDiv = elementCreator("div", ["class", "header-calender-day"], getDate()[1],div);
-
+    headerCalFunc(div);
     return div
 
     function getDate(){
