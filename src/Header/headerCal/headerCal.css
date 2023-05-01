@@ -1,13 +1,12 @@
 .header-cal-main{
     position: fixed;
     width: 500px;
-    height: 500px;
+    height: fit-content;
     background-color: white;
     top: 50px;
-    right: 0;
-    border-radius: 0px 0px 0px 10px;
+    right: 70px;
+    border-radius: 0px 0px 10px 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    overflow: hidden;
     z-index: 90;
     border: 1px solid rgba(0, 0, 0, 0.363);
     user-select: none;
@@ -15,12 +14,14 @@
     padding-bottom: 20px;
     display: flex;
     flex-direction: column;
+    
 
 }
+
 .header-cal-detached{
     border-radius:10px;
     top: 70px;
-    right: 20px;
+    right: 100px;
 }
 .header-move-anim{
     transform: skew(-10deg);
@@ -37,6 +38,8 @@
 .header-title-detached{
     background-color: rgba(0, 25, 135, 0.247);
     cursor:grab;
+    border-radius:9px 9px 0px 0px;
+
 }
 
 .header-title-detached:active{
@@ -132,13 +135,208 @@
 .header-cal-div .square-invalid{
     cursor: pointer;
 }
-.header-cal-div .square-invalid:hover{
+.header-cal-div .square-invalid:not(.active-cal-square):hover{
     cursor: pointer;
     transform: scale(1.15);
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-    background-color:rgba(95, 158, 160, 0.877);
-
 }
 .header-cal-div .adder-cal-div{
     height: 370px;
 }
+
+.header-cal-div .cal-square{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+}
+.header-cal-div .cal-square:hover{
+   z-index: 102;
+}
+.active-cal-square{
+    z-index: 110;
+
+}
+.header-cal-div .cal-square .square-day-span{
+  align-self: end;
+}
+.header-cal-div .cal-square .header-cal-num-tasks{
+    flex-grow: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-bottom: 10px;
+
+}
+
+
+/* header task box when square is clicked */
+
+.header-cal-task-box{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 0px;
+    height: 0px;
+    border: 1px solid black;
+    transition: width, height 0.1s ease-in;
+    opacity: 0;
+    cursor: default;
+    display: grid;
+    grid-template-rows: 1fr 5fr 1fr;
+    z-index: 120 !important;
+    border-radius: 5px;
+   
+}
+.header-task-box-active{
+    width: 200px;
+    height: 200px;
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.263);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+.header-tb-upper{
+    display: flex;
+    padding-left:5px;
+    justify-content: space-between;
+    align-items: center;
+}
+.header-tb-date{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 110%;
+    white-space: nowrap;
+    text-align: center;
+    flex-grow: 1;
+}
+.header-tb-upper span{
+    border-left: 1px solid rgba(0, 0, 0, 0.267);
+    height: 100%;
+    padding: 0px 5px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: Arial, Helvetica, sans-serif;
+    background: rgba(255, 0, 0, 0.14);
+    color: black;
+    opacity: 1;
+}
+.header-tb-upper span:hover{
+    background: rgba(255, 0, 0, 0.24);
+
+}
+.header-tb-task-cont{
+
+    border: 1px solid black;
+    border-left: none;
+    border-right: none;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    overflow: auto;
+}
+.header-tb-btns-div{
+   
+
+}
+
+/* rows */
+.header-tb-task-cont{
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+
+}
+
+.tb-task-row{
+    padding: 7px 0px;
+    text-align: center;
+    cursor: pointer;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.321);
+    background-color: rgba(170, 170, 170, 0.094);
+
+}
+
+.tb-task-row:nth-child(even){
+    background-color: rgba(0, 14, 36, 0.1);
+
+}
+.tb-task-row:hover{
+    background-color: rgba(0, 10, 120, 0.195);
+}
+
+
+
+
+.header-tb-task-cont::-webkit-scrollbar {
+    width: 5px;
+}
+
+.header-tb-task-cont::-webkit-scrollbar-track {
+background: rgba(255, 255, 255, 0);
+border-left: 1px solid rgba(0, 0, 0, 0.569);
+
+}
+
+.header-tb-task-cont::-webkit-scrollbar-thumb {
+    background: rgba(1, 95, 102, 0.431);
+
+}
+.header-tb-btns-div{
+    display: flex;
+    flex-direction: column;
+}
+/*add task*/
+.tb-add-task{
+    font-size: 110%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 110%;
+    font-family: shib;
+    border-left: 1px solid rgba(0, 0, 0, 0.234);
+    cursor: pointer;
+    border-top: 1px solid rgb(0, 0, 0);
+
+}
+.tb-add-task:not(.invalid-add-btn-header-cal):hover{
+    background-color: rgba(7, 51, 109, 0.201);
+}
+.invalid-add-btn-header-cal{
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+/* go to date */
+.tb-go-to-date{
+    display: flex;
+    padding: 5px 0px;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+    font-size: 110%;
+}
+.tb-go-to-date > span{
+    font-size: 110%;
+
+}
+.tb-go-options-div{
+   display: flex;
+   gap: 3px;
+   font-family: roboto-medium;
+  
+}
+
+.tb-go-btn{
+    transition: 0.15s linear transform;
+}
+.tb-go-btn:hover{
+    background-color: rgba(3, 3, 3, 0.081);
+    cursor: pointer;
+    transform: scale(1.1);
+}
+.tb-go-btn span{
+
+}
+

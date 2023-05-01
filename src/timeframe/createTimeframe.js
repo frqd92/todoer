@@ -39,6 +39,7 @@ function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
         elementCreator("p", ["class", "tf-range-p"], elem, rangeDiv);
         elementCreator("span", ["class", "tf-row-arrow"], ">", rangeDiv);
         rangeDiv.addEventListener("click", tfRowChoose);
+        rangeDiv.changeRow = tfRowChoose;
     })
     const calContainer = elementCreator("div", ["class", "tf-cal-container"], false,timeframeDiv);
 
@@ -47,7 +48,7 @@ function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
     hideTF.addEventListener("click", hideShowTF)
 
         
-
+ 
     
     function tfRowChoose(){
         if(!this.className.includes("tf-chosen-row")){
@@ -65,7 +66,6 @@ function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
             //single row cal from button;
             createSRCal();
             createTaskDisplay()
-
         }
         
     }

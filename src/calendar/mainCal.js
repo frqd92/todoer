@@ -5,7 +5,7 @@ import { createQuickBtns } from "./quickBtns/quickBtns";
 import { getMonthAndYear, returnMonth, detectFirstDayMonth, daysInMonth, removeTime, getToday, addZero} from "../utilities/dateUtils";
 import { closeMenuOutside } from "../taskModal/createModal";
 import { closeMenuFromCal} from "../taskModal/repeat/repeat";
-import { headerCalSquareInfo } from "../Header/headerCal/headerCal";
+import { headerCalSquareFillInfo, headerCalSquareInfo } from "../Header/headerCal/headerCal";
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 export function CreateMainCal(type, outputBtn, smartInputBool, quickBtnBool){
     const mainCalDiv = elementCreator("div", ["class", "main-cal", `main-cal-${type}`], false, false)
@@ -96,7 +96,6 @@ function CalFactory(calParent, mmYY, output, type){
                 yearCheck = Number(currY)-1
                 monthCheck = 12;
             }
-            console.log(monthCheck, yearCheck);
         }
         else if(square.className.includes("next")){
             if(currM!==12){
@@ -119,8 +118,8 @@ function CalFactory(calParent, mmYY, output, type){
             square.addEventListener("click", calDateToOutputBtn)
         }
         if(type==="headerCal"){
-
-            headerCalSquareInfo(square)
+            square.foundTasks = [];
+            elementCreator("div", ["class", "header-cal-num-tasks"], false, square)
         }
     }
     function calDateToOutputBtn(e){
@@ -216,6 +215,7 @@ function getCalInfo(date){
 
 //top part with arrows------------------------------------------------------------------
 function calTop(calParent, output, type){
+
     const calTopPart = elementCreator("div", ["class", "cal-top"], false, calParent);
     const content = ["<<", "<", false, ">", ">>"];
     content.forEach((elem, i)=>{
@@ -232,7 +232,8 @@ function calTop(calParent, output, type){
             arrow.addEventListener("click", changeTopDateAndCal);
         };
     })
-    mouseWheelCalFunc(calParent.parentElement);
+    if(type!=="headerCal") mouseWheelCalFunc(calParent.parentElement);
+
 
     function mouseWheelCalFunc(calOuterDiv){
         calOuterDiv.addEventListener("mouseover", startScroll);
@@ -248,6 +249,7 @@ function calTop(calParent, output, type){
             if(delta<0) changeTopDateAndCal(arrowRight);
             else changeTopDateAndCal(arrowLeft);
             document.addEventListener("wheel", scrollCal, {once:true})
+
         }
     }
    
@@ -266,13 +268,13 @@ function calTop(calParent, output, type){
         const adderCalDiv = val.parentElement.parentElement.querySelector(".adder-cal-div");
         adderCalDiv.remove();
         const newCal = CalFactory(val.parentElement.parentElement,textPart.innerText, output, type);
+
     }
     
     function backToOGDate(e){
         const textPart = this.parentElement.parentElement.querySelector(".cal-date-text");
         textPart.innerText = getMonthAndYear();
         this.style.display="none";
-    
         //deletes old cal and creates new one from the new month or year change same as above you ya lazy cunt
         const calDiv = this.parentElement.parentElement.parentElement.parentElement;
         const adderCalDiv = calDiv.querySelector(".adder-cal-div");

@@ -1,6 +1,10 @@
 import { CreateMainCal } from '../../calendar/mainCal';
+import { mainTaskArr, timeframeChange } from '../../state';
+import { processRepeat } from '../../taskDisp/processRepeat';
+import { dateObjToFullFormatted, dispDateStrToObjDate } from '../../utilities/dateUtils';
 import { elementCreator } from '../../utilities/elementCreator';
 import { followMouseHoverText } from '../../utilities/hoverDiv';
+import { sortByDate } from '../../utilities/sortTasks';
 import '/src/Header/headerCal/headerCal.css'
 
 export function headerCalFunc(calBtn){
@@ -14,28 +18,160 @@ function generateHeadCal(e){
     const mainCalDiv = elementCreator("div", ["class", "header-cal-main"], false, document.body);
     const titleBar = createTitleBar(mainCalDiv);
     const calDiv = elementCreator("div", ["class", "header-cal-div"], false, mainCalDiv);
-
-    const cal = CreateMainCal("headerCal",mainCalDiv, true, false);
-
-    calDiv.appendChild(cal)
-
+    generateNewCal()
 }
+
+function generateNewCal(){
+    if(document.querySelector(".main-cal-headerCal")!==null){
+        document.querySelector(".main-cal-headerCal").remove()
+    }
+    const calDiv = document.querySelector(".header-cal-div")
+    const cal = CreateMainCal("headerCal", calDiv, true, false);
+    calDiv.appendChild(cal)
+    headerCalSquareFillInfo(cal)
+    const arrowBtns = cal.querySelectorAll(".cal-arrow");
+    arrowBtns.forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+            headerCalSquareFillInfo(cal)
+        })
+    })
+    cal.querySelector(".cal-og-date-btn").addEventListener("click", ()=>{
+        headerCalSquareFillInfo(cal)
+    })
+}
+
+
+
+
 
 //runs in the cal loop
-export function headerCalSquareInfo(square){
-    square.addEventListener("mouseover", displayTaskDay);
-    
+export function headerCalSquareFillInfo(cal){
+    const calSquares = cal.querySelectorAll(".cal-square");
+    const sortedMain = sortByDate(mainTaskArr, false)
+    sortedMain.forEach(task=>{
+        calSquares.forEach(square=>{
+            const dateArr = [[square.sqDate.getDate(),square.sqDate.getMonth(), square.sqDate.getFullYear()]]
+            if(dispDateStrToObjDate(task.due).getTime()===square.sqDate.getTime()){
+                square.foundTasks.push(task)
+            }
+            if(task.repeat){
+                const repTask = processRepeat(task, dateArr);
+                if(repTask){
+                    if(repTask.length>0){
+                        square.foundTasks.push(task)
+                    }
+                }
+            }
+        })
+    })
+    calSquares.forEach(square=>{
+        square.addEventListener("click",headerSquareFunc)
+        if(square.foundTasks.length>0){
+            const squareNumDiv = square.querySelector(".header-cal-num-tasks");
+            const taskStr = square.foundTasks.length===1?" task":" tasks";
+            squareNumDiv.innerText = square.foundTasks.length+ taskStr;
+        }
 
-    function displayTaskDay(){
-       console.log(square.sqDate);
+    })
+    function headerSquareFunc(e){
+        if(e.target.closest(".header-cal-task-box")) return
+        clearCalTask(calSquares)
+        this.classList.add("active-cal-square")
+        const calTaskObj = CreateCalTaskBox(this);
+        const calTaskBox = calTaskObj.createToDom();
+        setTimeout(()=>calTaskBox.classList.add("header-task-box-active"), 20)
+ 
     }
+function clearCalTask(squares){
+    if(document.querySelector(".header-cal-task-box")!==null){
+        document.querySelector(".header-cal-task-box").remove()
+    }
+    squares.forEach(square=>square.classList.remove("active-cal-square"))
+}
+
+}
+
+//task row factory for task rows in header cal
+function CreateCalTaskBox(sqr){
+    function createToDom(){
+        const mainDiv = elementCreator("div", ["class", "header-cal-task-box"], false, sqr);
+        const upperPart = elementCreator("div", ["class", "header-tb-upper"], false, mainDiv)
+        const dateTextDiv = elementCreator("div", ["class","header-tb-date"], dateObjToFullFormatted(sqr.sqDate), upperPart);
+        const closeBtn = elementCreator("span",false, "X", upperPart);
+        closeBtn.addEventListener("click",()=>{
+            sqr.classList.remove("active-cal-square")
+            mainDiv.remove()
+        })
+        const taskCont = elementCreator("div", ["class", "header-tb-task-cont"], false, mainDiv);
+        displayTasks(taskCont);
+        const btnsDiv = elementCreator("div", ["class", "header-tb-btns-div"], false, mainDiv);
+        const goToDate = createGoToDate(btnsDiv);
+        const addTask = createAddTaskBtn(btnsDiv)
+
+        return mainDiv;
+    }
+
+    function displayTasks(container){
+        if(sqr.foundTasks.length>0){
+            sqr.foundTasks.forEach(task=>{
+                elementCreator("div", ["class", "tb-task-row"], task.title, container)
+            })
+
+        }
+    }
+    function createAddTaskBtn(parent){
+        const addBtn = elementCreator("div", ["class", "tb-add-task"], "+", parent)
+        if(!sqr.className.includes("invalid")){
+            addBtn.addEventListener("click", addBtnTaskFromHeaderCal);
+            followMouseHoverText(addBtn, "Add task on this day")
+        }
+        else{
+            addBtn.classList.add("invalid-add-btn-header-cal")
+            followMouseHoverText(addBtn, "Date has passed")
+        }
+
+    }
+    function addBtnTaskFromHeaderCal(){
+        console.log(sqr);
+    }
+    
+    
+    function createGoToDate(parent){
+        const div = elementCreator("div", ["class", "tb-go-to-date"], false, parent)
+        elementCreator("span", false, "Go to date:", div);
+        const optionsDiv = elementCreator("div", ["class", "tb-go-options-div"], false, div);
+        const btnText = ["day", "week", "month"];
+        btnText.forEach((element, index)=>{
+            const btn =  elementCreator("div", ["class", "tb-go-btn"], element, optionsDiv)
+            if(index!==2)elementCreator("span", false, "/", optionsDiv)
+            btn.btnDate = sqr.sqDate;
+            btn.addEventListener("click", goToDates)
+        })
+    }
+
+
+    return { createToDom};
+
 }
 
 
-
-
-
-
+function goToDates(){
+    const [,monthBtn, weekBtn, dayBtn] = document.querySelectorAll(".tf-range-row")
+    switch(this.innerText){
+        case "day":
+            timeframeChange("Day", true)
+            dayBtn.changeRow()
+            break;
+        case "week":
+            timeframeChange("Week", true)
+            weekBtn.changeRow()
+            break;
+        case "month":
+            timeframeChange("Month", true)
+            monthBtn.changeRow()
+            break;            
+    }
+}
 
 
 
@@ -60,7 +196,6 @@ function createTitleBar(parent){
     const detachBtn = createDetach();
     const closeBtn = elementCreator("div", ["class", "h-close-btn"], "X", titleBar)
     closeBtn.addEventListener("click", ()=>{
-        console.log(parent);
         parent.remove()}
         )
     return titleBar;
@@ -83,8 +218,7 @@ function createTitleBar(parent){
                 parent.classList.add("header-cal-detached");
                 titleBar.classList.add("header-title-detached")
                 upperSquare.style.transform = 'rotate(180deg)';
-                parent.style.right = "20px";
-
+                parent.style.right = "100px";
                 makeDragFunc(parent, titleBar)
                 parent.style.top = "70px";
             }
@@ -103,15 +237,17 @@ function createTitleBar(parent){
 
 function disableDragging(draggableDiv, handleDiv) {
     handleDiv.onmousedown = null;
-    draggableDiv.style.right="0px"
+    draggableDiv.style.right="70px"
     draggableDiv.style.left="auto"
     draggableDiv.style.top="50px";
   }
 function makeDragFunc(draggableDiv, handleDiv) {
     let pos1 = 0, pos2 = 0, pos3 = 0, pos4 = 0;
+    console.log();
     handleDiv.onmousedown = dragMouseDown;
-  
-    function dragMouseDown(e) {
+    
+    function dragMouseDown(e){
+    if(!e.target.className.includes("header-title-detached")) return
       e.preventDefault();
       pos3 = e.clientX;
       pos4 = e.clientY;
@@ -119,7 +255,7 @@ function makeDragFunc(draggableDiv, handleDiv) {
       document.onmousemove = elementDrag;
     }
   
-    function elementDrag(e) {
+    function elementDrag(e){
       e.preventDefault();
       pos1 = pos3 - e.clientX;
       pos2 = pos4 - e.clientY;

@@ -48,6 +48,7 @@ function arrowDailyFunc(left, right){
     [left,right].forEach(btn=>{btn.addEventListener("click", incrDecrDay);})
     function incrDecrDay(){
         const text = left.parentElement.querySelector(".day-date-range");
+        console.log(text);
         const date = textDateToNum(text.innerText);
         if(this.className.includes("taskbox-left-div")){
             text.innerText = fullFormattedDate(findRelativeDate(date,-1));

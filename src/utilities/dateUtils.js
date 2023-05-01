@@ -262,3 +262,12 @@ export function isPast(date){
   return date.getTime()<today.getTime()?true:false;
 
 }
+
+//takes a date obj and returns string: "Tuesday: 2nd of June, 2099"
+export function dateObjToFullFormatted(date){
+  const day = date.getDate();
+  const month = returnMonth(date.getMonth());
+  const year = date.getFullYear();
+  const weekDay = date.toLocaleString('en-us', {weekday: 'long'});
+  return `${weekDay}, ${addSuffix(day)} of ${month} ${year}`
+}

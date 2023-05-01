@@ -122,7 +122,7 @@
     font-family: roboto;
     color: black;
     font-size: 1rem;
-    
+
 }
 .cal-square{
     font-size: 0.78rem;
@@ -137,11 +137,11 @@
     transition: transform, background-color 0.15s linear;
 
 }
-.cal-square:not(.square-invalid):hover{
+.cal-square:not(.square-invalid, .active-cal-square):hover{
     transform: scale(1.15);
     box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
 }
-.cal-square:not(.prev-month-square, .next-month-square, .square-invalid, .cal-today-square):hover{
+.cal-square:not(.prev-month-square, .next-month-square, .square-invalid, .cal-today-square, .active-cal-square):hover{
     background-color:rgba(95, 158, 160, 0.877);
 }
 .square-invalid{
@@ -161,7 +161,7 @@
     background-color: rgb(207, 208, 242);
     border: 2px solid rgba(0, 0, 0, 0.318);
 }
-.cal-today-square:hover{
+.cal-today-square:not(.active-cal-square):hover{
     background-color: rgb(162, 164, 239);
 
 }
