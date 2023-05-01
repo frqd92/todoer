@@ -1,7 +1,7 @@
 .header-cal-main{
     position: fixed;
-    width: 400px;
-    height: fit-content;
+    width: 500px;
+    height: 500px;
     background-color: white;
     top: 50px;
     right: 0;
@@ -13,6 +13,9 @@
     user-select: none;
     -webkit-user-select: none; 
     padding-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+
 }
 .header-cal-detached{
     border-radius:10px;
@@ -32,7 +35,6 @@
 }
 
 .header-title-detached{
-    border-bottom: 1px solid rgba(0, 0, 0, 0.16);
     background-color: rgba(0, 25, 135, 0.247);
     cursor:grab;
 }
@@ -57,12 +59,6 @@
 .h-close-btn:active{
     box-shadow: rgba(50, 50, 93, 0.25) 0px 30px 60px -12px inset, rgba(0, 0, 0, 0.3) 0px 18px 36px -18px inset;
 }
-
-
-
-
-
-
 
 
 
@@ -114,3 +110,35 @@
    left: 2px;
   }
   
+
+
+/* actual calender */
+.header-cal-div{
+
+}
+
+  .header-cal-div #cal-smart-input{
+    border: none;
+    padding: 5px 0px;
+    border-top:1px solid rgba(0, 0, 0, 0.212) ;
+  } 
+
+.header-cal-div .cal-top{
+    height: 50px;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.347);
+    border-top: 1px dashed rgba(0, 0, 0, 0.347);
+}
+
+.header-cal-div .square-invalid{
+    cursor: pointer;
+}
+.header-cal-div .square-invalid:hover{
+    cursor: pointer;
+    transform: scale(1.15);
+    box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
+    background-color:rgba(95, 158, 160, 0.877);
+
+}
+.header-cal-div .adder-cal-div{
+    height: 370px;
+}

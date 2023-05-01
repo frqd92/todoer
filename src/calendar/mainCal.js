@@ -5,6 +5,7 @@ import { createQuickBtns } from "./quickBtns/quickBtns";
 import { getMonthAndYear, returnMonth, detectFirstDayMonth, daysInMonth, removeTime, getToday, addZero} from "../utilities/dateUtils";
 import { closeMenuOutside } from "../taskModal/createModal";
 import { closeMenuFromCal} from "../taskModal/repeat/repeat";
+import { headerCalSquareInfo } from "../Header/headerCal/headerCal";
 const weekArr = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 export function CreateMainCal(type, outputBtn, smartInputBool, quickBtnBool){
     const mainCalDiv = elementCreator("div", ["class", "main-cal", `main-cal-${type}`], false, false)
@@ -40,8 +41,7 @@ function CalFactory(calParent, mmYY, output, type){
     let currentMonthDays = 1, prevMonthStart=daysInPrevMonth-(firstWeekDay-1), nextMonthDays=1;
     for(let i=0;i<42;i++){
         const square = elementCreator("div", ["class", "cal-square"], false, calDiv);
-        const squareSpan = elementCreator("span", false, false, square);
-
+        const squareSpan = elementCreator("span", ["class", "square-day-span"], false, square);
         //prev month days
         if(i<firstWeekDay){
             squareSpan.innerText=prevMonthStart;
@@ -84,12 +84,43 @@ function CalFactory(calParent, mmYY, output, type){
             if(getToday("day")===(currentMonthDays-1)){
                 if(!square.className.includes("next-month-square") &&!square.className.includes("prev-month-square")  ){
                     square.classList.add("cal-today-square");
-
                 }
             }
         }
-        if(square.className.includes("valid-square")){
+        //attach an object with the square's date to each each
+        let monthCheck, yearCheck;
+        if(square.className.includes("prev")){
+            monthCheck = currM-1;
+            yearCheck = currY;
+            if(currM===1) {
+                yearCheck = Number(currY)-1
+                monthCheck = 12;
+            }
+            console.log(monthCheck, yearCheck);
+        }
+        else if(square.className.includes("next")){
+            if(currM!==12){
+                monthCheck= currM+1;
+                yearCheck = currY;
+            }
+            else{
+                monthCheck= 1;
+                yearCheck = parseInt(currY)+1;
+            }
+        }
+        else{
+            monthCheck=currM;
+            yearCheck=currY;
+        }
+
+        square.sqDate = new Date(`${yearCheck}/${monthCheck}/${squareSpan.innerText}`)
+
+        if(square.className.includes("valid-square") && type!=="headerCal"){
             square.addEventListener("click", calDateToOutputBtn)
+        }
+        if(type==="headerCal"){
+
+            headerCalSquareInfo(square)
         }
     }
     function calDateToOutputBtn(e){
@@ -117,6 +148,7 @@ function CalFactory(calParent, mmYY, output, type){
 
 function renderCalDate(calSquare){
     let classElements = [...calSquare.classList].filter(elem=>elem.includes("valid"));
+    console.log(classElements);
     const squareDay = calSquare.querySelector("span").innerText
     let [mm, yy] = classElements.join().split("-").slice(2)
     mm = Number(mm); yy = Number(yy);

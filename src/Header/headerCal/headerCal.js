@@ -21,6 +21,15 @@ function generateHeadCal(e){
 
 }
 
+//runs in the cal loop
+export function headerCalSquareInfo(square){
+    square.addEventListener("mouseover", displayTaskDay);
+    
+
+    function displayTaskDay(){
+       console.log(square.sqDate);
+    }
+}
 
 
 
