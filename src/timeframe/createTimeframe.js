@@ -19,6 +19,7 @@ export function createTimeframeDiv(bodyParent){
     createSRCal();
 }
 export function createSRCal(){
+
     //clear previous cal
     const calContainer = document.querySelectorAll(".tf-cal-container div");
     if(calContainer.length>0) calContainer.forEach(elem=>{elem.remove()})
@@ -50,8 +51,8 @@ function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
         
  
     
-    function tfRowChoose(){
-        if(!this.className.includes("tf-chosen-row")){
+    function tfRowChoose(e, fromHeader){
+        if(!this.className.includes("tf-chosen-row") || fromHeader){
             // row stuff
             const pElem = this.querySelector(".tf-range-p");
             timeframeChange(pElem.innerText, true);
@@ -61,7 +62,7 @@ function createTimeRange(timeframeDiv, timeSpanBtnsDiv){
 
             //time span upper part stuff
             timeSpanBtnsDiv.childNodes.forEach(child=>child.remove());
-            createTimeSpan(timeSpanBtnsDiv)
+            createTimeSpan(timeSpanBtnsDiv, fromHeader)
 
             //single row cal from button;
             createSRCal();

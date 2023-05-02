@@ -6,7 +6,7 @@ import { createSRCal } from "./createTimeframe";
 import { createTaskDisplay} from "../taskDisp/createTaskDisp";
 import { fillAllCalSquares } from "../singleRowCal/singleRowAll";
 
-export function createTimeSpan(parent){
+export function createTimeSpan(parent, fromHeader){
     const type = timeframeOption.toLocaleLowerCase();
     const div = elementCreator("div", ["class", "ts-main-div"], false, parent);
     const leftArrow = createArrow(div, true);
@@ -14,7 +14,8 @@ export function createTimeSpan(parent){
     const rightArrow = createArrow(div);
     arrowEffect([leftArrow, rightArrow]);
     arrowFunc(div, type)
-    dateProcess(timeSpanDiv, type);
+    dateProcess(timeSpanDiv, type, fromHeader)
+    
 
     return div;
 }    
@@ -48,7 +49,6 @@ function arrowDailyFunc(left, right){
     [left,right].forEach(btn=>{btn.addEventListener("click", incrDecrDay);})
     function incrDecrDay(){
         const text = left.parentElement.querySelector(".day-date-range");
-        console.log(text);
         const date = textDateToNum(text.innerText);
         if(this.className.includes("taskbox-left-div")){
             text.innerText = fullFormattedDate(findRelativeDate(date,-1));
@@ -108,13 +108,27 @@ function arrowMonthlyFunc(left,right){
 }
 
 
-function dateProcess(parent, type){
+function dateProcess(parent, type, fromHeader){
     const div = elementCreator("div", ["class", `${type}-date-range`], false, parent);
+    
     if(type==="day"){
-        div.innerText = fullFormattedDate(getToday());
+        if(fromHeader){
+            div.innerText = fromHeader;
+        }
+        else{
+            div.innerText = fullFormattedDate(getToday())
+        }
+
     }
     else if(type==="week"){
-        const [lText, rText] = formatForWeek();
+        let lText, rText;
+        if(fromHeader){
+            [lText, rText] = fromHeader
+        }
+        else{
+            [lText, rText] = formatForWeek();
+        }
+        
         const left = elementCreator("p", ["class", "ts-from"], lText, false);
         const right = elementCreator("p", ["class", "ts-to"], rText, false);
         div.appendChild(left); 
@@ -122,11 +136,18 @@ function dateProcess(parent, type){
         div.appendChild(right);
     }
     else if(type==="month"){
-        div.innerText = returnMonth(getToday("month")) + " " + getToday("year");
+        if(fromHeader){
+            div.innerText = fromHeader
+        }
+        else{
+            div.innerText = returnMonth(getToday("month")) + " " + getToday("year");
+        }
     }
     else if(type==="all"){
       div.innerText= "All tasks"
     }
+
+
     return div;
 
     function formatForWeek(){

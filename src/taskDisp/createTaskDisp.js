@@ -2,7 +2,7 @@ import { elementCreator } from '../utilities/elementCreator';
 import { mainTaskArr, isLogged, timeframeOption, addNewTaskLocal } from '../state';
 import '/src/taskDisp/taskDisp.css'
 import { readUserTasksServer} from '../firebase';
-import { dispDateStrToObjDate, fullFormattedDate, textDateToNum} from '../utilities/dateUtils';
+import { dateObjToFullFormatted, dispDateStrToObjDate, fullFormattedDate, textDateToNum} from '../utilities/dateUtils';
 import { getFirstTaskDay, makeDeepCopy, returnRangeTasks, sortByDate } from '../utilities/sortTasks';
 import { createMiniCal, makeAdd } from '../Header/createHeader';
 import { prioToColor } from '../utilities/priorityColor';
@@ -365,8 +365,8 @@ export function TaskGroupFactory(){
         taskDueGroup.closeFunc = closeTaskGroup;
         taskDueGroup.openFunc = openTaskGroup;
         dropDiv = elementCreator("div", ["class", "td-grouped-drop"], false, taskDueGroup);
-        const dropText = elementCreator("p", false, fullFormattedDate(task.due, true), dropDiv);
-        arrow = elementCreator("span", false, "<", dropDiv);
+        const dropText = elementCreator("p", false, dateObjToFullFormatted(dispDateStrToObjDate(task.due)), dropDiv);
+        arrow = elementCreator("span", false, "<", dropDiv); 
         tasksContainer = elementCreator("div", ["class","td-grouped-tasks-div"], false, taskDueGroup);
         numOfTasks = elementCreator("p", ["class", "td-group-num-tasks"], false, taskDueGroup);
         numOfTasks.style.display = "none";

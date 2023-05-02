@@ -203,6 +203,7 @@ export function findRelativeDate(date, num, isMonth){
 
 //"3rd of march, 2023" becomes 3/2/2023
 export function textDateToNum(str, addOne){
+  console.log(str);
   const arr = str.split(" ");
   const day = arr[0].split("").filter(elem=>!isNaN(elem)).join("")
   const monthComma = arr[arr.length-2].split("");
@@ -264,10 +265,16 @@ export function isPast(date){
 }
 
 //takes a date obj and returns string: "Tuesday: 2nd of June, 2099"
-export function dateObjToFullFormatted(date){
+export function dateObjToFullFormatted(date, noWeek){
   const day = date.getDate();
   const month = returnMonth(date.getMonth());
   const year = date.getFullYear();
   const weekDay = date.toLocaleString('en-us', {weekday: 'long'});
-  return `${weekDay}, ${addSuffix(day)} of ${month} ${year}`
+  if(!noWeek) return `${weekDay}, ${addSuffix(day)} of ${month} ${year}`
+  else return `${addSuffix(day)} of ${month}, ${year}`
+  
+}
+//dateObj to dd/mm/yyyy
+export function dateObjToStrDate(dateObj){
+  return `${dateObj.getDate()}/${dateObj.getMonth()}/${dateObj.getFullYear()}`
 }

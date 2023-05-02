@@ -1,10 +1,11 @@
 import { CreateMainCal } from '../../calendar/mainCal';
 import { mainTaskArr, timeframeChange } from '../../state';
 import { processRepeat } from '../../taskDisp/processRepeat';
-import { dateObjToFullFormatted, dispDateStrToObjDate } from '../../utilities/dateUtils';
+import { dateObjToFullFormatted, dateObjToStrDate, dispDateStrToObjDate, formatNumDate, recursiveFunc, returnMonth } from '../../utilities/dateUtils';
 import { elementCreator } from '../../utilities/elementCreator';
 import { followMouseHoverText } from '../../utilities/hoverDiv';
 import { sortByDate } from '../../utilities/sortTasks';
+import { makeAdd } from '../createHeader';
 import '/src/Header/headerCal/headerCal.css'
 
 export function headerCalFunc(calBtn){
@@ -21,7 +22,7 @@ function generateHeadCal(e){
     generateNewCal()
 }
 
-function generateNewCal(){
+export function generateNewCal(){
     if(document.querySelector(".main-cal-headerCal")!==null){
         document.querySelector(".main-cal-headerCal").remove()
     }
@@ -42,12 +43,18 @@ function generateNewCal(){
 
 
 
-
-
 //runs in the cal loop
-export function headerCalSquareFillInfo(cal){
+export function headerCalSquareFillInfo(isClear){
+    const cal = document.querySelector(".main-cal-headerCal")
     const calSquares = cal.querySelectorAll(".cal-square");
     const sortedMain = sortByDate(mainTaskArr, false)
+    if(isClear){
+        calSquares.forEach(square=>{
+            const squareNum = square.querySelector(".header-cal-num-tasks");
+            squareNum.innerText="";
+        })
+        clearCalTask(calSquares)
+    }
     sortedMain.forEach(task=>{
         calSquares.forEach(square=>{
             const dateArr = [[square.sqDate.getDate(),square.sqDate.getMonth(), square.sqDate.getFullYear()]]
@@ -124,6 +131,9 @@ function CreateCalTaskBox(sqr){
         if(!sqr.className.includes("invalid")){
             addBtn.addEventListener("click", addBtnTaskFromHeaderCal);
             followMouseHoverText(addBtn, "Add task on this day")
+            addBtn.btnDate = sqr.sqDate;
+            addBtn.addEventListener("click", makeAdd)
+
         }
         else{
             addBtn.classList.add("invalid-add-btn-header-cal")
@@ -156,19 +166,28 @@ function CreateCalTaskBox(sqr){
 
 
 function goToDates(){
+    //200ms animation on arrow thing was causing a bug when user accidentally double clicks
+    this.removeEventListener("click", goToDates)
+    setTimeout(()=>{this.addEventListener("click", goToDates)}, 200)
+
     const [,monthBtn, weekBtn, dayBtn] = document.querySelectorAll(".tf-range-row")
     switch(this.innerText){
         case "day":
             timeframeChange("Day", true)
-            dayBtn.changeRow()
+            const date = dateObjToFullFormatted(this.btnDate, true);
+            dayBtn.changeRow(false, date)
             break;
         case "week":
+            const strDate = dateObjToStrDate(this.btnDate)
+            const from = formatNumDate(recursiveFunc(strDate, false), true) 
+            const to = formatNumDate(recursiveFunc(strDate, true), true) 
             timeframeChange("Week", true)
-            weekBtn.changeRow()
+            weekBtn.changeRow(false, [from, to]);
             break;
         case "month":
             timeframeChange("Month", true)
-            monthBtn.changeRow()
+            const mmYY = returnMonth(this.btnDate.getMonth()) + " " + this.btnDate.getFullYear();
+            monthBtn.changeRow(false, mmYY)
             break;            
     }
 }

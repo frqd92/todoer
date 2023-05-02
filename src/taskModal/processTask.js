@@ -3,6 +3,7 @@ import { mainTaskArr, isLogged } from "../state";
 import { writeUserTasksServer } from "../firebase";
 import { createBodyModal } from "../utilities/bodyModal";
 import { createTaskDisplay } from '/src/taskDisp/createTaskDisp';
+import { generateNewCal, headerCalSquareFillInfo } from "../Header/headerCal/headerCal";
 
 export function processTask(){
     const [titleDiv, descDiv, dueDiv, groupDiv, priorityDiv, repeatDiv, notesDiv,] = this.parentElement.childNodes;
@@ -85,7 +86,9 @@ export function processTask(){
     const bgModal = createBodyModal(this.parentElement.parentElement);
     bgModal.closeDiv();
     createTaskDisplay()
- 
+    if(document.querySelector(".adder-cal-main-div")!==null){
+        headerCalSquareFillInfo(true);
+    }
 }
 
 

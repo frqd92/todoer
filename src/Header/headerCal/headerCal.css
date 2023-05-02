@@ -187,6 +187,7 @@
     grid-template-rows: 1fr 5fr 1fr;
     z-index: 120 !important;
     border-radius: 5px;
+    overflow: hidden;
    
 }
 .header-task-box-active{
@@ -215,7 +216,7 @@
 .header-tb-upper span{
     border-left: 1px solid rgba(0, 0, 0, 0.267);
     height: 100%;
-    padding: 0px 5px;
+    padding: 0px 2px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -246,7 +247,7 @@
     display: flex;
     flex-direction: column;
     justify-content: start;
-
+    
 }
 
 .tb-task-row{
@@ -290,7 +291,6 @@ border-left: 1px solid rgba(0, 0, 0, 0.569);
 /*add task*/
 .tb-add-task{
     font-size: 110%;
-
     display: flex;
     justify-content: center;
     align-items: center;

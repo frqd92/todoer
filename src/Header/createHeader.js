@@ -5,6 +5,7 @@ import { searchLoupe, inputBehaviour } from "./searchLogic";
 import { createAddModal } from "../taskModal/createModal";
 import { createBodyModal } from "../utilities/bodyModal";
 import { headerCalFunc } from '/src/Header/headerCal/headerCal.js'; 
+import { dateObjToStrDate, formatNumDate } from "../utilities/dateUtils";
 export function createHeaderDom(bodyParent){
     const header = elementCreator("header", false, false, bodyParent);
     const title = elementCreator("h1", ["class", "main-title", "title-hide"], "Todoer", header);
@@ -42,6 +43,10 @@ export function makeAdd(taskEditObj){
     }
     else if(this.className.includes("sr-cal-add-task")){
         const date = this.parentElement.id.split("-").pop();
+        div.appendChild(createAddModal(false, date))     
+    }
+    else if(this.className.includes("tb-add-task")){
+        const date = formatNumDate(dateObjToStrDate(this.btnDate), true) 
         div.appendChild(createAddModal(false, date))     
     }
     else if(this.id.includes("header-add-btn")){

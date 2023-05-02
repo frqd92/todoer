@@ -150,10 +150,10 @@
 .prev-month-square, .next-month-square{
     background-color: rgba(155, 173, 184, 0.223);
 }
-.prev-month-square span, .next-month-square span{
+.prev-month-square > span, .next-month-square > span{
     opacity: 0.3;
 }
-.prev-month-square:not(.square-invalid):hover, .next-month-square:not(.square-invalid):hover{
+.prev-month-square:not(.square-invalid, .active-cal-square):hover, .next-month-square:not(.square-invalid, .active-cal-square):hover{
     background-color:rgba(95, 158, 160, 0.877);
 
 }
@@ -162,6 +162,7 @@
     border: 2px solid rgba(0, 0, 0, 0.318);
 }
 .cal-today-square:not(.active-cal-square):hover{
+
     background-color: rgb(162, 164, 239);
 
 }
