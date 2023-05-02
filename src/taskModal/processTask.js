@@ -1,4 +1,4 @@
-import { addZeroDispDate, getToday } from "../utilities/dateUtils";
+import { addZeroDispDate, formatNumDate, getToday } from "../utilities/dateUtils";
 import { mainTaskArr, isLogged } from "../state";
 import { writeUserTasksServer } from "../firebase";
 import { createBodyModal } from "../utilities/bodyModal";
@@ -60,8 +60,8 @@ export function processTask(){
         obj.uniqueID = createID();
         if(repeat!=="No repeat") obj.originalID = obj.uniqueID;
         //date of task entry
-        obj.dateEntered = getToday(false, true);
-
+        obj.dateEntered = formatNumDate(getToday(false, true));
+        
         //isPast, plan is each time a user logs in the program will check if the task due has passed and update accordingly
         obj.isPast = false;
 

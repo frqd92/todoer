@@ -21,7 +21,10 @@ export function followMouseHoverText(div, txt){
         div.addEventListener("mousemove", followMouse);
     }
     function makeInvisible(){
-        document.querySelector(".create-hover-text").remove();
+        if(document.querySelector(".create-hover-text")!==null){
+            document.querySelector(".create-hover-text").remove();
+
+        }
         div.addEventListener("mouseover", makeVisible, {once:true});
         div.removeEventListener("mousemove", followMouse);
     }

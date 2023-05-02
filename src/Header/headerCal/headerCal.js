@@ -112,7 +112,7 @@ function CreateCalTaskBox(sqr){
         const taskCont = elementCreator("div", ["class", "header-tb-task-cont"], false, mainDiv);
         displayTasks(taskCont);
         const btnsDiv = elementCreator("div", ["class", "header-tb-btns-div"], false, mainDiv);
-        const goToDate = createGoToDate(btnsDiv);
+        const goToDate = createGoToDate(btnsDiv, sqr.sqDate, "headerCal");
         const addTask = createAddTaskBtn(btnsDiv)
 
         return mainDiv;
@@ -121,19 +121,20 @@ function CreateCalTaskBox(sqr){
     function displayTasks(container){
         if(sqr.foundTasks.length>0){
             sqr.foundTasks.forEach(task=>{
-                elementCreator("div", ["class", "tb-task-row"], task.title, container)
+                const newTask = elementCreator("div", ["class", "tb-task-row"], task.title, container)
+                newTask.taskObj = task;
+                newTask.addEventListener("click", createTaskInfo)
             })
 
         }
     }
+
     function createAddTaskBtn(parent){
         const addBtn = elementCreator("div", ["class", "tb-add-task"], "+", parent)
         if(!sqr.className.includes("invalid")){
-            addBtn.addEventListener("click", addBtnTaskFromHeaderCal);
             followMouseHoverText(addBtn, "Add task on this day")
             addBtn.btnDate = sqr.sqDate;
             addBtn.addEventListener("click", makeAdd)
-
         }
         else{
             addBtn.classList.add("invalid-add-btn-header-cal")
@@ -141,30 +142,58 @@ function CreateCalTaskBox(sqr){
         }
 
     }
-    function addBtnTaskFromHeaderCal(){
-        console.log(sqr);
-    }
-    
-    
-    function createGoToDate(parent){
-        const div = elementCreator("div", ["class", "tb-go-to-date"], false, parent)
-        elementCreator("span", false, "Go to date:", div);
-        const optionsDiv = elementCreator("div", ["class", "tb-go-options-div"], false, div);
-        const btnText = ["day", "week", "month"];
-        btnText.forEach((element, index)=>{
-            const btn =  elementCreator("div", ["class", "tb-go-btn"], element, optionsDiv)
-            if(index!==2)elementCreator("span", false, "/", optionsDiv)
-            btn.btnDate = sqr.sqDate;
-            btn.addEventListener("click", goToDates)
-        })
-    }
+
 
 
     return { createToDom};
 
 }
+function createTaskInfo(){
+    const taskObj = this.taskObj;
+    const taskCont = this.closest(".header-cal-task-box");
+    const taskInfoDiv = elementCreator("div", ["class", "tb-task-info"], false,taskCont);
+    const backBtn = elementCreator("span", ["class","tb-info-back-btn"], "↩", taskInfoDiv);
+    followMouseHoverText(backBtn, "back");
+    const title = elementCreator("div", ["class", "tb-info-title"], taskObj.title, taskInfoDiv);
+    const otherElements = elementCreator("div", ["class", "tb-other-div"], false, taskInfoDiv);
+    const contentArr = ["Description", "Due", "Date Entered", "Priority","Group", "Completed", "Repeated"]
+    const objDataArr = [taskObj.description, taskObj.due, taskObj.dateEntered, taskObj.priority, taskObj.group, taskObj.isComplete, taskObj.repeat]
+    objDataArr.forEach((elem, index)=>{
+        const container = elementCreator("div", ["class", "tb-info-row"], false, otherElements);
+        elementCreator("p", false, contentArr[index], container);
+        const info = elementCreator("p", false, elem, container);
+        if((index===0 || index===4) && !elem){
+            info.innerText = "None"
+        }
+        else if(((index===5 || index===6)) && !elem){
+            info.innerText = "No"
+
+        }
+    })
+    backBtn.addEventListener("click", ()=>{
+        taskInfoDiv.remove()
+        if(document.querySelector(".create-hover-text")!==null){document.querySelector(".create-hover-text").remove()}
+    })
+}
 
 
+
+
+
+
+
+export function createGoToDate(parent, date, classL){
+    const div = elementCreator("div", ["class", `${classL}-go-to`, "tb-go-to-date"], false, parent)
+    elementCreator("span", false, "Go to:", div);
+    const optionsDiv = elementCreator("div", ["class", "tb-go-options-div"], false, div);
+    const btnText = ["day", "week", "month"];
+    btnText.forEach((element, index)=>{
+        const btn =  elementCreator("div", ["class", "tb-go-btn"], element, optionsDiv)
+        if(index!==2)elementCreator("span", false, "/", optionsDiv)
+        btn.btnDate = date;
+        btn.addEventListener("click", goToDates)
+    })
+}
 function goToDates(){
     //200ms animation on arrow thing was causing a bug when user accidentally double clicks
     this.removeEventListener("click", goToDates)

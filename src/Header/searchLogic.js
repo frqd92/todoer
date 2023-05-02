@@ -1,5 +1,7 @@
 import { mainTaskArr } from '../state';
+import { dispDateStrToObjDate } from '../utilities/dateUtils';
 import { elementCreator } from '../utilities/elementCreator';
+import { createGoToDate } from './headerCal/headerCal';
 import '/src/Header/searchBar.css'
 export function searchLoupe(btn, input){
     btn.addEventListener("click", ()=>{input.focus()})
@@ -15,7 +17,7 @@ function taskFinder(val){
         if(taskTitle.includes(value)){
             foundArr.push(task);
         }
-        if(dueVal.includes(value)){
+        else if(dueVal.includes(value)){
             foundArr.push(task);
         }
      
@@ -57,7 +59,7 @@ function SearchRowFact(task, menu){
         upper = elementCreator("div", ["class", "s-menu-upper"], false, row)
         const title = elementCreator("div", false, task.title,upper);
         const due = elementCreator("div", false,task.due,upper);
-
+        const goToDate = createGoToDate(upper, dispDateStrToObjDate(task.due), "searchBar")
         lower = elementCreator("div", ["class", "s-menu-lower", "s-menu-hidden"], false, row);
         const lowerContent = [task.group, task.priority, task.repeat, task.isComplete];
         const lowerLabel = ["Group:", "Priority:", "Repeat:", "Status:"]
@@ -79,7 +81,8 @@ function SearchRowFact(task, menu){
             row.addEventListener("click", searchRowFunc)
         })
 
-    function searchRowFunc(){
+    function searchRowFunc(e){
+        if(e.target.className.includes("tb-go-btn")) return
         if(lower.className.includes("s-menu-hidden")){
             closeAll()
             lower.classList.remove("s-menu-hidden")

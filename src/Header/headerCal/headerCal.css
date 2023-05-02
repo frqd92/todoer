@@ -309,7 +309,8 @@ border-left: 1px solid rgba(0, 0, 0, 0.569);
     cursor: not-allowed;
 }
 /* go to date */
-.tb-go-to-date{
+
+.headerCal-go-to {
     display: flex;
     padding: 5px 0px;
     justify-content: center;
@@ -317,11 +318,11 @@ border-left: 1px solid rgba(0, 0, 0, 0.569);
     gap: 5px;
     font-size: 110%;
 }
-.tb-go-to-date > span{
+.headerCal-go-to  > span{
     font-size: 110%;
 
 }
-.tb-go-options-div{
+.headerCal-go-to  .tb-go-options-div{
    display: flex;
    gap: 3px;
    font-family: roboto-medium;
@@ -340,3 +341,55 @@ border-left: 1px solid rgba(0, 0, 0, 0.569);
 
 }
 
+/* header cal task info */
+
+.tb-task-info{
+    position: absolute;
+    background-color: white;
+    width: 100%;
+    height: 100%;
+}
+
+.tb-info-back-btn{
+    position: absolute;
+    left: 5px;
+    top: 3px;
+    font-size: 170%;
+    cursor: pointer;
+
+}
+.tb-info-title{
+    height: 30px;
+    margin-left: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family:Arial, Helvetica, sans-serif;
+    font-size: 120%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    letter-spacing: 0.1rem;
+}
+
+.tb-other-div{
+
+}
+.tb-info-row{
+    display: flex;
+    justify-content: start;
+    padding: 3px;
+    gap: 15px;
+    border-bottom: 1px dashed rgba(0, 0, 0, 0.29);
+}
+.tb-info-row > p:nth-child(1){
+    font-family: roboto-medium;
+}
+.tb-info-row > p:nth-child(2){
+    flex-grow: 1;
+    text-align: end;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-size: 100%;
+}
