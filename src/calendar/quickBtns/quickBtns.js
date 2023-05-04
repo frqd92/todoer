@@ -11,8 +11,8 @@ export function createQuickBtns(mainCalDiv, outputBtn){
     }
 
     const btnArray = [
-        {none:"None"}, {today:"Today"}, {tomorrow:"Tomorrow"}, 
-        {afterTomorrow:"After tomorrow"},{week:"Next week"}, {month:"Next month"}
+        {today:"Today"}, {tomorrow:"Tomorrow"}, {afterTomorrow:"After tomorrow"} ,{week:"Next week"},
+         {month:"Next month"}, {myDogsBd: "my dog's bd"}
     ]
     btnArray.forEach((elem)=>{   
         for(const key in elem){
@@ -63,6 +63,10 @@ function textToDate(text){
             formatDate.setDate(formatDate.getDate()+(((1 + 7 - formatDate.getDay()) % 7)|| 7)); break;
         case "Next month":
             formatDate.setMonth(formatDate.getMonth() + 1 ,1); break;
+        case "my dog's bd":
+            formatDate.setMonth(0)
+            formatDate.setDate(2)
+            formatDate.setFullYear(today.getFullYear() + 1)
     }
     const formattedDay = formatDate.getDate()<10?'0'+formatDate.getDate():formatDate.getDate();
     const formattedMonth = (formatDate.getMonth()+1)<10?"0"+(formatDate.getMonth()+1):formatDate.getMonth()+1;

@@ -26,7 +26,8 @@ export function createSmartInput(outputBtn, type){
 }
 
 function dateToDueBtn(val, outputBtn, type, input){
-    outputBtn.innerText = "until "+ val;
+    outputBtn.innerText =  val;
+
     if(type!=="until"){
         const parent = outputBtn.parentElement;
         const menu = parent.querySelector(".add-menu");
