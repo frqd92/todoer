@@ -1,6 +1,9 @@
 {
   "name": "todoer",
-  "version": "1.0.0",
+  "version": "1.0.0", 
+  "repository": {
+    "url": "git+https://github.com/frqd92/todoer.git"
+  },
   "description": "Todo project from TOP",
   "main": "index.js",
   "scripts": {
