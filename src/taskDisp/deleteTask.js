@@ -1,3 +1,4 @@
+import { headerCalSquareFillInfo } from "../Header/headerCal/headerCal";
 import { writeUserTasksServer } from "../firebase";
 import { addNewTaskLocal, isLogged, mainTaskArr } from "../state";
 import { createBodyModal } from "../utilities/bodyModal";
@@ -9,7 +10,6 @@ export function deleteTaskFunc(){
     const deleteDiv = elementCreator("div", ["class", "delete-task-div"], false, document.body);
     const hoverDiv = createBodyModal(deleteDiv);
     hoverDiv.createDiv();
-
     if(!taskObj.repeat){
         elementCreator("p", false, "Are you sure you want to remove this task?", deleteDiv);
         const btn = elementCreator("div", ["class" ,"delete-btn-task"], "Delete task", deleteDiv);
@@ -25,7 +25,6 @@ export function deleteTaskFunc(){
         btnAll.addEventListener("click", deleteSingleTask);
         btnOne.addEventListener("click", deleteSingleRepTask)
     }
-
 
 
 

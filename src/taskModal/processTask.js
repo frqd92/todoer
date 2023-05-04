@@ -8,6 +8,7 @@ import { generateNewCal, headerCalSquareFillInfo } from "../Header/headerCal/hea
 export function processTask(){
     const [titleDiv, descDiv, dueDiv, groupDiv, priorityDiv, repeatDiv, notesDiv,] = this.parentElement.childNodes;
     if(!validateTitle(titleDiv))return
+    if(!validateDesc(descDiv))return
     if(!isPrioEmpty(priorityDiv))return
 
     const obj = {};
@@ -109,14 +110,22 @@ function isPrioEmpty(prioDiv){
 
 function validateTitle(titleDiv){
     const input = titleDiv.querySelector(".modal-input");
-    if(input.textContent.length===0){
+    if(input.textContent.length===0 || input.textContent.length>100){
         input.classList.add("invalid-modal-element")
         setTimeout(()=>{input.classList.remove("invalid-modal-element")}, 2000)
         return false
     }
     return true;
 }
-    
+function validateDesc(descDiv){
+    const input = descDiv.querySelector(".modal-input");
+    if(input.textContent.length>200){
+        input.classList.add("invalid-modal-element")
+        setTimeout(()=>{input.classList.remove("invalid-modal-element")}, 2000)
+        return false
+    }
+    return true;
+}
     
     
     

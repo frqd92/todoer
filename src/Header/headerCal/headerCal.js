@@ -1,5 +1,6 @@
 import { CreateMainCal } from '../../calendar/mainCal';
 import { mainTaskArr, timeframeChange } from '../../state';
+import { deleteTaskFunc } from '../../taskDisp/deleteTask';
 import { processRepeat } from '../../taskDisp/processRepeat';
 import { dateObjToFullFormatted, dateObjToStrDate, dispDateStrToObjDate, formatNumDate, recursiveFunc, returnMonth } from '../../utilities/dateUtils';
 import { elementCreator } from '../../utilities/elementCreator';
@@ -27,7 +28,7 @@ export function generateNewCal(){
         document.querySelector(".main-cal-headerCal").remove()
     }
     const calDiv = document.querySelector(".header-cal-div")
-    const cal = CreateMainCal("headerCal", calDiv, true, false);
+    const cal = CreateMainCal("headerCal", calDiv, false, false);
     calDiv.appendChild(cal)
     headerCalSquareFillInfo(cal)
     const arrowBtns = cal.querySelectorAll(".cal-arrow");
@@ -150,26 +151,27 @@ function CreateCalTaskBox(sqr){
 }
 function createTaskInfo(){
     const taskObj = this.taskObj;
+    const square = this.closest(".cal-square");
     const taskCont = this.closest(".header-cal-task-box");
     const taskInfoDiv = elementCreator("div", ["class", "tb-task-info"], false,taskCont);
     const backBtn = elementCreator("span", ["class","tb-info-back-btn"], "↩", taskInfoDiv);
     followMouseHoverText(backBtn, "back");
     const title = elementCreator("div", ["class", "tb-info-title"], taskObj.title, taskInfoDiv);
     const otherElements = elementCreator("div", ["class", "tb-other-div"], false, taskInfoDiv);
+    const squareDate = formatNumDate(dateObjToStrDate(square.sqDate), true)
+    taskObj.due = squareDate;
     const contentArr = ["Description", "Due", "Date Entered", "Priority","Group", "Completed", "Repeated"]
     const objDataArr = [taskObj.description, taskObj.due, taskObj.dateEntered, taskObj.priority, taskObj.group, taskObj.isComplete, taskObj.repeat]
     objDataArr.forEach((elem, index)=>{
         const container = elementCreator("div", ["class", "tb-info-row"], false, otherElements);
         elementCreator("p", false, contentArr[index], container);
         const info = elementCreator("p", false, elem, container);
-        if((index===0 || index===4) && !elem){
-            info.innerText = "None"
-        }
-        else if(((index===5 || index===6)) && !elem){
-            info.innerText = "No"
-
-        }
+        if((index===0 || index===4) && !elem) info.innerText = "None"
+        else if(((index===5 || index===6)) && !elem) info.innerText = "No"
     })
+    const btnDiv = elementCreator("div", ["class", "tb-btn-div"], false, taskInfoDiv);
+
+    
     backBtn.addEventListener("click", ()=>{
         taskInfoDiv.remove()
         if(document.querySelector(".create-hover-text")!==null){document.querySelector(".create-hover-text").remove()}

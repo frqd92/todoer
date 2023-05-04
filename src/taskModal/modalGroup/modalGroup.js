@@ -48,6 +48,7 @@ function createGroupRows(listDiv, outputBtn){
         const groupText = elementCreator("p", false, group, rowDiv);
         const delBtn = elementCreator("div", ["class", "add-row-del"], "X", rowDiv);
         groupText.addEventListener("click", rowGroupToBtn);
+        delBtn.addEventListener("click", removeGroup);
     })
     const menu = listDiv.parentElement.parentElement;
     const addNewGroupBtn = menu.querySelector(".add-group-btn");
@@ -59,6 +60,25 @@ function createGroupRows(listDiv, outputBtn){
         closeMenuOutside(this.closest(".add-menu"));
     }
 }
+function removeGroup(e){
+    const groupText = this.previousSibling.innerText;
+    const index = mainGroupArr.indexOf(groupText);
+    mainGroupArr.splice(index, 1)
+    this.parentElement.remove()
+    isLogged?writeUserGroupsServer(mainGroupArr):addNewGroupLocal()
+    e.stopPropagation()
+
+    if(mainGroupArr.length<1){
+        const parentRow = document.querySelector(".add-group")
+        const emptyDiv = parentRow.querySelector(".group-no-group");
+        const groupRowDiv = parentRow.querySelector(".add-group-list-div")
+        emptyDiv.classList.add("no-group-show");
+        groupRowDiv.classList.add("group-row-hide")
+    }
+
+}
+
+
 
 function groupInputFunc(){
     this.classList.add("disabled-group-btn");
@@ -97,7 +117,7 @@ function addNewGroup(e, isEnter){
     if(inputDiv===null)return;
     const emptyDiv =inputDiv.parentElement.querySelector(".group-no-group");
     const input = inputDiv.querySelector("input");
-
+    input.value = input.value.trim()
     if(validateGroupInput(input)){
         mainGroupArr.push(input.value);
 
@@ -144,6 +164,12 @@ function validateGroupInput(input){
     else if(input.value.length>50){
         input.value="";
         input.placeholder = "Max 50 characters";
+        return false;
+    }
+    const duplicateCheck = mainGroupArr.every(group=>group.toLowerCase()!==input.value.toLowerCase());
+    if(!duplicateCheck){
+        input.value="";
+        input.placeholder = "Group already exists";
         return false;
     }
     return true;
