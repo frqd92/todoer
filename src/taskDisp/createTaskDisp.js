@@ -267,18 +267,19 @@ function renderTasksToDisp(sortedTasks, loadMore){
         }
     }
     else{
-        sortedTasks.forEach((task, index)=>{
-            if((index>=1 && task.due!==task.due) || index===0){
-                const taskDueGroup = TaskGroupFactory();
-                taskDueGroup.createTaskGroup(taskDispDiv, task);
+        for(let i=0;i<sortedTasks.length;i++){
+            if((i>=1 && sortedTasks[i].due!==sortedTasks[i-1].due) || i===0){
+                const taskDueGroup = TaskGroupFactory(); 
+                taskDueGroup.createTaskGroup(taskDispDiv, sortedTasks[i]);
             }
             const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
-            const rowCreate = TaskFactory(task, allGroups[allGroups.length-1]);
+            const rowCreate = TaskFactory(sortedTasks[i], allGroups[allGroups.length-1]);
             const row = rowCreate.createTaskElements();
 
-            const createCalRow = CalTaskFactory(row, task, rowCreate.showLowerTask);
+            const createCalRow = CalTaskFactory(row, sortedTasks[i], rowCreate.showLowerTask);
             createCalRow.createCalRow();
-        })
+        }
+
     }
 
 
