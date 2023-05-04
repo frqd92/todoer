@@ -12,6 +12,15 @@ body{
     position: sticky;
     top: 0;
     z-index:20;
+
+}
+
+.timespan-div, .timeframe-div, header{
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+}
+
+.f-settings-div:not(.f-settings-hidden){
     backdrop-filter: blur(18px);
     -webkit-backdrop-filter: blur(18px);
 }

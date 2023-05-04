@@ -43,7 +43,6 @@
     grid-template-rows: 1fr 5fr;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-
 }
 
 
@@ -53,6 +52,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    
   
 }
 .sr-week-day-num{
@@ -63,7 +63,6 @@
     justify-self: center;
     align-self: center;
     font-family: montserrat;
-
 }
 
 .sr-w-square .sr-task-div{
@@ -76,6 +75,7 @@
     justify-self: center;
 
 }
+
 /* cal tasks */
 
 .sr-w-square .sr-task-div{
@@ -131,11 +131,13 @@ background: rgba(255, 255, 255, 0);
     
 }
 
-.sr-cal-add-task:hover{
+.sr-cal-add-task:not(.disabled-cal-add):hover{
     transform: scale(1.4);
-    opacity: 0.8;
-
-    
+    opacity: 0.8; 
+}
+.disabled-cal-add{
+    cursor: not-allowed !important;
+    opacity: 0.2 !important;
 }
 .sr-w-square:last-child{
     border-right: none;

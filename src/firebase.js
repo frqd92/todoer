@@ -5,7 +5,7 @@ import { getDatabase, ref, set, get, child } from "firebase/database";
 
 import { createHomeFromLogin } from "./loginPage/loginDom";
 import { modifyGroupsArr, modifyTasksArr } from "./state";
-import { renderTasks } from "./taskDisp/createTaskDisp";
+import { createEmptyMessage, renderTasks } from "./taskDisp/createTaskDisp";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -71,7 +71,7 @@ export function readUserTasksServer(bool){
         modifyTasksArr(snapshot.val());
         if(bool)renderTasks();
     } else {
-      console.log("No data available")
+      createEmptyMessage(document.getElementById("task-disp-main"))
     }
   }).catch((error) => {
     console.error(error);

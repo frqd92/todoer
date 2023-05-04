@@ -15,7 +15,6 @@
     display: flex;
     flex-direction: column;
     
-
 }
 
 .header-cal-detached{
@@ -396,3 +395,9 @@ border-left: 1px solid rgba(0, 0, 0, 0.569);
     font-size: 100%;
 }
 
+@media screen and (max-width: 510px){
+    .header-cal-main{
+        width: 300px;
+
+    }
+}

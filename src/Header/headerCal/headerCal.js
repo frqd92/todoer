@@ -15,7 +15,6 @@ export function headerCalFunc(calBtn){
 }
 
 function generateHeadCal(e){
-
     if(document.querySelector(".header-cal-main")!==null) return;
     const mainCalDiv = elementCreator("div", ["class", "header-cal-main"], false, document.body);
     const titleBar = createTitleBar(mainCalDiv);
@@ -40,6 +39,26 @@ export function generateNewCal(){
     cal.querySelector(".cal-og-date-btn").addEventListener("click", ()=>{
         headerCalSquareFillInfo(cal)
     })
+    window.addEventListener("resize", repositionDiv);
+}
+
+function repositionDiv(){
+    const calDiv = document.querySelector(".header-cal-main");
+    if(calDiv===null) return
+    const windowWidth = window.innerWidth;
+    const windowHeight = window.innerHeight;
+    const divLeft = calDiv.offsetLeft;
+    const divTop = calDiv.offsetTop;
+    const divWidth = calDiv.offsetWidth;
+    const divHeight = calDiv.offsetHeight;
+    const divRight = divLeft + divWidth;
+    const divBottom = divTop + divHeight;
+    if(divRight > windowWidth || divBottom > windowHeight){
+        const newLeft = Math.min(divLeft, windowWidth - divWidth);
+        const newTop = Math.min(divTop, windowHeight - divHeight);
+        calDiv.style.left = newLeft + "px";
+        calDiv.style.top = newTop + "px";
+    }
 }
 
 
@@ -246,7 +265,9 @@ function createTitleBar(parent){
     const detachBtn = createDetach();
     const closeBtn = elementCreator("div", ["class", "h-close-btn"], "X", titleBar)
     closeBtn.addEventListener("click", ()=>{
-        parent.remove()}
+        parent.remove();
+        window.removeEventListener("resize", repositionDiv);
+    }
         )
     return titleBar;
 

@@ -241,30 +241,46 @@ function renderTasksToDisp(sortedTasks, loadMore){
         initialVal=loadMore.count;
 
     }
-
-    for(let x=initialVal;x<initialVal+1;x++){
-        for(let i=0;i<arrDiv[x].length;i++){
-            if((i>=1 && arrDiv[x][i].due!==arrDiv[x][i-1].due) || i===0){
-                const taskDueGroup = TaskGroupFactory();
-                taskDueGroup.createTaskGroup(taskDispDiv, arrDiv[x][i]);
-            }
-            const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
-            const rowCreate = TaskFactory(arrDiv[x][i], allGroups[allGroups.length-1]);
-            const row = rowCreate.createTaskElements();
-    
-            if(timeframeOption!=="All"){
-                const createRow = CalTaskFactory(row, arrDiv[x][i], rowCreate.showLowerTask);
-                createRow.createCalRow();
+    if(timeframeOption==="All"){
+        for(let x=initialVal;x<initialVal+1;x++){
+            for(let i=0;i<arrDiv[x].length;i++){
+                if((i>=1 && arrDiv[x][i].due!==arrDiv[x][i-1].due) || i===0){
+                    const taskDueGroup = TaskGroupFactory();
+                    taskDueGroup.createTaskGroup(taskDispDiv, arrDiv[x][i]);
+                }
+                const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
+                const rowCreate = TaskFactory(arrDiv[x][i], allGroups[allGroups.length-1]);
+                const row = rowCreate.createTaskElements();
+        
+                if(timeframeOption!=="All"){
+                    const createRow = CalTaskFactory(row, arrDiv[x][i], rowCreate.showLowerTask);
+                    createRow.createCalRow();
+                }
             }
         }
+        if(arrDiv.length>1 && document.querySelector(".load-more-tasks")===null){
+            const loadMoreBtn = createLoadMoreBtn(arrDiv)
+            taskDispDiv.appendChild(loadMoreBtn)
+        }
+        if(loadMore){
+            taskDispDiv.appendChild(loadMore)
+        }
     }
-    if(arrDiv.length>1 && document.querySelector(".load-more-tasks")===null){
-        const loadMoreBtn = createLoadMoreBtn(arrDiv)
-        taskDispDiv.appendChild(loadMoreBtn)
+    else{
+        sortedTasks.forEach((task, index)=>{
+            if((index>=1 && task.due!==task.due) || index===0){
+                const taskDueGroup = TaskGroupFactory();
+                taskDueGroup.createTaskGroup(taskDispDiv, task);
+            }
+            const allGroups = document.querySelectorAll(".td-grouped-tasks-div");
+            const rowCreate = TaskFactory(task, allGroups[allGroups.length-1]);
+            const row = rowCreate.createTaskElements();
+
+            const createCalRow = CalTaskFactory(row, task, rowCreate.showLowerTask);
+            createCalRow.createCalRow();
+        })
     }
-    if(loadMore){
-        taskDispDiv.appendChild(loadMore)
-    }
+
 
     function divideTasks(){
         const numDiv = Math.ceil(sortedTasks.length/20)

@@ -3,6 +3,7 @@ import { addZero, addZeroDispDate, dispDateStrToObjDate, findRelativeDate, getTo
 import '/src/singleRowCal/singleRow.css'
 import { createAddModal } from '../taskModal/createModal';
 import { makeAdd } from '../Header/createHeader';
+import { followMouseHoverText } from '../utilities/hoverDiv';
 
 export function createWeekCal(){
     const calContainer = document.querySelector(".tf-cal-container");
@@ -40,9 +41,13 @@ function createWeekSquares(parent){
         }
         //where tasks are stored
         const calTasksDiv = elementCreator("div", ["class", "sr-task-div"], false, square);
+        const calAddTask = elementCreator("div", ["class", "sr-cal-add-task"], "+", square);
         if(!isPast(dispDateStrToObjDate(clDate))){
-            const calAddTask = elementCreator("div", ["class", "sr-cal-add-task"], "+", square);
             calAddTask.addEventListener("click", makeAdd);
+        }
+        else{
+            calAddTask.classList.add("disabled-cal-add")
+            followMouseHoverText(calAddTask, "date has passed")
         }
 
     }

@@ -1,3 +1,6 @@
+.timespan-div{
+
+}
 .ts-main-div{
 
     user-select: none;
@@ -5,7 +8,6 @@
     grid-template-columns: 1fr 1.5fr 1fr;
     border-top: 1px solid rgba(0, 0, 0, 0.199);
     min-width:  368px;
-
 }
 
 

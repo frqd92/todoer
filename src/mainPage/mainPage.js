@@ -42,7 +42,8 @@ function readTasksGroups(){
     //reads user group and task in firebase and copies its value to mainGroupArr/task in state if available
     if(isLogged){
         readUserGroupsServer();
-        readUserTasksServer();
+
+
     }
     //gets local "groups" and tasks in state and copies to mainGroupArr/task in state if available
     else{
