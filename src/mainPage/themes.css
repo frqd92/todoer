@@ -49,6 +49,7 @@
     --load-more-bg: rgb(141, 143, 147);
     --options-btn-bg: rgba(255, 255, 255, 0.519);
     --load-more-color: white;
+    --no-tasks-color: white;
 }
 
 
@@ -147,4 +148,10 @@ header{
     
     background-color:var(--load-more-bg); 
     color: var(--load-more-color);
+}
+
+
+#task-empty-msg{
+
+    color: var(--no-tasks-color);
 }
