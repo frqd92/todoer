@@ -173,15 +173,11 @@ function createGroupsDiv(par){
             else{
                 task.style.display="none"
                 task.classList.add("filtered-group-task");
-                console.log(task);
-
             }
         })
         checkGroupVisibility()
         function checkGroupVisibility(){
-
             document.querySelectorAll(".td-grouped").forEach(group=>{
-                console.log(group);
                 const allRows = group.querySelectorAll(".task-row-main");
                 const allFiltered = group.querySelectorAll(".filtered-group-task")
     

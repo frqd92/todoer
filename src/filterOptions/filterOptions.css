@@ -1,7 +1,9 @@
 .filter-options-div{
     display: flex;
     user-select: none;
+    -webkit-user-select: none;
     min-width: 400px;
+
 }
 
 

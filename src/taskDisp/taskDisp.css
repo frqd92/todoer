@@ -47,6 +47,7 @@
     justify-content: center;
     align-items: center;
     gap: 10px;
+    -webkit-user-select: none;
     user-select: none;
     cursor: pointer;
     width: inherit;
@@ -114,7 +115,9 @@
 
 /* upper part */
 .task-row-upper{
+    -webkit-user-select: none;
     user-select: none;
+    -webkit-user-select: none;
     position: relative;
     font-family: roboto;
     display: grid;
@@ -323,6 +326,7 @@ font-size: 0.75rem;
     border-left: 1px solid rgba(0, 0, 0, 0.229);
     cursor: pointer;
     user-select: none;
+    -webkit-user-select: none;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -376,6 +380,7 @@ font-size: 0.75rem;
     font-size:  75%;
     letter-spacing: 0.02rem;
     user-select: none;
+    -webkit-user-select: none;
     box-shadow: rgba(60, 64, 67, 0.3) 0px 1px 2px 0px, rgba(60, 64, 67, 0.15) 0px 1px 3px 1px;
     opacity: 0.8;
 }
@@ -483,6 +488,7 @@ font-size: 0.75rem;
     justify-content: center;
     align-items: center;
     gap:  5px;
+    -webkit-user-select: none;
     user-select: none;
     cursor: pointer;
     padding: 3px 16px;
@@ -548,6 +554,7 @@ font-size: 0.75rem;
     flex-direction: column;
     gap: 10px;
     align-items: center;
+    -webkit-user-select: none;
     user-select: none;
 }
 .delete-task-div p{
@@ -591,6 +598,7 @@ font-size: 0.75rem;
     padding: 1% 0;
     gap: 3px;
     user-select: none;
+    -webkit-user-select: none;
 }
 .load-more-tasks:hover{
     background-color: rgba(0, 32, 61, 0.245);

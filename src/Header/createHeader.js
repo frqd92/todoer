@@ -70,16 +70,12 @@ function createLightBulb(parent){
     div.addEventListener("click", bulbLogic);
     return div;
     function bulbLogic(){
-        console.log("jdkadka");
         if(!this.className.includes("bulb-on")){
-            console.log("shart");
-
             this.classList.add("bulb-on");
             modifyTheme("dark-theme");
             bulbLum.style.display = "block";
         }
         else{
-            console.log("fart");
             this.classList.remove("bulb-on");
             modifyTheme("light-theme");
             bulbLum.style.display = "none";

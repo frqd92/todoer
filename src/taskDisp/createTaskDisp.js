@@ -463,7 +463,8 @@ function taskboxDateArray(dateDiv, type){
         else{
             let firstDayTask = getFirstTaskDay();
             let lastDayTask = new Date();
-            lastDayTask.setFullYear(firstDayTask.getFullYear()+1)
+            console.log();
+            lastDayTask.setFullYear(firstDayTask.getFullYear()+10)
             while(firstDayTask.getTime()<=lastDayTask.getTime()){
                 allArr.push([firstDayTask.getDate(), firstDayTask.getMonth(), firstDayTask.getFullYear()])
                 firstDayTask.setDate(firstDayTask.getDate()+1);
@@ -555,7 +556,7 @@ function getFromToDate(){
             const [from, to] = document.querySelectorAll(".week-date-range p");
             return [dispDateStrToObjDate(from.innerText),dispDateStrToObjDate(to.innerText)];
         case "Month":
-            const allS = document.querySelectorAll(".sr-m-square");
+            const allS = document.querySelectorAll('.sr-m-square');
             return [
                 dispDateStrToObjDate(allS[0].id.split("-").pop()),
                 dispDateStrToObjDate(allS[allS.length-1].id.split("-").pop())

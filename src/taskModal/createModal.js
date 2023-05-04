@@ -165,7 +165,6 @@ function createNotes(outputBtn){
     saveBtn.addEventListener("click", saveNotes);
     function saveNotes(){
         const length = textArea.innerText.match(/\S/g).length;
-        console.log(length);
         if(length>1000)return
         if(textArea.innerText==""){
             outputBtn.innerText = "None";

@@ -203,7 +203,6 @@ export function findRelativeDate(date, num, isMonth){
 
 //"3rd of march, 2023" becomes 3/2/2023
 export function textDateToNum(str, addOne){
-  console.log(str);
   const arr = str.split(" ");
   const day = arr[0].split("").filter(elem=>!isNaN(elem)).join("")
   const monthComma = arr[arr.length-2].split("");

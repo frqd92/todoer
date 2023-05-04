@@ -1,8 +1,7 @@
 .timespan-div{
-
 }
 .ts-main-div{
-
+    -webkit-user-select: none;
     user-select: none;
     display: grid;
     grid-template-columns: 1fr 1.5fr 1fr;

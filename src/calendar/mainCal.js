@@ -147,7 +147,6 @@ function CalFactory(calParent, mmYY, output, type){
 
 function renderCalDate(calSquare){
     let classElements = [...calSquare.classList].filter(elem=>elem.includes("valid"));
-    console.log(classElements);
     const squareDay = calSquare.querySelector("span").innerText
     let [mm, yy] = classElements.join().split("-").slice(2)
     mm = Number(mm); yy = Number(yy);

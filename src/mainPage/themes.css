@@ -1,7 +1,6 @@
 .light-theme{
     --color-bg: linear-gradient(to right, #8e9eab, #eef2f3);
     --header-bg: linear-gradient(to right, #d1d1d180, #2424241e);
-
     --header-box-shadow: rgba(50, 50, 93, 0.25) 0px 6px 12px -2px, rgba(0, 0, 0, 0.3) 0px 3px 7px -3px;
     --modal-add-bg: rgb(255, 255, 255);
     --bg-div:  rgba(0, 0, 0, 0.325);
@@ -21,7 +20,13 @@
 }
 
 .dark-theme{
-    --color-bg: linear-gradient(to right, rgb(8, 19, 23), rgb(7, 17, 21), rgb(8, 19, 23));   
+
+
+
+    --color-bg: linear-gradient(to left, #1c1f20, #363b41);
+
+
+   
     --header-bg: linear-gradient(to right, rgba(249, 249, 249, 0.747), rgba(255, 255, 255, 0.478));
     --header-box-shadow:none;
     --modal-add-bg: rgba(25, 25, 26, 0.845);
@@ -37,6 +42,13 @@
     --tf-bg:rgba(255, 255, 255, 0.757);
     --tf-hide-btn: rgb(255, 255, 255);
     --tf-hide-opa: 0.8;
+    --f-bg: rgba(255, 255, 255, 0.411);
+    --ts-bg: rgba(255, 255, 255, 0.368);
+    --group-font: rgb(236, 236, 241);
+    --td-arrow-dark: rgb(181, 179, 179);
+    --load-more-bg: rgb(141, 143, 147);
+    --options-btn-bg: rgba(255, 255, 255, 0.519);
+    --load-more-color: white;
 }
 
 
@@ -50,26 +62,33 @@ header{
     box-shadow: var(--header-box-shadow);
 
 }
-/* timefram cal ----------------------------------------------------------------------------------*/
+/* timespan */
 
- .tf-time-range-div{
-    background: var(--tf-bg);
-}
-.hide-tf-btn{
-    background: var(--tf-hide-btn);
-    opacity: var(--tf-hide-opa);
-
+.timespan-div{
+    background: var(--ts-bg);
 }
 
+.timeframe-div{
+    background: var(--ts-bg);
+}
 
+/* options */
+.f-main-btn-div{
+    background-color: var(--options-btn-bg);
+}
+.f-settings-div:not(.f-settings-hidden){
+    background-color: var(--f-bg);
+}
 
-
-
-
-
+.td-grouped-drop{
+    color: var(--group-font)
+}
 /* add modal ----------------------------------------------------------------------------------*/
 .header-add-div{
     box-shadow: var(--add-box-shadow);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+
 }
 .modal-add{
     background: var(--modal-add-bg);
@@ -110,4 +129,22 @@ header{
 .modal-task-add-btn:hover, .modal-task-edit-btn:hover{
     background-color: var(--modal-add-btn-hover);
 
+}
+
+
+.td-grouped{
+    background-color: rgba(255, 255, 255, 0.343);
+}
+
+.td-grouped-drop span{
+        
+        color: var(--td-arrow-dark);
+        border-color:var(--td-arrow-dark);
+}
+
+.load-more-tasks{
+    
+    
+    background-color:var(--load-more-bg); 
+    color: var(--load-more-color);
 }

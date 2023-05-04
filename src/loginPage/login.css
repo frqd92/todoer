@@ -29,6 +29,7 @@
     0 5px 10px rgba(0,0,0,.2),
     0 10px 10px rgba(0, 0, 0, 0.32);
     user-select: none;
+    -webkit-user-select: none;
     transition: all 0.2s ease;
     z-index: 99;
 }

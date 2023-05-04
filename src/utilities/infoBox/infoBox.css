@@ -41,6 +41,7 @@
     opacity: 0;
     transition: opacity 0.15s linear;
     user-select: none;
+    -webkit-user-select: none;
     pointer-events: none;
 }
 .info-hover-text::first-line{
